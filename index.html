@@ -1290,7 +1290,7 @@ const PRESETS=[
  dv:'하루 수요량과 공급량, 그리고 그 차이(초과 수요·초과 공급)',dvUnit:'인분',
  dvHow:'가격을 정하고 «하루 장사하기»를 누르면 소비자 줄과 판매대가 움직이고 수요량·공급량이 표에 기록된다',dvRes:'1인분 단위 · 가격은 500원 간격',
  cvs:['소비자 100명과 판매자 10곳으로 고정','소득·기호·재료비 등 다른 조건은 일정','하루 단위 거래'],
- init:'가격 1000원일 때 수요량 100인분·공급량 20인분, 가격 6000원일 때 수요량 10인분·공급량 110인분이 되도록 직선으로 설정한다(교육용 가상 자료).\n균형 가격 3500원 부근에서 수요량과 공급량이 같아진다.\n출처: 중학교 사회 교과서 수요·공급 곡선의 전형적 형태를 따른 가상 자료 — 실제 통계가 아님을 화면에 밝힌다',
+ init:'가격 1000원일 때 수요량 100인분·공급량 20인분, 가격 6000원일 때 수요량 10인분·공급량 90인분이 되도록 직선으로 설정한다(교육용 가상 자료).\n균형 가격 3500원 부근에서 수요량과 공급량이 같아진다.\n출처: 중학교 사회 교과서 수요·공급 곡선의 전형적 형태를 따른 가상 자료 — 실제 통계가 아님을 화면에 밝힌다',
  simplify:'수요·공급 곡선을 직선으로 단순화한 교육용 모형이며, 실제 시장의 비선형성·시간 지연·심리 요인은 다루지 않는다.\n«다른 조건이 일정하다»는 가정을 화면에 밝힌다.\n수치는 실제 통계가 아니라 원리를 보기 위한 가상 자료다.',
  misconcept:'가격이 오르면 공급량도 줄어든다고 생각한다.\n균형 가격은 정부나 판매자가 정하는 것이라고 생각한다.\n수요량의 변화와 수요의 변화를 구분하지 못한다.',
  safety:'',
@@ -1341,7 +1341,7 @@ function stdList(){
 function sciUnits(){return isSci()?[...new Set(S.stds.map(c=>unitOf(c)).filter(Boolean))]:[]}
 function allInqs(){
   const a=isSci()?[...S.inqs,...((S.inqEtcOn?S.inqEtc:[]).map(x=>x.trim()).filter(Boolean))]:[];
-  const b=(S.actText||'').split('\n').map(x=>x.trim()).filter(Boolean);
+  const b=isSci()?[]:(S.actText||'').split('\n').map(x=>x.trim()).filter(Boolean);
   return [...a,...b];
 }
 function schoolLv(){
@@ -1357,7 +1357,7 @@ function unitLine(){
     const us=sciUnits();
     if(!us.length)return S.grade===10?'고등학교 1학년 · 통합과학':`중학교 ${S.grade||'1~3'}학년 · 과학 · ${S.area} 영역`;
     const hs=us.filter(u=>u.g===10), ms=us.filter(u=>u.g!==10), parts=[];
-    if(ms.length)parts.push(`중학교 ${ms[0].g}학년 · 과학 · ${ms[0].a} 영역 · `+ms.map(u=>`(${u.no}) ${u.n}`).join(' / '));
+    if(ms.length)parts.push(`중학교 ${[...new Set(ms.map(u=>u.g))].join('·')}학년 · 과학 · ${[...new Set(ms.map(u=>u.a))].join('·')} 영역 · `+ms.map(u=>`(${u.no}) ${u.n}`).join(' / '));
     if(hs.length)parts.push('고등학교 1학년 · '+hs.map(u=>`통합과학${u.bk} (${u.sub}) ${u.n}`).join(' / '));
     return parts.join('  +  ');
   }
@@ -1470,7 +1470,8 @@ function renderSegs(){
     renderSegs();renderShortNote();sync();
     if(S.timeEtc){const el=$('#f_timeEtc');if(el){el.focus();el.select()}}});
   const te=$('#f_timeEtc');
-  if(te)te.oninput=()=>{const n=Math.max(1,Math.min(180,parseInt(te.value,10)||0));S.time=String(n||'');renderShortNote();sync()};
+  if(te){te.oninput=()=>{const n=Math.max(1,Math.min(180,parseInt(te.value,10)||0));S.time=String(n||'');renderShortNote();sync()};
+    te.onchange=()=>{te.value=S.time}}
 
   $('#segCtx').innerHTML=CTXS.map(c=>`<button data-v="${c}" aria-pressed="${S.ctx===c}">${c}</button>`).join('');
   $$('#segCtx button').forEach(b=>b.onclick=()=>{S.ctx=b.dataset.v;renderSegs();sync()});
@@ -1828,6 +1829,8 @@ function verbHint(){
   const vs=['설명할 수 있다','추론할 수 있다','분석할 수 있다','비교할 수 있다','관찰할 수 있다','설계할 수 있다','해석할 수 있다','표현할 수 있다',
             '분류할 수 있다','이해할 수 있다','조사할 수 있다','예측할 수 있다','구할 수 있다','그릴 수 있다','해결할 수 있다','설명한다','도출한다','계획한다','탐구한다','적용할 수 있다'];
   const hit=vs.filter(x=>t.includes(x));
+  stdList().map(s=>s.t).filter(Boolean).forEach(s=>{if(vs.some(x=>s.includes(x)))return;
+    const m=s.replace(/[.\s]+$/,'').match(/([가-힣]+ 수 있다|[가-힣]+다)$/);if(m&&!hit.includes(m[1]))hit.push(m[1])});
   return hit.length?hit.join(' · '):'(성취기준을 적으면 서술어가 표시됩니다)';
 }
 function ivLine(){
@@ -1856,7 +1859,7 @@ function buildPrompt(){
   const stdBlock=sl.length?sl.map(s=>'  · '+(s.c?'['+s.c+'] ':'')+s.t).join('\n'):'  '+NA;
   const inqLines=[...(sci?S.inqs:[]).map(q=>'  · '+q),
     ...(sci?(S.inqEtcOn?S.inqEtc:[]):[]).map(x=>x.trim()).filter(Boolean).map(q=>'  · '+q+'  (교사가 직접 정한 활동)'),
-    ...(S.actText||'').split('\n').map(x=>x.trim()).filter(Boolean).map(q=>'  · '+q)];
+    ...(sci?'':(S.actText||'')).split('\n').map(x=>x.trim()).filter(Boolean).map(q=>'  · '+q)];
   const cvs=S.cvs.map(x=>x.trim()).filter(Boolean);
   const on=modsOn(), off=modsOff();
   const areas=sci?[...new Set(sciUnits().map(u=>u.a))]:[];
@@ -2041,7 +2044,7 @@ function buildClass(){
   const midLbl=S.typeEtc?((S.type||'활동').trim()||'활동'):S.type==='게임형'?'게임':S.type==='미션형'?'미션':'탐구';
   const plan=[['도입',intro],[midLbl,Math.max(1,t-intro-outro)],['정리',outro]];
   L.push('■ '+v(S.title,'(제목 미입력)')+'  —  수업 활용안');
-  L.push('  '+unitLine()+' / '+S.type+' / '+S.time+'분 / '+S.ctx);
+  L.push('  '+unitLine()+' / '+v(S.type,'(유형 미정)')+' / '+S.time+'분 / '+S.ctx);
   L.push('');
   L.push('■ 성취기준');
   L.push(sl.length?sl.map(s=>'  · '+(s.c?'['+s.c+'] ':'')+s.t).join('\n'):'  (미선택)');
@@ -2159,6 +2162,7 @@ $$('[data-k]').forEach(el=>{
 });
 const sx=$('#f_stdText_sci');
 if(sx)sx.addEventListener('input',()=>{S.stdText=sx.value;const g=$('#f_stdText');if(g)g.value=sx.value;renderCur();sync()});
+['#f_title','#f_goal'].forEach(id=>$(id).addEventListener('blur',applyAuto));
 $('#btnGoalAuto').onclick=()=>{S.goalAuto=1;S.titleAuto=S.titleAuto||!(S.title||'').trim()?1:S.titleAuto;applyAuto();sync();toast('성취기준 문장으로 되돌렸어요.')};
 $('#btnS3').onclick=()=>{S.s3open=S.s3open?0:1;renderS3sum();save();if(S.s3open)$('#s3').scrollIntoView({block:'start'})};
 let SIMPLE=true;
@@ -2228,7 +2232,7 @@ $('#btnDockAI').onclick=()=>openAI(lastAI,buildPrompt());
 $('#btnCopyClass').onclick=()=>copy(buildClass(),'수업 활용안을 복사했어요.');
 $('#btnTxt').onclick=()=>{dl(slug()+'_제작요청서.txt',buildPrompt());toast('저장했어요. 다운로드 폴더를 확인해 주세요.')};
 $('#btnMd').onclick=()=>{
-  const md='# '+v(S.title,'가상실험실')+' — 가상실험실 제작 요청서\n\n> '+unitLine()+' · '+S.type+' · '+S.time+'분\n\n```\n'+buildPrompt()+'\n```\n';
+  const md='# '+v(S.title,'가상실험실')+' — 가상실험실 제작 요청서\n\n> '+unitLine()+' · '+v(S.type,'(유형 미정)')+' · '+S.time+'분\n\n```\n'+buildPrompt()+'\n```\n';
   dl(slug()+'_제작요청서.md',md);toast('저장했어요. 다운로드 폴더를 확인해 주세요.')};
 $('#btnExport').onclick=()=>{dl(slug()+'_작업파일.json',JSON.stringify(S,null,2));
   toast('작업 파일을 저장했어요. 다음에 열어서 이어 쓸 수 있어요.')};
@@ -2236,12 +2240,13 @@ $('#btnImport').onclick=()=>$('#fileIn').click();
 $('#fileIn').onchange=e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=()=>{try{const o=JSON.parse(r.result);
+  r.onload=()=>{const prev=S;try{const o=JSON.parse(r.result);
+    if(!o||typeof o!=='object'||Array.isArray(o)||!('stds' in o||'subj' in o))throw new Error('not studio file');
     S=Object.assign(JSON.parse(JSON.stringify(BLANK)),o);
     if(o.title&&o.titleAuto===undefined)S.titleAuto=0; if(o.goal&&o.goalAuto===undefined)S.goalAuto=0;
     if(!SUBJECTS.includes(S.subj))S.subj='과학'; if(!Array.isArray(S.qs))S.qs=['','',''];
     refreshAll();toast('작업 파일을 불러왔어요.')}
-    catch(err){toast('파일을 읽지 못했어요. 이 도구에서 내보낸 .json인지 확인해 주세요.')}};
+    catch(err){S=prev;try{refreshAll()}catch(e){}toast('파일을 읽지 못했어요. 이 도구에서 내보낸 .json인지 확인해 주세요.')}};
   r.readAsText(f); e.target.value='';
 };
 $('#btnPrint').onclick=()=>{window.print()};
@@ -2301,7 +2306,7 @@ function askSeed(){
   const L=[];
   L.push('■ 수업 정보');
   L.push('  대상 : '+unitLine());
-  L.push('  조건 : '+S.type+' / 수업 '+S.time+'분'+(S.ctx?' / '+S.ctx:''));
+  L.push('  조건 : '+v(S.type,'(유형 미정)')+' / 수업 '+S.time+'분'+(S.ctx?' / '+S.ctx:''));
   if(t)L.push('  만들려는 가상실험실 : '+t);
   if((S.goal||'').trim())L.push('  학습 목표 : '+S.goal.trim().replace(/\n/g,' / '));
   if(sl.length){L.push('■ 성취기준'); sl.forEach(s=>L.push('  '+(s.c?'['+s.c+'] ':'')+s.t))}
@@ -2458,7 +2463,7 @@ function buildQuick(){
   const subj=subjIn||'(과목은 교사가 적은 내용에서 추정)';
   const lv=QK.lvl==='초'?'초등학교':QK.lvl==='고'?'고등학교':'중학교';
   const sci=qkSubjIsSci();
-  const gradeTxt=QK.lvl?(lv+(QK.gradeN?' '+QK.gradeN:'')):'';
+  const gradeTxt=QK.lvl?(lv+(QK.gradeN?' '+QK.gradeN:'')):(QK.gradeN||'');
   const typeTxt=QK.type?QK.type+' ('+(TYPES.find(t=>t[0]===QK.type)||['',''])[1]+')':'';
   const errs=sci?errListFor('과학',[...new Set(QK.stds.map(s=>(unitOf(s.c)||{}).a).filter(Boolean))]):errListFor(subjIn,[]);
   const L=[];
@@ -2540,7 +2545,7 @@ $('#btnQkToFull').onclick=()=>{
   if(!subjIn||subjIn==='과학'||subjIn.includes('과학'))S.subj='과학';
   else if(SUBJECTS.includes(subjIn))S.subj=subjIn;
   else {S.subj='직접 입력';S.subjEtc=subjIn}
-  if(isSci()){S.grade=QK.lvl==='고'?10:(QK.gradeN?parseInt(QK.gradeN,10)||2:2);S.stds=QK.stds.map(s=>s.c).filter(c=>stdOf(c));
+  if(isSci()){S.grade=QK.lvl==='고'?10:(QK.gradeN&&QK.lvl!=='초'?parseInt(QK.gradeN,10)||2:2);S.stds=QK.stds.map(s=>s.c).filter(c=>stdOf(c));
     const u=S.stds.length?unitOf(S.stds[0]):null; if(u&&u.g!==10){S.grade=u.g;S.area=u.a}}
   else {S.lvl=QK.lvl||'중';S.gradeN=QK.gradeN?parseInt(QK.gradeN,10)||1:(S.lvl==='초'?3:2)}
   if(QK.type)S.type=QK.type; if(QK.time)S.time=QK.time.replace('분','');
