@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>송쌤과학 가상실험실 프롬프트 스튜디오 (교사용)</title>
 <meta name="description" content="모든 과목의 선생님이 성취기준에서 출발해, 생성형 AI에 바로 넣을 수 있는 가상실험실(상호작용 학습 도구) 제작 프롬프트를 완성하는 교사용 도구">
-<meta name="version" content="2.0 · 2026-10-07">
+<meta name="version" content="2.1 · 2026-11-11">
+<meta name="theme-color" content="#0F6FB8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F6FB8'/%3E%3Cpath d='M25 14v14L14 46a5 5 0 0 0 4 8h28a5 5 0 0 0 4-8L39 28V14' fill='none' stroke='%23FFB7B2' stroke-width='4.5' stroke-linejoin='round'/%3E%3Cpath d='M21 38h22' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
@@ -14,181 +15,214 @@
 /* ══════════ 토큰 ══════════ */
 :root{
   --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:32px;--sp8:40px;--sp9:48px;
-  --r1:6px;--r2:10px;--r3:16px;--r4:24px;
-  --brand-pink:#FFB7B2; --brand-blue:#0F6FB8;
+  --r1:8px;--r2:12px;--r3:18px;--r4:26px;
+  --brand-pink:#FFB7B2; --pink-tx:#2A1512; --brand-blue:#0F6FB8;
   --ph:#0072B2; --ch:#E69F00; --bi:#009E73; --ea:#56B4E9; --cv:#CC79A7;
   --font-t:'Wanted Sans Variable','Wanted Sans','Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   --font-b:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-  --dur:.22s; --ease:cubic-bezier(.2,.7,.3,1);
-  --h-header:60px;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+  --dur:.2s; --ease:cubic-bezier(.2,.7,.3,1);
+  --h-header:58px; --h-rail:67px;
 }
 :root{
-  --bg:#F5F7FA; --bg2:#EDF1F6; --surf:#FFFFFF; --surf2:#F7F9FC; --line:#DDE4EC; --line2:#C5D0DC;
-  --tx:#16202B; --tx2:#4C5A6B; --tx3:#77869A;
-  --acc:#0F6FB8; --acc-fill:#0F6FB8; --acc-tx:#fff;
-  --ok:#137F5B; --warn:#A26907; --bad:#C0392B;
-  --tint:rgba(15,111,184,.09); --scrim:rgba(20,30,44,.42);
-  --sh1:0 1px 2px rgba(20,35,55,.10); --sh2:0 8px 24px rgba(20,35,55,.12); --sh3:0 20px 56px rgba(20,35,55,.18);
+  --bg:#F3F6FA; --bg2:#E9EEF5; --surf:#FFFFFF; --surf2:#F6F9FC; --line:#D9E1EA; --line2:#BECAD8;
+  --tx:#14202C; --tx2:#455468; --tx3:#5B6B7D;
+  --acc:#0C63A6; --acc-fill:#0F6FB8; --acc-tx:#fff; --acc-deep:#0A4C82;
+  --ok:#137F5B; --on-ok:#fff; --warn:#8F5E05; --on-warn:#fff; --warn-bg:#FFF4DA; --bad:#C0392B;
+  --tint:rgba(15,111,184,.09); --tint2:rgba(15,111,184,.17); --scrim:rgba(20,30,44,.42);
+  --sh1:0 1px 2px rgba(20,35,55,.08); --sh2:0 10px 28px rgba(20,35,55,.11); --sh3:0 22px 60px rgba(20,35,55,.18);
   color-scheme:light;
 }
 @media(prefers-color-scheme:dark){:root:not([data-t="light"]){
-  --bg:#0D1117; --bg2:#131A23; --surf:#171F2A; --surf2:#1E2836; --line:#28323F; --line2:#37455A;
-  --tx:#E6EDF5; --tx2:#A8B6C7; --tx3:#7A8899;
-  --acc:#4FA8E8; --acc-fill:#1276C4; --acc-tx:#fff;
-  --ok:#3FBF8F; --warn:#E0A33A; --bad:#E5736B;
-  --tint:rgba(79,168,232,.12); --scrim:rgba(6,10,15,.66);
-  --sh1:0 1px 2px rgba(0,0,0,.28); --sh2:0 8px 24px rgba(0,0,0,.34); --sh3:0 20px 56px rgba(0,0,0,.46);
+  --bg:#0C1117; --bg2:#121A23; --surf:#161F2A; --surf2:#1C2734; --line:#27323F; --line2:#3A485B;
+  --tx:#E6EDF5; --tx2:#AAB8C8; --tx3:#93A2B3;
+  --acc:#62B4EE; --acc-fill:#1276C4; --acc-tx:#fff; --acc-deep:#0C3D66;
+  --ok:#43C795; --on-ok:#04140E; --warn:#E9B24A; --on-warn:#1B1300; --warn-bg:rgba(233,178,74,.13); --bad:#E5736B;
+  --tint:rgba(98,180,238,.12); --tint2:rgba(98,180,238,.22); --scrim:rgba(6,10,15,.66);
+  --sh1:0 1px 2px rgba(0,0,0,.3); --sh2:0 10px 28px rgba(0,0,0,.36); --sh3:0 22px 60px rgba(0,0,0,.5);
   color-scheme:dark;
 }}
 html[data-t="dark"]{
-  --bg:#0D1117; --bg2:#131A23; --surf:#171F2A; --surf2:#1E2836; --line:#28323F; --line2:#37455A;
-  --tx:#E6EDF5; --tx2:#A8B6C7; --tx3:#7A8899;
-  --acc:#4FA8E8; --acc-fill:#1276C4; --acc-tx:#fff;
-  --ok:#3FBF8F; --warn:#E0A33A; --bad:#E5736B;
-  --tint:rgba(79,168,232,.12); --scrim:rgba(6,10,15,.66);
-  --sh1:0 1px 2px rgba(0,0,0,.28); --sh2:0 8px 24px rgba(0,0,0,.34); --sh3:0 20px 56px rgba(0,0,0,.46);
+  --bg:#0C1117; --bg2:#121A23; --surf:#161F2A; --surf2:#1C2734; --line:#27323F; --line2:#3A485B;
+  --tx:#E6EDF5; --tx2:#AAB8C8; --tx3:#93A2B3;
+  --acc:#62B4EE; --acc-fill:#1276C4; --acc-tx:#fff; --acc-deep:#0C3D66;
+  --ok:#43C795; --on-ok:#04140E; --warn:#E9B24A; --on-warn:#1B1300; --warn-bg:rgba(233,178,74,.13); --bad:#E5736B;
+  --tint:rgba(98,180,238,.12); --tint2:rgba(98,180,238,.22); --scrim:rgba(6,10,15,.66);
+  --sh1:0 1px 2px rgba(0,0,0,.3); --sh2:0 10px 28px rgba(0,0,0,.36); --sh3:0 22px 60px rgba(0,0,0,.5);
   color-scheme:dark;
 }
 html[data-t="light"]{
-  --bg:#F5F7FA; --bg2:#EDF1F6; --surf:#FFFFFF; --surf2:#F7F9FC; --line:#DDE4EC; --line2:#C5D0DC;
-  --tx:#16202B; --tx2:#4C5A6B; --tx3:#77869A;
-  --acc:#0F6FB8; --acc-fill:#0F6FB8; --acc-tx:#fff;
-  --ok:#137F5B; --warn:#A26907; --bad:#C0392B;
-  --tint:rgba(15,111,184,.09); --scrim:rgba(20,30,44,.42);
-  --sh1:0 1px 2px rgba(20,35,55,.10); --sh2:0 8px 24px rgba(20,35,55,.12); --sh3:0 20px 56px rgba(20,35,55,.18);
+  --bg:#F3F6FA; --bg2:#E9EEF5; --surf:#FFFFFF; --surf2:#F6F9FC; --line:#D9E1EA; --line2:#BECAD8;
+  --tx:#14202C; --tx2:#455468; --tx3:#5B6B7D;
+  --acc:#0C63A6; --acc-fill:#0F6FB8; --acc-tx:#fff; --acc-deep:#0A4C82;
+  --ok:#137F5B; --on-ok:#fff; --warn:#8F5E05; --on-warn:#fff; --warn-bg:#FFF4DA; --bad:#C0392B;
+  --tint:rgba(15,111,184,.09); --tint2:rgba(15,111,184,.17); --scrim:rgba(20,30,44,.42);
+  --sh1:0 1px 2px rgba(20,35,55,.08); --sh2:0 10px 28px rgba(20,35,55,.11); --sh3:0 22px 60px rgba(20,35,55,.18);
   color-scheme:light;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--font-b);
-  font-size:15px;line-height:1.62;-webkit-text-size-adjust:100%;
-  font-variant-numeric:tabular-nums;letter-spacing:-.01em;word-break:keep-all;overflow-wrap:break-word}
-h1,h2,h3,h4{font-family:var(--font-t);font-weight:700;letter-spacing:-.025em;margin:0;line-height:1.32}
-button,input,select,textarea{font:inherit;color:inherit;font-variant-numeric:tabular-nums}
+  font-size:15px;line-height:1.6;font-variant-numeric:tabular-nums;letter-spacing:-.012em;
+  word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,h4{font-family:var(--font-t);font-weight:700;letter-spacing:-.028em;margin:0;line-height:1.3}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit;font-variant-numeric:tabular-nums}
+button{cursor:pointer}
 a{color:var(--acc)}
-:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:var(--r1)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:6px}
 ::selection{background:var(--acc-fill);color:#fff}
 [hidden]{display:none !important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* ══════════ 헤더 ══════════ */
-header{position:sticky;top:0;z-index:40;height:var(--h-header);display:flex;align-items:center;
-  gap:var(--sp3);padding:0 var(--sp5);background:color-mix(in srgb,var(--bg) 86%,transparent);
+/* ══════════ 머리 ══════════ */
+header.top{position:sticky;top:0;z-index:40;height:var(--h-header);display:flex;align-items:center;
+  gap:var(--sp3);padding:0 var(--sp5);background:color-mix(in srgb,var(--surf) 88%,transparent);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-@supports not (backdrop-filter:blur(1px)){header{background:var(--bg)}}
-.logo{display:flex;align-items:center;gap:var(--sp2);font-family:var(--font-t);font-weight:800;
-  font-size:13px;background:var(--brand-pink);color:#2A1512;padding:5px 11px;border-radius:999px;flex:none}
+@supports not (backdrop-filter:blur(1px)){header.top{background:var(--surf)}}
+.logo{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-t);font-weight:800;
+  font-size:13px;background:var(--brand-pink);color:var(--pink-tx);padding:5px 12px 5px 10px;border-radius:999px;flex:none}
 .logo svg{width:15px;height:15px}
-.htitle{font-size:15px;font-weight:700;font-family:var(--font-t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.htitle b{color:var(--acc)}
-.hsp{flex:1}
-.hbtns{display:flex;gap:var(--sp1);align-items:center;flex:none}
-.ico{width:40px;height:40px;min-width:40px;display:grid;place-items:center;border:1px solid transparent;
-  background:transparent;border-radius:var(--r2);cursor:pointer;color:var(--tx2);transition:var(--dur) var(--ease)}
-.ico:hover{background:var(--surf2);color:var(--tx);border-color:var(--line)}
-.ico svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:var(--r2);
-  border:1px solid var(--line2);background:var(--surf);color:var(--tx);font-size:13.5px;font-weight:600;
-  cursor:pointer;white-space:nowrap;transition:var(--dur) var(--ease)}
-.pill:hover{background:var(--surf2);border-color:var(--acc)}
-.pill svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.pill.pri{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx)}
-.pill.pri:hover{filter:brightness(1.1)}
-.pill.sm{height:34px;padding:0 12px;font-size:12.5px}
-.pill.sm svg{width:15px;height:15px}
-.pill.danger:hover{border-color:var(--bad);color:var(--bad)}
-.pill.quick{background:var(--brand-blue);border-color:var(--brand-blue);color:#fff}
-.pill.quick:hover{filter:brightness(1.12);border-color:var(--brand-blue)}
-.pill.ask{background:var(--brand-pink);border-color:var(--brand-pink);color:#2A1512}
-.pill.ask:hover{filter:brightness(1.05);border-color:var(--brand-pink)}
-.pill:disabled{opacity:.5;cursor:not-allowed}
-@media(max-width:1180px){.pill#btnGuide .lbtxt,.pill#btnReset .lbtxt{display:none}}
-@media(max-width:980px){.pill.quick .lbtxt{display:none}}
-@media(max-width:760px){.pill.ask .lbtxt{display:none}}
 .logo b{font-weight:800}
-.hbtns{max-width:100%;overflow-x:auto;scrollbar-width:none}
-.hbtns::-webkit-scrollbar{display:none}
-@media(max-width:600px){.logo b{display:none}.logo{padding:5px 8px}.pill#btnGuide{display:none}header{gap:var(--sp2);padding:0 var(--sp3)}}
-@media(max-width:480px){.hbtns .pill{padding:0 10px}.hbtns .ico{width:38px;min-width:38px}#btnImport{display:none}}
+.htitle{font-size:15.5px;font-weight:700;font-family:var(--font-t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.htitle b{margin-left:6px;font-size:11.5px;font-weight:700;color:var(--acc);background:var(--tint);
+  padding:3px 8px;border-radius:999px;vertical-align:1px}
+.hsp{flex:1}
+.hbtns{display:flex;gap:6px;align-items:center;flex:none;max-width:100%}
+.hdiv{width:1px;height:22px;background:var(--line);margin:0 2px;flex:none}
+.ico{width:40px;height:40px;min-width:40px;display:grid;place-items:center;border:1px solid transparent;
+  background:transparent;border-radius:var(--r2);color:var(--tx2);transition:var(--dur) var(--ease)}
+.ico:hover{background:var(--bg2);color:var(--tx)}
+.ico svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* ══════════ 레이아웃 ══════════ */
-.wrap{max-width:1500px;margin:0 auto;padding:var(--sp6) var(--sp5) 96px;
-  display:grid;grid-template-columns:minmax(0,1fr) 384px;gap:var(--sp6);align-items:start}
-@media(max-width:1180px){.wrap{grid-template-columns:minmax(0,1fr);padding-bottom:132px}.side{position:static !important;max-height:none !important}}
+/* 단추 */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 15px;border-radius:13px;
+  border:1.5px solid var(--line2);background:var(--surf);color:var(--tx);font-size:14px;font-weight:700;
+  white-space:nowrap;transition:var(--dur) var(--ease)}
+.pill:hover{border-color:var(--acc);background:var(--tint)}
+.pill svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.pill.pri{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx)}
+.pill.pri:hover{filter:brightness(1.08);background:var(--acc-fill)}
+.pill.go{min-height:50px;font-family:var(--font-t);font-size:15px;box-shadow:0 8px 20px rgba(15,111,184,.26)}
+.pill.go:hover{transform:translateY(-1px)}
+.pill.go:active{transform:none}
+.pill.sm{min-height:38px;padding:0 12px;font-size:13px;border-radius:11px}
+.pill.sm svg{width:15px;height:15px}
+.pill:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:none;box-shadow:none}
+header.top .pill{min-height:40px;padding:0 13px;font-size:13.5px;border-radius:12px;border-width:1px}
+.pill.quick{background:var(--acc-fill);border-color:var(--acc-fill);color:#fff}
+.pill.quick:hover{filter:brightness(1.1);background:var(--acc-fill);border-color:var(--acc-fill)}
+.pill.ask{background:var(--brand-pink);border-color:var(--brand-pink);color:var(--pink-tx)}
+.pill.ask:hover{filter:brightness(1.04);background:var(--brand-pink);border-color:var(--brand-pink)}
+@media(max-width:1040px){.pill#btnEx .lbtxt{display:none}}
+@media(max-width:900px){.pill.ask .lbtxt{display:none}}
+@media(max-width:760px){.htitle{display:none}}
+@media(max-width:560px){.pill.quick .lbtxt{display:none}.logo b{display:none}.logo{padding:5px 8px}
+  header.top{gap:var(--sp2);padding:0 var(--sp3)}.hbtns{gap:3px}.hdiv{display:none}
+  header.top .pill{padding:0 11px}.hbtns .ico{width:38px;min-width:38px}}
 
-/* 인트로 */
-.intro{margin-bottom:var(--sp5)}
-.intro h1{font-size:clamp(23px,3vw,32px);margin-bottom:var(--sp2)}
-.intro h1 em{font-style:normal;color:var(--acc)}
-.lead{color:var(--tx2);font-size:14.5px;max-width:78ch;margin:0 0 var(--sp4)}
-.lead b{color:var(--tx);font-weight:600}
-.path{display:flex;flex-wrap:wrap;gap:var(--sp2);align-items:center}
-.path span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--tx2);
-  background:var(--surf);border:1px solid var(--line);padding:5px 11px;border-radius:999px}
-.path span i{font-style:normal;width:18px;height:18px;border-radius:50%;background:var(--tint);color:var(--acc);
-  display:grid;place-items:center;font-size:11px;font-weight:700}
-.path u{text-decoration:none;color:var(--tx3);font-size:14px}
+/* ══════════ 첫머리 ══════════ */
+.hero{position:relative;overflow:hidden;color:#fff;background:
+  radial-gradient(900px 260px at 88% -40%,rgba(255,183,178,.30),transparent 62%),
+  linear-gradient(118deg,#0A4C82,#0F6FB8 58%,#1876BE)}
+.hero-in{max-width:1500px;margin:0 auto;padding:17px var(--sp5) 19px;display:flex;align-items:flex-end;gap:var(--sp6);position:relative}
+.eyebrow{margin:0 0 6px;font-family:var(--font-t);font-size:11.5px;font-weight:700;letter-spacing:.14em;opacity:.8}
+.hero h1{font-size:clamp(21px,2.5vw,29px);font-weight:800;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,rgba(255,183,178,.55) 62%);padding:0 2px}
+.lead{margin:7px 0 0;font-size:14.5px;opacity:.93;max-width:720px}
+.lead b{font-weight:700}
+.flow{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none;font-size:12.5px;font-weight:600}
+.flow span{padding:6px 12px;border-radius:999px;background:rgba(6,40,72,.34);border:1px solid rgba(255,255,255,.3);white-space:nowrap}
+.flow i{font-style:normal;opacity:.6}
+.hero::after{content:"";position:absolute;right:-40px;bottom:-70px;width:220px;height:220px;border-radius:44px;
+  border:1.5px solid rgba(255,255,255,.16);transform:rotate(18deg);pointer-events:none}
+@media(max-width:1180px){.flow{display:none}}
+
+/* ══════════ 단계 줄 ══════════ */
+.rail{position:sticky;top:var(--h-header);z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.rail-in{max-width:1500px;margin:0 auto;padding:9px var(--sp5);display:flex;gap:var(--sp2);align-items:center;
+  overflow-x:auto;scrollbar-width:none}
+.rail-in::-webkit-scrollbar{display:none}
+.rail button[data-s]{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:10px;height:48px;padding:6px 12px 6px 8px;
+  border-radius:14px;border:1px solid var(--line);background:var(--surf);color:var(--tx2);text-align:left;
+  transition:var(--dur) var(--ease)}
+.rail button[data-s]:hover{border-color:var(--line2);color:var(--tx)}
+.rail button[data-s] i{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-style:normal;
+  font-family:var(--font-t);font-weight:800;font-size:14px;background:var(--bg2);color:var(--tx3)}
+.rail button[data-s] span{min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.rail button[data-s] b{font-family:var(--font-t);font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail button[data-s] small{font-size:11.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail button.done i{background:color-mix(in srgb,var(--ok) 16%,var(--surf));color:var(--ok)}
+.rail button[aria-current="true"]{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx);box-shadow:var(--sh2)}
+.rail button[aria-current="true"] i{background:rgba(255,255,255,.2);color:#fff}
+.rail button[aria-current="true"] small{color:#fff;opacity:.9}
+.rail-mode{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px;border-radius:14px;background:var(--bg2);margin-left:var(--sp2)}
+.rail-mode button{min-height:40px;padding:0 13px;border:0;border-radius:10px;background:transparent;font-size:13px;font-weight:700;
+  color:var(--tx2);white-space:nowrap;transition:var(--dur) var(--ease)}
+.rail-mode button[aria-pressed="true"]{background:var(--surf);color:var(--tx);box-shadow:var(--sh1)}
+body.simple .opt{display:none !important}
+body.simple .row.c4{grid-template-columns:repeat(3,1fr)}
+@media(max-width:760px){
+  :root{--h-rail:61px}
+  .rail-in{padding:8px var(--sp3);gap:6px}
+  .rail button[data-s]{flex:none;height:44px;padding:6px 11px 6px 6px;gap:7px;border-radius:12px}
+  .rail button[data-s] i{width:28px;height:28px;border-radius:9px;font-size:13px}
+  .rail button[data-s] b{font-size:13.5px}
+  .rail button[data-s] small{display:none}
+  .rail-mode{margin-left:auto}
+  .rail-mode button{min-height:36px;padding:0 10px;font-size:12.5px}
+}
+@media(max-width:560px){
+  .rail button[data-s]{padding:6px;gap:0}
+  .rail button[data-s] span{display:none}
+  .rail button[data-s][aria-current="true"]{padding:6px 12px 6px 6px;gap:7px}
+  .rail button[data-s][aria-current="true"] span{display:flex}
+}
+@media(max-width:350px){
+  .rail button[data-s][aria-current="true"]{padding:6px;gap:0}
+  .rail button[data-s][aria-current="true"] span{display:none}
+  .rail-in{gap:4px;padding:8px 10px}
+  .rail-mode button{padding:0 8px}
+}
+
+/* ══════════ 큰 틀 ══════════ */
+.wrap{max-width:1500px;margin:0 auto;padding:var(--sp5) var(--sp5) 96px;
+  display:grid;grid-template-columns:minmax(0,1fr) 396px;gap:var(--sp5);align-items:start}
+main{min-width:0}
+@media(max-width:1180px){.wrap{grid-template-columns:minmax(0,1fr);padding-bottom:132px}.side{display:none !important}}
 
 /* 예시 카드 (모달 안) */
 .exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:var(--sp3)}
-.ex{position:relative;text-align:left;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r3);
-  padding:var(--sp4) var(--sp4) var(--sp3);cursor:pointer;transition:var(--dur) var(--ease);overflow:hidden;color:inherit}
-.ex::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--k)}
+.ex{position:relative;text-align:left;background:var(--surf);border:1.5px solid var(--line);border-radius:16px;
+  padding:var(--sp4) var(--sp4) var(--sp3);transition:var(--dur) var(--ease);overflow:hidden;color:inherit}
+.ex::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--k)}
 .ex:hover{border-color:var(--k);transform:translateY(-2px);box-shadow:var(--sh2)}
-.ex .tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:var(--k);
-  background:color-mix(in srgb,var(--k) 14%,transparent);padding:3px 9px;border-radius:999px;margin-bottom:var(--sp2)}
+.ex .tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:var(--tx);
+  background:color-mix(in srgb,var(--k) 16%,transparent);padding:3px 9px;border-radius:999px;margin-bottom:var(--sp2)}
 .ex h3{font-size:15px;margin-bottom:6px;line-height:1.4}
 .ex .code{font-size:11.5px;color:var(--tx3);font-weight:600;margin-bottom:var(--sp2)}
 .ex p{margin:0;font-size:13px;color:var(--tx2);line-height:1.55}
-.ex .meta{display:flex;gap:var(--sp2);flex-wrap:wrap;margin-top:var(--sp3);padding-top:var(--sp3);border-top:1px solid var(--line)}
-.ex .meta b{font-size:11.5px;font-weight:600;color:var(--tx3);background:var(--surf);padding:2px 8px;border-radius:var(--r1)}
-@media(max-width:1280px){.pill#btnEx .lbtxt{display:none}}
+.ex .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:var(--sp3);padding-top:var(--sp3);border-top:1px solid var(--line)}
+.ex .meta b{font-size:11.5px;font-weight:600;color:var(--tx2);background:var(--bg2);padding:2px 8px;border-radius:999px}
 
-/* ══════════ 스텝 ══════════ */
-.rail{position:sticky;top:var(--h-header);z-index:30;display:flex;gap:var(--sp1);overflow-x:auto;
-  background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);padding:var(--sp3) 0;margin:0 0 var(--sp4);
-  border-bottom:1px solid var(--line);scrollbar-width:thin}
-.rail button{flex:none;display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;
-  border:1px solid var(--line);background:var(--surf);color:var(--tx2);font-size:13px;font-weight:600;
-  cursor:pointer;transition:var(--dur) var(--ease);white-space:nowrap}
-.rail button:hover{border-color:var(--line2);color:var(--tx)}
-.rail button[aria-current="true"]{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx)}
-.rail button i{font-style:normal;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;
-  font-size:11px;font-weight:700;background:var(--bg2);color:var(--tx3)}
-.rail button[aria-current="true"] i{background:rgba(255,255,255,.22);color:#fff}
-.rail button.done i{background:var(--ok);color:#04140E}
-.rail-mode{margin-left:auto;display:flex;align-items:center;gap:var(--sp1);padding-left:var(--sp3);flex:none}
-.rail-mode button.rail-reset{border-color:var(--line);color:var(--tx3);background:var(--surf);font-weight:600}
-.rail-mode button.rail-reset::before{content:"🗑";margin-right:2px}
-.rail-mode button.rail-reset:hover{border-color:var(--bad);color:var(--bad)}
-.rail-mode button{border-color:var(--acc);color:var(--acc);background:var(--tint);font-weight:700}
-.rail-mode button::before{content:"⚡";margin-right:2px}
-.rail-mode button[aria-pressed="false"]{border-color:var(--line);color:var(--tx2);background:var(--surf)}
-.rail-mode button[aria-pressed="false"]::before{content:"⚙"}
-.modehint{margin:0 0 var(--sp4);font-size:12.5px;color:var(--tx3);line-height:1.55}
-.modehint b{color:var(--tx2);font-weight:600}
-body.simple .opt{display:none !important}
-body.simple .row.c4{grid-template-columns:repeat(3,1fr)}
-@media(max-width:640px){body.simple .row.c4{grid-template-columns:1fr}}
-
-section.step{background:var(--surf);border:1px solid var(--line);border-radius:var(--r3);
-  padding:var(--sp6);margin-bottom:var(--sp5);scroll-margin-top:124px}
-.sh{display:flex;align-items:flex-start;gap:var(--sp3);margin-bottom:var(--sp5);
-  padding-bottom:var(--sp4);border-bottom:1px solid var(--line)}
-.sh .n{flex:none;width:30px;height:30px;border-radius:var(--r2);background:var(--acc-fill);color:var(--acc-tx);
+/* ══════════ 단계 카드 ══════════ */
+section.step{background:var(--surf);border:1px solid var(--line);border-radius:var(--r3);box-shadow:var(--sh1);
+  padding:var(--sp5) var(--sp6) var(--sp6);margin-bottom:var(--sp4);scroll-margin-top:calc(var(--h-header) + var(--h-rail) + 12px)}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:var(--sp5)}
+.sh .n{flex:none;width:30px;height:30px;border-radius:10px;background:var(--acc-fill);color:var(--acc-tx);
   display:grid;place-items:center;font-family:var(--font-t);font-weight:800;font-size:14px}
-.sh h2{font-size:19px;margin-bottom:3px}
-.sh h2 small{font-size:12px;font-weight:600;color:var(--tx3);margin-left:6px;vertical-align:middle;background:var(--bg2);padding:2px 8px;border-radius:999px}
-.sh p{margin:0;font-size:13px;color:var(--tx3);line-height:1.5}
-.sh .sh-act{margin-left:auto;align-self:center;flex:none}
+.sh h2{font-size:18px;font-weight:800;white-space:nowrap}
+.sh h2 small{font-size:11.5px;font-weight:700;color:var(--tx3);margin-left:6px;vertical-align:2px;background:var(--bg2);padding:2px 8px;border-radius:999px}
+.sh .sub{margin:0 0 0 auto;font-size:12.5px;color:var(--tx3);text-align:right;line-height:1.45}
+.sh .sh-act{flex:none;margin-left:var(--sp2)}
+@media(max-width:760px){.sh{flex-wrap:wrap}.sh .sub{flex-basis:100%;order:3;margin:0;text-align:left}.sh .sh-act{margin-left:auto}}
 
 /* 접힌 3단계 */
-.fold-sum{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:13px;color:var(--tx2);line-height:1.5}
-.fold-sum b{color:var(--tx);font-weight:600}
-.fold-sum .chipk{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);font-size:12.5px}
+.fold-sum{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:13px;color:var(--tx2);line-height:1.5}
+.fold-sum b{color:var(--tx);font-weight:700}
+.fold-sum .chipk{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:var(--surf2);border:1px solid var(--line);font-size:12.5px}
 body.simple #s3.fold .sbody{display:none}
-body.simple #s3.fold .sh{margin-bottom:var(--sp3);padding-bottom:var(--sp3);border-bottom:0}
+body.simple #s3.fold .sh{margin-bottom:var(--sp3)}
 #s3:not(.fold) .fold-sum{display:none}
 body:not(.simple) #s3 .fold-sum{display:none}
 body:not(.simple) #s3 .sbody{display:block}
@@ -196,211 +230,295 @@ body:not(.simple) #s3 .sh-act{display:none}
 
 .fg{margin-bottom:var(--sp5)}
 .fg:last-child{margin-bottom:0}
-label.lb{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px;color:var(--tx)}
+label.lb{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:var(--tx2)}
 label.lb em{font-style:normal;color:var(--bad);margin-left:3px}
-label.lb span{font-weight:400;color:var(--tx3);font-size:12.5px;margin-left:6px}
+label.lb span{font-weight:500;color:var(--tx3);font-size:12.5px;margin-left:6px}
 .autob{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--ok);
-  background:color-mix(in srgb,var(--ok) 14%,transparent);padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
-.hint{font-size:12.5px;color:var(--tx3);margin:6px 0 0;line-height:1.55}
+  background:color-mix(in srgb,var(--ok) 13%,transparent);padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+label.lb span.autob{font-size:11px;font-weight:700;color:var(--ok)}
+.hint{font-size:12.5px;color:var(--tx3);margin:7px 0 0;line-height:1.55}
+.hint b{color:var(--tx2);font-weight:600}
 .hint code{background:var(--bg2);padding:1px 5px;border-radius:4px;font-size:11.5px;color:var(--tx2)}
 .hint .mini{margin-left:6px}
-input[type=text],input[type=number],select,textarea{width:100%;background:var(--bg2);color:var(--tx);
-  border:1px solid var(--line);border-radius:var(--r2);padding:10px 12px;font-size:14px;
+input[type=text],input[type=number],select,textarea{width:100%;min-height:44px;background:var(--surf2);color:var(--tx);
+  border:1.5px solid var(--line);border-radius:var(--r2);padding:9px 13px;font-size:14.5px;
   transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease)}
 input:hover,select:hover,textarea:hover{border-color:var(--line2)}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);background:var(--surf2);
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);background:var(--surf);
   box-shadow:0 0 0 3px var(--tint)}
-input::placeholder,textarea::placeholder{color:var(--tx3);opacity:.75}
-textarea{min-height:82px;resize:vertical;line-height:1.6}
-textarea.sm{min-height:58px}
-select{cursor:pointer;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--tx3) 50%),linear-gradient(135deg,var(--tx3) 50%,transparent 50%);
-  background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:34px}
+input::placeholder,textarea::placeholder{color:var(--tx3);opacity:.85}
+textarea{min-height:86px;resize:vertical;line-height:1.55}
+textarea.sm{min-height:62px}
+select{cursor:pointer;appearance:none;-webkit-appearance:none;padding-right:38px;text-overflow:ellipsis;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237E909C' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 6l4.5 4.5L12.5 6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;background-size:14px}
 .row{display:grid;gap:var(--sp3)}
 .row.c2{grid-template-columns:1fr 1fr}
 .row.c3{grid-template-columns:1fr 1fr 1fr}
 .row.c4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:640px){.row.c2,.row.c3,.row.c4{grid-template-columns:1fr}}
-details.sub{border:1px dashed var(--line2);border-radius:var(--r2);padding:8px 12px;margin-top:var(--sp3)}
-details.sub summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--tx2)}
+.row>.fg{margin-bottom:0}
+.row.dv2{grid-template-columns:minmax(0,1fr) minmax(150px,26%)}
+.mf{display:grid;gap:4px;min-width:0}
+.mf>span{font-size:11.5px;font-weight:700;color:var(--tx3);padding-left:2px}
+.mf.in{position:relative;display:block}
+.mf.in>span{position:absolute;left:13px;top:50%;transform:translateY(-50%);padding:0;pointer-events:none}
+.mf.in>input{padding-left:46px}
+@media(max-width:960px){.row.c3{grid-template-columns:1fr}.row.c3>.fg+.fg{margin-top:var(--sp2)}}
+@media(max-width:640px){.row.c2{grid-template-columns:1fr}.row.c4{grid-template-columns:1fr 1fr}.row.dv2{grid-template-columns:minmax(0,1fr) 112px}}
+details.sub{border:1px dashed var(--line2);border-radius:var(--r2);padding:4px 13px;margin-top:var(--sp3)}
+details.sub summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--tx2);padding:9px 0}
+details.sub[open]{padding-bottom:12px}
 details.sub[open] summary{margin-bottom:8px}
+.gsub{margin:var(--sp6) 0 var(--sp3);font-size:14.5px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.gsub small{font-family:var(--font-b);font-size:12.5px;font-weight:500;color:var(--tx3);letter-spacing:-.012em}
 
 /* 세그먼트 */
-.seg{display:flex;flex-wrap:wrap;gap:var(--sp2)}
-.seg button{padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);
-  color:var(--tx2);font-size:13.5px;font-weight:600;cursor:pointer;transition:var(--dur) var(--ease);min-height:40px}
+.seg{display:flex;flex-wrap:wrap;gap:7px}
+.seg button{min-height:40px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);
+  color:var(--tx2);font-size:13.5px;font-weight:600;transition:var(--dur) var(--ease)}
 .seg button:hover{border-color:var(--line2);color:var(--tx)}
 .seg button[aria-pressed="true"]{background:var(--acc-fill);border-color:var(--acc-fill);color:var(--acc-tx)}
 .seg button.auto[aria-pressed="true"]{background:var(--tint);border-color:var(--acc);color:var(--acc)}
 .seg button.auto[aria-pressed="true"]::after{content:"자동";font-size:10.5px;margin-left:6px;opacity:.85}
-.seg.dom button[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:#fff}
-.seg.sm button{padding:5px 10px;min-height:32px;font-size:12.5px}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+.seg.dom button{display:inline-flex;align-items:center;gap:7px}
+.seg.dom button::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--k);flex:none}
+.seg.dom button[aria-pressed="true"]{background:color-mix(in srgb,var(--k) 17%,var(--surf));border-color:var(--k);color:var(--tx);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--k) 16%,transparent)}
+.seg.sm button{padding:5px 11px;min-height:34px;font-size:12.5px}
+.seg-note{align-self:center;font-size:12.5px;color:var(--tx3);margin-left:4px}
 .timeetc{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);font-weight:600}
-.timeetc input{width:88px;padding:8px 10px;text-align:right}
-html[data-t="dark"] .seg.dom button[aria-pressed="true"]{color:#08111A}
+.timeetc input{width:88px;min-height:40px;padding:7px 10px;text-align:right}
 .subj-etc{margin-top:var(--sp2);max-width:340px}
 
 /* 체크 카드 */
-.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:var(--sp2)}
-.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border:1px solid var(--line);
-  border-radius:var(--r2);background:var(--bg2);cursor:pointer;transition:var(--dur) var(--ease);min-height:44px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:var(--sp2)}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border:1.5px solid var(--line);
+  border-radius:var(--r2);background:var(--surf);cursor:pointer;transition:var(--dur) var(--ease);min-height:44px}
 .ck:hover{border-color:var(--line2);background:var(--surf2)}
 .ck:has(input:checked){border-color:var(--acc);background:var(--tint)}
-.ck input{flex:none;width:17px;height:17px;margin:3px 0 0;accent-color:var(--acc-fill);cursor:pointer}
-.ck b{display:block;font-size:13.5px;font-weight:600;line-height:1.45}
+.ck input{flex:none;width:18px;height:18px;margin:2px 0 0;accent-color:var(--acc-fill);cursor:pointer}
+.ck b{display:block;font-size:13.5px;font-weight:700;line-height:1.45}
 .ck small{display:block;font-size:12px;color:var(--tx3);line-height:1.45;margin-top:2px}
 
 /* 성취기준 */
-.stdbox{border:1px solid var(--line);border-radius:var(--r2);background:var(--bg2);
-  max-height:300px;overflow:auto;overscroll-behavior:contain}
+.stdbox{border:1.5px solid var(--line);border-radius:14px;background:var(--surf);
+  max-height:312px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
 .stdbox:empty::after{content:"학년과 영역을 고르면 성취기준이 나타납니다.";display:block;padding:var(--sp6);
   text-align:center;color:var(--tx3);font-size:13px}
 .ugroup{border-bottom:1px solid var(--line)}
 .ugroup:last-child{border-bottom:0}
 .uhead{display:flex;align-items:center;gap:var(--sp2);padding:9px var(--sp4);background:var(--surf2);
   position:sticky;top:0;z-index:2;border-bottom:1px solid var(--line)}
-.uhead b{font-size:13px;font-weight:700}
-.uhead .dot{width:8px;height:8px;border-radius:50%;background:var(--k);flex:none}
-.uhead small{color:var(--tx3);font-size:11.5px;margin-left:auto}
+.uhead b{font-family:var(--font-t);font-size:13.5px;font-weight:700}
+.uhead .dot{width:9px;height:9px;border-radius:50%;background:var(--k);flex:none}
+.uhead small{color:var(--tx3);font-size:11.5px;font-weight:600;margin-left:auto;background:var(--bg2);padding:2px 8px;border-radius:999px}
 .std{display:flex;gap:10px;align-items:flex-start;padding:10px var(--sp4);cursor:pointer;
   border-bottom:1px solid color-mix(in srgb,var(--line) 55%,transparent);transition:background var(--dur) var(--ease)}
 .std:last-child{border-bottom:0}
 .std:hover{background:var(--surf2)}
 .std:has(input:checked){background:var(--tint)}
-.std input{flex:none;width:16px;height:16px;margin:4px 0 0;accent-color:var(--acc-fill);cursor:pointer}
+.std input{flex:none;width:18px;height:18px;margin:3px 0 0;accent-color:var(--acc-fill);cursor:pointer}
 .std code{flex:none;font-size:11.5px;font-weight:700;color:var(--acc);background:var(--surf);
-  border:1px solid var(--line);padding:2px 7px;border-radius:var(--r1);margin-top:1px;font-family:var(--font-b)}
-.std span{font-size:13.5px;line-height:1.55;color:var(--tx2)}
+  border:1px solid var(--line);padding:2px 7px;border-radius:7px;margin-top:1px;font-family:var(--font-b)}
+.std span{font-size:14px;line-height:1.55;color:var(--tx2)}
 .std:has(input:checked) span{color:var(--tx)}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sp2)}
 .chips:empty{display:none}
+.chips .picked{font-size:12.5px;color:var(--tx3);align-self:center;margin-right:2px}
 .chips .chip{display:inline-flex;align-items:center;gap:7px;padding:5px 8px 5px 11px;border-radius:999px;
   border:1px solid var(--acc);background:var(--tint);font-size:12.5px;font-weight:600;color:var(--tx);max-width:100%}
 .chips .chip code{font-family:var(--font-b);font-size:11.5px;font-weight:700;color:var(--acc)}
 .chips .chip em{font-style:normal;color:var(--tx2);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:38ch}
-.chips .chip button{width:20px;height:20px;border-radius:50%;border:0;background:transparent;color:var(--tx3);
-  cursor:pointer;display:grid;place-items:center;flex:none}
+.chips .chip button{position:relative;width:22px;height:22px;border-radius:50%;border:0;background:transparent;color:var(--tx3);
+  display:grid;place-items:center;flex:none}
+.chips .chip button::after{content:"";position:absolute;inset:-9px}
 .chips .chip button:hover{background:var(--surf);color:var(--bad)}
 .chips .chip button svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round}
 .inqbox{display:flex;flex-direction:column;gap:6px}
+.inq{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border:1.5px solid var(--line);
+  border-radius:var(--r2);background:var(--surf);cursor:pointer;font-size:14px;transition:var(--dur) var(--ease)}
+.inq:hover{border-color:var(--line2)}
+.inq:has(input:checked){border-color:var(--bi);background:color-mix(in srgb,var(--bi) 10%,transparent)}
+.inq input{flex:none;width:18px;height:18px;margin:2px 0 0;accent-color:var(--bi);cursor:pointer}
 .inq.etc{border-style:dashed}
 .inq.etc:has(input:checked){border-style:solid}
-.inq b{display:block;font-size:13.5px;font-weight:600;line-height:1.45}
+.inq b{display:block;font-size:13.5px;font-weight:700;line-height:1.45}
 .inq small{display:block;font-size:12px;color:var(--tx3);line-height:1.45;margin-top:1px}
 .etcbox{margin:2px 0 0 26px}
-.inq{display:flex;gap:9px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
-  border-radius:var(--r2);background:var(--bg2);cursor:pointer;font-size:13.5px;transition:var(--dur) var(--ease)}
-.inq:hover{border-color:var(--line2)}
-.inq:has(input:checked){border-color:var(--bi);background:color-mix(in srgb,var(--bi) 11%,transparent)}
-.inq input{flex:none;width:16px;height:16px;margin:2px 0 0;accent-color:var(--bi);cursor:pointer}
-.empty{padding:var(--sp5);text-align:center;color:var(--tx3);font-size:13px;border:1px dashed var(--line);border-radius:var(--r2)}
+.empty{padding:var(--sp5);text-align:center;color:var(--tx3);font-size:13px;border:1px dashed var(--line2);border-radius:var(--r2)}
 
 /* 반복 목록 */
 .list{display:flex;flex-direction:column;gap:var(--sp2)}
 .li{display:flex;gap:var(--sp2);align-items:center}
-.li .num{flex:none;width:24px;height:24px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);
+.li .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--bg2);
   color:var(--tx3);font-size:11.5px;font-weight:700;display:grid;place-items:center}
-.li input{flex:1}
-.del{flex:none;width:36px;height:36px;border-radius:var(--r2);border:1px solid var(--line);background:var(--bg2);
-  color:var(--tx3);cursor:pointer;display:grid;place-items:center;transition:var(--dur) var(--ease)}
+.li .num.tag{width:auto;min-width:138px;padding:0 10px;border-radius:99px;font-size:11.5px;color:var(--tx2);white-space:nowrap}
+@media(max-width:560px){#modWhy .li{flex-direction:column;align-items:stretch;gap:5px}.li .num.tag{align-self:flex-start;min-width:0}}
+.li input{flex:1;min-width:0}
+.del{flex:none;width:40px;height:40px;border-radius:var(--r2);border:1.5px solid var(--line);background:var(--surf);
+  color:var(--tx3);display:grid;place-items:center;transition:var(--dur) var(--ease)}
 .del:hover{border-color:var(--bad);color:var(--bad)}
 .del svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
-.add{margin-top:var(--sp2);padding:8px 14px;border-radius:var(--r2);border:1px dashed var(--line2);
-  background:transparent;color:var(--tx2);font-size:13px;font-weight:600;cursor:pointer;transition:var(--dur) var(--ease)}
+.add{margin-top:var(--sp2);min-height:40px;padding:8px 14px;border-radius:var(--r2);border:1.5px dashed var(--line2);
+  background:transparent;color:var(--tx2);font-size:13px;font-weight:700;transition:var(--dur) var(--ease)}
 .add:hover{border-color:var(--acc);color:var(--acc);border-style:solid}
 
 /* 안내 박스 */
-.note{border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:var(--r2);
-  background:var(--bg2);padding:var(--sp3) var(--sp4);font-size:13px;color:var(--tx2);line-height:1.62;margin:var(--sp3) 0 0}
-.note b{color:var(--tx);font-weight:600}
-.note.warn{border-left-color:var(--warn)}
-.note.ok{border-left-color:var(--ok)}
+.note{border-radius:var(--r2);background:var(--surf2);border:1px dashed var(--line2);
+  padding:10px 13px;font-size:13px;color:var(--tx2);line-height:1.6;margin:var(--sp3) 0 0}
+.note b{color:var(--tx);font-weight:700}
+.note.warn{background:var(--warn-bg);border-color:transparent;color:var(--tx)}
+.note.ok{background:color-mix(in srgb,var(--ok) 9%,var(--surf));border-color:transparent}
+.note .pill{margin-top:8px}
 
-/* ══════════ 사이드 ══════════ */
-.side{position:sticky;top:calc(var(--h-header) + var(--sp5));display:flex;flex-direction:column;
-  gap:var(--sp3);max-height:calc(100dvh - var(--h-header) - var(--sp8))}
-.panel{background:var(--surf);border:1px solid var(--line);border-radius:var(--r3);overflow:hidden;flex:none}
-.panel>h3{font-size:14px;padding:var(--sp3) var(--sp4);border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:var(--sp2);background:var(--surf2)}
-.panel>h3 .pct{margin-left:auto;font-size:15px;font-weight:800;color:var(--acc);font-family:var(--font-t)}
-.pbody{padding:var(--sp4)}
-.bar{height:6px;border-radius:99px;background:var(--bg2);overflow:hidden;margin-bottom:var(--sp3)}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc-fill),var(--brand-pink));
-  border-radius:99px;transition:width .35s var(--ease)}
-.ready{font-size:12.5px;font-weight:600;color:var(--tx3);margin:0 0 var(--sp3);display:flex;align-items:center;gap:6px}
-.ready.ok{color:var(--ok)}
-.crit{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.crit li{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.5}
-.crit .mk{flex:none;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;
-  font-size:10px;font-weight:800;margin-top:2px;background:var(--bg2);color:var(--tx3);border:1px solid var(--line)}
-.crit li.on .mk{background:var(--ok);color:#04140E;border-color:var(--ok)}
-.crit li.on b{color:var(--tx)}
-.crit b{display:block;font-weight:600;color:var(--tx2)}
-.crit small{display:block;color:var(--tx3);font-size:11.5px;line-height:1.45}
-.side-acts{display:flex;flex-direction:column;gap:8px;padding:var(--sp3) var(--sp4);border-top:1px solid var(--line);background:var(--surf2)}
-.side-acts .pill{justify-content:center}
-
-.prevbox{flex:1;min-height:0;display:flex;flex-direction:column}
-.prevbox .pbody{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:0}
-pre.prev{margin:0;padding:var(--sp4);font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
-  font-size:11.5px;line-height:1.68;color:var(--tx2);white-space:pre-wrap;word-break:break-word}
-.mini{padding:5px 11px;border-radius:var(--r1);border:1px solid var(--line);background:var(--bg2);
-  color:var(--tx2);font-size:12px;font-weight:600;cursor:pointer;transition:var(--dur) var(--ease)}
-.mini:hover{border-color:var(--acc);color:var(--acc)}
-.panel>h3 .mini{margin-left:auto}
-
-/* AI 열기 버튼 */
-.aibar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.aibar .lbl{font-size:12px;color:var(--tx3);font-weight:600;margin-right:2px;white-space:nowrap}
-.aib{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 10px 0 6px;border-radius:var(--r2);
-  border:1px solid var(--line);background:var(--surf);font-size:12.5px;font-weight:600;color:var(--tx2);cursor:pointer;
+/* ══════════ AI 고르기 · 길이 · 보내기 ══════════ */
+.sendbar{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--sp3) var(--sp5);align-items:center;
+  padding:var(--sp4);border:1px solid var(--line);border-radius:16px;background:var(--surf2);margin-bottom:var(--sp3)}
+.sendbar .q{font-family:var(--font-t);font-weight:700;font-size:15px;white-space:nowrap}
+.sendbar .q small{display:block;font-family:var(--font-b);font-weight:500;font-size:12px;color:var(--tx3)}
+.ais{display:flex;flex-wrap:wrap;gap:var(--sp2)}
+.aib{position:relative;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 7px;border-radius:13px;
+  border:1.5px solid var(--line);background:var(--surf);font-weight:700;font-size:14px;color:var(--tx2);
   transition:var(--dur) var(--ease);--k:var(--acc)}
-.aib .mark{width:22px;height:22px;border-radius:6px;background:var(--k);color:#fff;font-size:10px;font-weight:800;
-  display:grid;place-items:center;font-family:var(--font-t);flex:none}
-.aib:hover{border-color:var(--k);color:var(--tx);transform:translateY(-1px)}
+.aib:hover{border-color:var(--line2);color:var(--tx)}
+.aib .mark{width:30px;height:30px;border-radius:9px;background:var(--k);color:#fff;font-family:var(--font-t);font-size:11px;
+  font-weight:800;display:grid;place-items:center;letter-spacing:0;flex:none}
+.aib[aria-pressed="true"]{border-color:var(--acc);background:var(--tint);color:var(--tx);box-shadow:0 0 0 3px var(--tint)}
+.ais.sm{gap:6px;flex-wrap:nowrap}
+.ais.sm .aib{height:40px;padding:0 5px;gap:7px;border-radius:12px;font-size:13.5px}
+.ais.sm .aib .mark{width:28px;height:28px;border-radius:8px;font-size:10.5px}
+.ais.sm .aib .nm{display:none}
+.ais.sm .aib[aria-pressed="true"]{padding-right:12px;flex:1;min-width:0}
+.ais.sm .aib[aria-pressed="true"] .nm{display:inline;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ainote{grid-column:1/-1;display:flex;gap:var(--sp2) var(--sp3);flex-wrap:wrap;align-items:center;font-size:13px;color:var(--tx2);
+  background:var(--surf);border:1px dashed var(--line2);border-radius:var(--r2);padding:9px 13px;line-height:1.5}
+.ainote b{color:var(--tx)}
+.ainote .who{font-size:12px;font-weight:700;color:var(--acc);background:var(--tint);padding:2px 9px;border-radius:999px;white-space:nowrap}
+.lenrow{display:flex;align-items:center;gap:var(--sp3) var(--sp4);flex-wrap:wrap;margin-bottom:var(--sp3)}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:13px;background:var(--bg2)}
+.seg2 button{min-height:40px;padding:0 14px;border:0;border-radius:10px;background:transparent;font-size:13.5px;font-weight:700;
+  color:var(--tx2);white-space:nowrap;transition:var(--dur) var(--ease)}
+.seg2 button small{font-weight:600;font-size:11px;margin-left:5px;color:var(--tx3)}
+.seg2 button[aria-pressed="true"]{background:var(--surf);color:var(--tx);box-shadow:var(--sh1)}
+.seg2 button[aria-pressed="true"] small{color:var(--acc)}
+.meter{margin:0;font-size:12.5px;color:var(--tx3);line-height:1.45}
+.meter b{font-weight:700;color:var(--tx2)}
+.meter.over b{color:var(--warn)}
+.over-msg{font-size:12.5px;line-height:1.5;color:var(--tx);background:var(--warn-bg);border-radius:11px;padding:8px 11px;
+  display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:var(--sp3)}
+.over-msg button{flex:none;min-height:32px;border:0;background:var(--warn);color:var(--on-warn);font-weight:700;font-size:12px;
+  border-radius:8px;padding:5px 10px;white-space:nowrap}
+.acts{display:flex;flex-wrap:wrap;gap:var(--sp2);margin-bottom:var(--sp4);align-items:center}
+.more{position:relative;margin-left:auto}
+.more summary{list-style:none;cursor:pointer}
+.more summary::-webkit-details-marker{display:none}
+.more[open] summary{border-color:var(--acc);background:var(--tint)}
+.more-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:20;min-width:230px;padding:6px;border-radius:14px;
+  background:var(--surf);border:1px solid var(--line);box-shadow:var(--sh2);display:grid;gap:2px}
+.more-menu button{display:flex;align-items:center;gap:9px;min-height:42px;padding:0 12px;border:0;border-radius:10px;
+  background:transparent;font-size:13.5px;font-weight:600;color:var(--tx);text-align:left;white-space:nowrap}
+.more-menu button:hover{background:var(--tint)}
+.more-menu svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none;color:var(--tx3)}
+@media(max-width:760px){
+  .sendbar{grid-template-columns:minmax(0,1fr)}
+  .aib{height:42px;padding:0 11px 0 6px;font-size:13.5px}
+  .acts .pill.go{flex:1 1 100%}
+  .more{margin-left:0;flex:1 1 100%}
+  .more summary{width:100%}
+  .more-menu{position:static;min-width:0;margin-top:6px;box-shadow:none}
+}
+@media(max-width:560px){
+  .sendbar .ais{gap:6px;flex-wrap:nowrap}
+  .sendbar .aib{height:42px;padding:0 5px}
+  .sendbar .aib .nm{display:none}
+  .sendbar .aib[aria-pressed="true"]{padding-right:12px;flex:1;min-width:0}
+  .sendbar .aib[aria-pressed="true"] .nm{display:inline;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+
+/* ══════════ 완성 프롬프트 판 (사이드) ══════════ */
+.side{position:sticky;top:calc(var(--h-header) + var(--h-rail) + 14px);min-width:0}
+.panel{display:flex;flex-direction:column;max-height:calc(100dvh - var(--h-header) - var(--h-rail) - 30px - var(--hero-vis,0px));min-height:330px;
+  background:var(--surf);border:1px solid var(--line);border-radius:var(--r3);box-shadow:var(--sh2);overflow:hidden}
+.p-head{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--surf2)}
+.p-head h2{font-size:15px}
+.p-head .pct{margin-left:auto;font-family:var(--font-t);font-size:12.5px;font-weight:800;color:var(--acc);background:var(--tint);
+  padding:3px 10px;border-radius:999px;white-space:nowrap}
+.p-ready{padding:11px 16px 10px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.bar{height:6px;border-radius:99px;background:var(--bg2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc-fill),var(--brand-pink));
+  border-radius:99px;transition:width .35s var(--ease)}
+.ready{font-size:12.5px;font-weight:600;color:var(--tx3);margin:0;line-height:1.45}
+.ready.ok{color:var(--ok)}
+.crit{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:5px}
+.crit li{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 4px;border-radius:999px;background:var(--bg2);
+  font-size:12px;font-weight:600;color:var(--tx3);line-height:1.4}
+.crit .mk{flex:none;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;
+  font-size:10px;font-weight:800;background:var(--surf);color:var(--tx3)}
+.crit li.on{background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--tx)}
+.crit li.on .mk{background:var(--ok);color:var(--on-ok)}
+.p-opt{padding:10px 16px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.p-body{flex:1;min-height:56px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+pre.prev{margin:0;padding:12px 16px 14px;font-family:var(--mono);
+  font-size:11.5px;line-height:1.68;color:var(--tx2);white-space:pre-wrap;word-break:break-word}
+.p-act{padding:11px 16px 13px;border-top:1px solid var(--line);background:var(--surf2);display:grid;gap:8px}
+.p-act .pill{width:100%}
+.p-act .pill:not(.go){min-height:40px;font-size:13.5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini{min-height:32px;padding:5px 11px;border-radius:9px;border:1px solid var(--line);background:var(--surf);
+  color:var(--tx2);font-size:12px;font-weight:700;transition:var(--dur) var(--ease)}
+.mini:hover{border-color:var(--acc);color:var(--acc)}
 
 /* 하단 고정 바 (좁은 화면) */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;align-items:center;gap:8px;
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--surf) 92%,transparent);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:var(--sh2)}
-.dock .dk{font-size:12px;color:var(--tx3);font-weight:600;white-space:nowrap;line-height:1.2}
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--surf) 94%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.dock .dk{font-size:11.5px;color:var(--tx3);font-weight:600;white-space:nowrap;line-height:1.2}
 .dock .dk b{display:block;color:var(--acc);font-size:15px;font-family:var(--font-t)}
-.dock .pill{flex:1;justify-content:center;min-width:0}
+.dock .pill{min-height:48px}
+.dock .pill.pri{flex:1;min-width:0;font-family:var(--font-t)}
 .dock .pill .lbtxt{overflow:hidden;text-overflow:ellipsis}
 @media(max-width:1180px){.dock{display:flex}}
-@media(max-width:430px){.dock{gap:6px;padding-left:10px;padding-right:10px}.dock .pill{padding:0 9px;font-size:12.5px;gap:4px}.dock .dk{font-size:11px}}
+@media(max-width:430px){.dock{gap:6px;padding-left:10px;padding-right:10px}.dock .pill{padding:0 11px;font-size:13.5px;gap:5px}}
 
 /* ══════════ 출력 ══════════ */
-.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:var(--sp5);overflow-x:auto}
-.tabs button{padding:10px 15px;border:0;background:transparent;color:var(--tx3);font-size:13.5px;
-  font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;
-  transition:var(--dur) var(--ease)}
-.tabs button:hover{color:var(--tx2)}
-.tabs button[aria-selected="true"]{color:var(--acc);border-bottom-color:var(--acc);font-weight:700}
-.acts{display:flex;flex-wrap:wrap;gap:var(--sp2);margin-bottom:var(--sp4);align-items:center}
-pre.out{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:var(--sp5);
-  font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.72;
+.tabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--bg2);margin-bottom:var(--sp4);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1 0 auto;min-height:40px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:var(--tx2);font-size:13.5px;
+  font-weight:700;white-space:nowrap;transition:var(--dur) var(--ease)}
+.tabs button:hover{color:var(--tx)}
+.tabs button[aria-selected="true"]{background:var(--surf);color:var(--tx);box-shadow:var(--sh1)}
+pre.out{background:var(--surf2);border:1px solid var(--line);border-radius:14px;padding:var(--sp5);
+  font-family:var(--mono);font-size:12.5px;line-height:1.72;
   white-space:pre-wrap;word-break:break-word;max-height:640px;overflow:auto;overscroll-behavior:contain;
-  color:var(--tx);margin:0}
+  color:var(--tx);margin:0;scrollbar-width:thin}
 .stat{text-align:right;font-size:12px;color:var(--tx3);margin:var(--sp2) 0 0}
 
-/* 점검표 */
-.gates{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp2)}
-.gates li{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);
-  border-radius:var(--r2);background:var(--bg2);font-size:13.5px;line-height:1.55}
-.gates li .g{flex:none;width:22px;height:22px;border-radius:var(--r1);background:var(--surf2);border:1px solid var(--line);
-  display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--tx3)}
-.gates li b{font-weight:600}
-.gates li small{display:block;color:var(--tx3);font-size:12px;margin-top:2px;line-height:1.5}
-.gsub{margin:var(--sp5) 0 var(--sp3);font-size:14px}
-.gates.cond li{border-left:3px solid var(--warn)}
-.gates.block li{border-left:3px solid var(--bad)}
+/* 점검표 · 고쳐 달라는 말 */
+.gates{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.gates li{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border:1px solid var(--line);
+  border-radius:var(--r2);background:var(--surf);font-size:13.5px;line-height:1.55}
+.gates li .g{flex:none;width:24px;height:24px;border-radius:8px;background:var(--bg2);
+  display:grid;place-items:center;font-size:11.5px;font-weight:800;color:var(--tx3);font-family:var(--font-t)}
+.gates li b{font-weight:700}
+.gates li small{display:block;color:var(--tx3);font-size:12.5px;margin-top:2px;line-height:1.5}
+.gates.block li .g{background:color-mix(in srgb,var(--bad) 13%,transparent);color:var(--bad)}
+.gates.cond li .g{background:var(--warn-bg);color:var(--warn)}
+.fixes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp2)}
+.fix{display:flex;flex-direction:column;gap:7px;padding:12px 13px;border-radius:14px;border:1px solid var(--line);background:var(--surf)}
+.fix b{font-family:var(--font-t);font-size:14px}
+.fix p{flex:1;margin:0;font-size:13px;color:var(--tx2);line-height:1.55;background:var(--surf2);border-radius:10px;padding:8px 11px}
+.fix p mark{background:var(--tint2);color:var(--tx);border-radius:4px;padding:0 3px;font-weight:600}
+.fix .mini{align-self:flex-start}
+@media(max-width:760px){.fixes{grid-template-columns:minmax(0,1fr)}}
 
 /* 근거 표 */
 table.ev{width:100%;border-collapse:collapse;font-size:13.5px}
 table.ev th,table.ev td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 table.ev th{font-size:12px;font-weight:700;color:var(--tx3);background:var(--surf2);white-space:nowrap}
 table.ev code{font-size:11.5px;font-weight:700;color:var(--acc);white-space:nowrap;font-family:var(--font-b)}
-table.ev tr:last-child td{border-bottom:0}
+table.ev tr:last-child td,table.ev tr:last-child th{border-bottom:0}
+table.ev .none{color:var(--tx3)}
 
 /* ══════════ 드로어 · 모달 · 토스트 ══════════ */
 .scrim{position:fixed;inset:0;background:var(--scrim);backdrop-filter:blur(3px);z-index:60;opacity:0;
@@ -410,17 +528,20 @@ table.ev tr:last-child td{border-bottom:0}
   border-left:1px solid var(--line);box-shadow:var(--sh3);display:flex;flex-direction:column;
   transform:translateX(100%);transition:transform var(--dur) var(--ease)}
 .drawer.in{transform:none}
-.dhead{display:flex;align-items:center;gap:var(--sp3);padding:var(--sp4) var(--sp5);border-bottom:1px solid var(--line)}
+.dhead{display:flex;align-items:center;gap:var(--sp3);padding:var(--sp3) var(--sp4) var(--sp3) var(--sp5);border-bottom:1px solid var(--line)}
 .dhead h2{font-size:17px;flex:1}
+.dtabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:13px;background:var(--bg2);margin-bottom:var(--sp4)}
+.dtabs button{min-height:40px;border:0;border-radius:10px;background:transparent;font-size:13.5px;font-weight:700;color:var(--tx2)}
+.dtabs button[aria-selected="true"]{background:var(--surf);color:var(--tx);box-shadow:var(--sh1)}
 .dbody{flex:1;overflow:auto;overscroll-behavior:contain;padding:var(--sp5)}
-.gcard{border:1px solid var(--line);border-radius:var(--r2);background:var(--bg2);padding:var(--sp4);margin-bottom:var(--sp3)}
-.gcard h4{font-size:14px;margin-bottom:var(--sp2);display:flex;align-items:center;gap:8px}
-.gcard h4 code{font-size:11px;font-weight:700;color:var(--acc);background:var(--surf);border:1px solid var(--line);
-  padding:2px 7px;border-radius:var(--r1);font-family:var(--font-b)}
-.gcard ul{margin:0;padding-left:1.15em;font-size:13px;color:var(--tx2);line-height:1.68}
+.gcard{border:1px solid var(--line);border-radius:14px;background:var(--surf2);padding:var(--sp4);margin-bottom:var(--sp3)}
+.gcard h4{font-size:14.5px;margin-bottom:var(--sp2);display:flex;align-items:center;gap:8px}
+.gcard h4 code{font-size:11px;font-weight:800;color:var(--acc);background:var(--tint);
+  padding:2px 8px;border-radius:999px;font-family:var(--font-t)}
+.gcard ul{margin:0;padding-left:1.15em;font-size:13.5px;color:var(--tx2);line-height:1.65}
 .gcard ul li{margin-bottom:4px}
 .gcard ul li:last-child{margin-bottom:0}
-.gcard b{color:var(--tx);font-weight:600}
+.gcard b{color:var(--tx);font-weight:700}
 
 .modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:var(--sp5);
   background:var(--scrim);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
@@ -430,125 +551,121 @@ table.ev tr:last-child td{border-bottom:0}
   border-radius:var(--r3);box-shadow:var(--sh3);display:flex;flex-direction:column;
   transform:translateY(10px);transition:transform var(--dur) var(--ease)}
 .modal.in .mbox{transform:none}
-.mbody{padding:var(--sp5);overflow:auto;overscroll-behavior:contain}
-.lbrow{display:flex;align-items:center;gap:var(--sp2);margin-bottom:6px;flex-wrap:wrap}
+.mbody{padding:var(--sp5);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.mbody>.hint:first-child{margin:0 0 var(--sp4);font-size:13.5px;color:var(--tx2)}
+.mbody label.lb{margin-top:var(--sp4)}
+.mbody .lbrow label.lb{margin:0}
+.lbrow{display:flex;align-items:center;gap:var(--sp2);margin-bottom:7px;flex-wrap:wrap}
 .lbrow .mini{margin-left:auto}
-.qchips{display:flex;flex-direction:column;gap:5px;margin-top:var(--sp2)}
-.qchips button{display:flex;align-items:baseline;gap:8px;padding:8px 12px;border-radius:var(--r2);
-  border:1px dashed var(--line2);background:transparent;color:var(--tx3);font-size:12.5px;cursor:pointer;
-  text-align:left;transition:var(--dur) var(--ease);opacity:.9;line-height:1.5}
+.qchips{display:flex;flex-direction:column;gap:5px}
+.qchips button{display:flex;align-items:baseline;gap:8px;min-height:40px;padding:8px 12px;border-radius:var(--r2);
+  border:1px dashed var(--line2);background:transparent;color:var(--tx2);font-size:13px;
+  text-align:left;transition:var(--dur) var(--ease);line-height:1.5}
 .qchips button span{flex:1}
-.qchips button em{flex:none;font-style:normal;font-size:11px;color:var(--tx3);opacity:.8;white-space:nowrap}
-.qchips button:hover{border-style:solid;border-color:var(--acc);color:var(--tx2);opacity:1;background:var(--tint)}
+.qchips button em{flex:none;font-style:normal;font-size:11.5px;color:var(--tx3);white-space:nowrap}
+.qchips button:hover{border-style:solid;border-color:var(--acc);color:var(--tx);background:var(--tint)}
 .qchips button:hover em{color:var(--acc)}
-.qchips button.gap{border-color:color-mix(in srgb,var(--warn) 55%,transparent)}
-.qchips button.gap em{color:var(--warn);opacity:1}
-.qchips button:disabled{cursor:default;border-style:solid;border-color:var(--line)}
+.qchips button.gap em{color:var(--warn);font-weight:600}
+.qchips button:disabled{cursor:default;border-style:solid;border-color:var(--line);opacity:.45}
 @media(max-width:560px){.qchips button{flex-direction:column;gap:2px}.qchips button em{white-space:normal}}
-.ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:var(--sp2)}
-.ai{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:var(--r2);cursor:pointer;
-  border:1px solid var(--line);background:var(--bg2);color:var(--tx2);text-align:left;
-  transition:var(--dur) var(--ease);min-height:52px;font-size:13.5px}
-.ai:hover{border-color:var(--line2);transform:translateY(-1px)}
-.ai .mark{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
-  font-weight:800;font-size:12px;font-family:var(--font-t);background:var(--surf2);color:var(--tx3)}
-.ai b{display:block;font-size:13.5px;font-weight:600;color:var(--tx);line-height:1.35}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--sp2)}
+.ai{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:13px;
+  border:1.5px solid var(--line);background:var(--surf);color:var(--tx2);text-align:left;
+  transition:var(--dur) var(--ease);min-height:54px;font-size:13.5px;--k:var(--acc)}
+.ai:hover{border-color:var(--k);transform:translateY(-1px);box-shadow:var(--sh1)}
+.ai .mark{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  font-weight:800;font-size:11px;font-family:var(--font-t);background:var(--k);color:#fff}
+.ai b{display:block;font-size:13.5px;font-weight:700;color:var(--tx);line-height:1.35}
 .ai small{display:block;font-size:11.5px;color:var(--tx3);line-height:1.35}
-.ai.auto{border-color:var(--k);background:color-mix(in srgb,var(--k) 13%,transparent)}
-.ai.auto:hover{border-color:var(--k);background:color-mix(in srgb,var(--k) 20%,transparent)}
-.ai.auto .mark{background:var(--k);color:#fff}
-.ai.auto small{color:var(--k);font-weight:600}
-.dotk{display:inline-block;width:10px;height:10px;border-radius:3px;vertical-align:-1px;margin:0 2px}
-.dotk.auto{background:#1B9E5A}
-.dotk.man{background:var(--line2);border:1px solid var(--tx3)}
+.ai.auto small{color:var(--ok);font-weight:700}
 
 /* 긴급 모달 */
 .qk-rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--sp3)}
-.qk-rows small{display:block;font-size:12px;color:var(--tx3);margin-bottom:5px}
-.sug{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-.sug button{display:flex;gap:8px;align-items:flex-start;text-align:left;padding:8px 11px;border-radius:var(--r2);
-  border:1px solid var(--line);background:var(--bg2);font-size:12.5px;color:var(--tx2);cursor:pointer;line-height:1.5;transition:var(--dur) var(--ease)}
+.qk-rows small{display:block;font-size:12px;font-weight:600;color:var(--tx3);margin-bottom:5px}
+.sug{display:flex;flex-direction:column;gap:6px}
+.sug button{display:flex;gap:9px;align-items:flex-start;text-align:left;padding:9px 12px;border-radius:var(--r2);
+  border:1.5px solid var(--line);background:var(--surf);font-size:13px;color:var(--tx2);line-height:1.5;transition:var(--dur) var(--ease)}
 .sug button:hover{border-color:var(--line2);color:var(--tx)}
 .sug button[aria-pressed="true"]{border-color:var(--acc);background:var(--tint);color:var(--tx)}
 .sug button code{flex:none;font-family:var(--font-b);font-size:11px;font-weight:700;color:var(--acc);background:var(--surf);
-  border:1px solid var(--line);padding:1px 6px;border-radius:var(--r1);margin-top:2px}
-.sug button i{flex:none;font-style:normal;width:16px;height:16px;border-radius:4px;border:1px solid var(--line2);margin-top:3px;display:grid;place-items:center;font-size:10px}
+  border:1px solid var(--line);padding:1px 6px;border-radius:7px;margin-top:2px}
+.sug button i{flex:none;font-style:normal;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);margin-top:2px;display:grid;place-items:center;font-size:11px}
 .sug button[aria-pressed="true"] i{background:var(--acc-fill);border-color:var(--acc-fill);color:#fff}
+.qk-send{margin-top:var(--sp5);padding-top:var(--sp4);border-top:1px dashed var(--line2)}
+.qk-pick{display:flex;flex-wrap:wrap;gap:var(--sp2) var(--sp3);align-items:center;justify-content:space-between;margin-bottom:var(--sp3)}
+.qk-send .acts{margin:0}
 
-.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);background:var(--surf2);
-  border:1px solid var(--line2);color:var(--tx);padding:11px 20px;border-radius:999px;font-size:13.5px;
-  font-weight:600;box-shadow:var(--sh2);z-index:80;opacity:0;pointer-events:none;transition:var(--dur) var(--ease);max-width:min(92vw,520px);text-align:center}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);background:var(--tx);color:var(--bg);
+  padding:11px 20px;border-radius:999px;font-size:14px;
+  font-weight:600;box-shadow:var(--sh3);z-index:80;opacity:0;pointer-events:none;transition:var(--dur) var(--ease);max-width:min(92vw,540px);text-align:center}
 .toast.in{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1180px){.toast{bottom:92px}}
 
-footer{max-width:1500px;margin:0 auto;padding:var(--sp7) var(--sp5) var(--sp8);border-top:1px solid var(--line);
+footer{max-width:1500px;margin:0 auto;padding:var(--sp6) var(--sp5) var(--sp8);border-top:1px solid var(--line);
   color:var(--tx3);font-size:12.5px;line-height:1.85}
-footer b{color:var(--tx2);font-weight:600}
+footer b{color:var(--tx2);font-weight:700}
 footer a{color:var(--tx2);text-decoration:none}
 footer a:hover{color:var(--acc);text-decoration:underline}
+@media(max-width:1180px){footer{padding-bottom:104px}}
 
-@media(max-width:720px){
+@media(max-width:760px){
   pre.out{font-size:11.5px;padding:var(--sp4)}
-  .wrap{padding:var(--sp4) var(--sp3) 132px}
-  section.step{padding:var(--sp4)}
-  .htitle{display:none}
+  .wrap{padding:var(--sp3) var(--sp3) 132px}
+  .hero-in{padding:15px var(--sp3) 17px}
+  .lead{font-size:13.5px}
+  section.step{padding:var(--sp4);border-radius:16px}
+  .modal{padding:var(--sp3)}
+  .mbody{padding:var(--sp4)}
 }
 @media print{
-  header,.rail,.side,.acts,.tabs,footer,.intro .path,.dock,.modehint{display:none !important}
+  header.top,.hero,.rail,.side,.acts,.tabs,.sendbar,.lenrow,.over-msg,footer,.dock{display:none !important}
   body{background:#fff;color:#000}
-  section.step{border:0;padding:0;background:#fff}
+  section.step{border:0;padding:0;background:#fff;box-shadow:none}
   pre.out{max-height:none;border:1px solid #ccc;background:#fff;color:#000;font-size:10.5px}
   .wrap{display:block;padding:0}
 }
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}
 </style>
 </head>
 <body>
 
-<header>
-  <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v6L4 18a3 3 0 0 0 2.6 4.5h10.8A3 3 0 0 0 20 18l-5-9V3"/><path d="M7.5 14h9"/></svg><b>송쌤과학</b></span>
+<header class="top">
+  <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v6L4 18a3 3 0 0 0 2.6 4.5h10.8A3 3 0 0 0 20 18l-5-9V3"/><path d="M7.5 14h9"/></svg><b>송쌤과학</b></span>
   <span class="htitle">가상실험실 프롬프트 스튜디오 <b>교사용 · 전 과목</b></span>
   <span class="hsp"></span>
   <div class="hbtns">
-    <button class="pill quick" id="btnQuick" title="내용만 적고 바로 프롬프트 받기 (Q)"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg><span class="lbtxt">긴급 프롬프트</span></button>
-    <button class="pill ask" id="btnAsk" title="활동 내용을 AI에게 물어보기 (A)"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-2.9-.4L4 21l1.4-4.1A8.3 8.3 0 0 1 3.6 11.5C3.6 6.8 7.7 3 12.3 3S21 6.8 21 11.5Z"/><path d="M9.9 9.4a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2-2.4 3.4"/><path d="M12.3 16.2h.01"/></svg><span class="lbtxt">AI에게 물어보기</span></button>
-    <button class="pill" id="btnEx" title="예시 세팅 불러오기 (E)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="lbtxt">예시</span></button>
-    <button class="pill" id="btnGuide" title="제작 지침 요약 (G)"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6.5A2.5 2.5 0 0 0 4 19.5Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19"/><path d="M9 7h6M9 11h4"/></svg><span class="lbtxt">지침 요약</span></button>
-    <button class="ico" id="btnImport" title="저장한 작업 파일 열기" aria-label="저장한 작업 파일 열기"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M12 11v5M9.5 13.5 12 11l2.5 2.5"/></svg></button>
-    <input type="file" id="fileIn" accept=".json,application/json" hidden>
-    <button class="ico" id="btnTheme" title="테마 전환 (D)" aria-label="테마 전환"><svg viewBox="0 0 24 24" id="icTheme"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a7 7 0 0 0 10.8 10.8Z"/></svg></button>
-    <button class="ico" id="btnHelp" title="사용 방법 (H)" aria-label="사용 방법"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6.9c0 1.9-2.8 2.3-2.8 4"/><path d="M12 17.2h.01"/></svg></button>
-    <button class="pill danger" id="btnReset" title="입력한 내용을 전부 지웁니다"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"/><path d="M6.5 7 7.4 19a2 2 0 0 0 2 1.9h5.2a2 2 0 0 0 2-1.9L17.5 7"/></svg><span class="lbtxt">전체 초기화</span></button>
+    <button class="pill quick" id="btnQuick" type="button" title="내용만 적고 바로 프롬프트 받기 (Q)" aria-label="긴급 프롬프트"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg><span class="lbtxt">긴급 프롬프트</span></button>
+    <button class="pill ask" id="btnAsk" type="button" title="활동 내용을 AI에게 물어보기 (A)" aria-label="AI에게 물어보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-2.9-.4L4 21l1.4-4.1A8.3 8.3 0 0 1 3.6 11.5C3.6 6.8 7.7 3 12.3 3S21 6.8 21 11.5Z"/><path d="M9.9 9.4a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2-2.4 3.4"/><path d="M12.3 16.2h.01"/></svg><span class="lbtxt">AI에게 물어보기</span></button>
+    <button class="pill" id="btnEx" type="button" title="예시 세팅 불러오기 (E)" aria-label="예시"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="lbtxt">예시</span></button>
+    <span class="hdiv" aria-hidden="true"></span>
+    <button class="ico" id="btnReset" type="button" title="처음부터 새로 시작" aria-label="처음부터 새로 시작"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5v5h5"/><path d="M4.6 9.5A8 8 0 1 1 4 12.6"/></svg></button>
+    <button class="ico" id="btnTheme" type="button" title="테마 전환 (D)" aria-label="테마 전환"><svg viewBox="0 0 24 24" id="icTheme" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a7 7 0 0 0 10.8 10.8Z"/></svg></button>
+    <button class="ico" id="btnHelp" type="button" title="사용 방법 · 지침 요약 (H)" aria-label="사용 방법과 지침 요약"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.3a2.9 2.9 0 0 1 5.6.9c0 1.9-2.8 2.3-2.8 4"/><path d="M12 17.2h.01"/></svg></button>
   </div>
 </header>
 
+<section class="hero" aria-label="소개">
+  <div class="hero-in">
+    <div>
+      <p class="eyebrow">PROMPT STUDIO · 2022 개정 교육과정</p>
+      <h1>성취기준에서 출발하는 <em>가상실험실 제작 프롬프트</em></h1>
+      <p class="lead">성취기준을 고르고 <b>학생이 바꾸는 것 · 달라지는 것</b> 두 칸만 적으면, AI에 그대로 붙여 넣는 제작 요청서가 완성됩니다.</p>
+    </div>
+    <div class="flow" aria-hidden="true"><span>성취기준 고르기</span><i>→</i><span>두 칸 적기</span><i>→</i><span>복사해 붙여 넣기</span></div>
+  </div>
+</section>
+
+<nav class="rail" aria-label="제작 단계"><div class="rail-in" id="rail"></div></nav>
+
 <div class="wrap">
 <main>
-  <!-- ── 인트로 ── -->
-  <div class="intro">
-    <h1>성취기준에서 출발하는 <em>가상실험실 제작 프롬프트</em></h1>
-    <p class="lead">과목과 성취기준을 고르고 <b>학생이 바꾸는 것·달라지는 것</b> 두 칸만 적으면,
-      생성형 AI에 그대로 붙여넣는 <b>완성형 제작 요청서</b>가 만들어집니다.
-      과학은 2022 개정 성취기준 목록을 제공하고, 다른 과목은 성취기준을 직접 붙여 넣습니다. 나머지는 AI가 지침에 맞춰 정하고 «확인 필요»로 알려 줍니다.</p>
-    <div class="path">
-      <span><i>1</i>과목·성취기준 고르기</span><u>›</u>
-      <span><i>2</i>바꾸는 것·달라지는 것 적기</span><u>›</u>
-      <span><i>3</i>복사해서 AI에 붙여넣기</span>
-    </div>
-  </div>
-
-  <!-- ── 스텝 레일 ── -->
-  <nav class="rail" id="rail" aria-label="제작 단계"></nav>
-  <p class="modehint" id="modeHint"></p>
-
   <!-- ══ STEP 1 ══ -->
   <section class="step" id="s1">
-    <div class="sh"><span class="n">1</span><div>
-      <h2>교육과정 정렬</h2>
-      <p>과목과 성취기준만 고르면 실험실 이름과 학습 목표가 자동으로 채워집니다. 프롬프트의 뼈대가 되는 단계입니다.</p></div></div>
+    <div class="sh"><span class="n">1</span><h2>교육과정</h2>
+      <p class="sub">성취기준을 고르면 실험실 이름과 학습 목표가 자동으로 채워집니다</p></div>
 
     <div class="fg">
-      <label class="lb">과목 <span>과학은 성취기준 목록을 제공하고, 다른 과목은 직접 적습니다</span></label>
+      <label class="lb">과목 <span>과학은 목록에서 고르고, 다른 과목은 성취기준을 직접 적습니다</span></label>
       <div class="seg" id="segSubj"></div>
       <div class="subj-etc" id="subjEtcBox" hidden>
         <input type="text" id="f_subjEtc" data-k="subjEtc" maxlength="20" placeholder="과목 이름 · 예) 한문, 환경, 보건">
@@ -557,7 +674,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 
     <div id="curSci">
       <div class="fg">
-        <label class="lb">학년 <span>2022 개정 중학교 과학은 1~3학년군으로 제시됩니다. 아래 학년은 교과서의 일반적 배열 기준입니다</span></label>
+        <label class="lb">학년 <span>교육과정은 1~3학년군 · 아래는 교과서의 일반적 배열입니다</span></label>
         <div class="seg" id="segGrade"></div>
       </div>
       <div class="fg">
@@ -565,12 +682,12 @@ footer a:hover{color:var(--acc);text-decoration:underline}
         <div class="seg dom" id="segArea"></div>
       </div>
       <div class="fg">
-        <label class="lb">성취기준 <em>*</em><span>여러 개 고를 수 있습니다. 1~2개를 권장합니다</span></label>
+        <label class="lb">성취기준 <em>*</em><span>1~2개를 권장합니다</span></label>
         <div class="stdbox" id="stdBox"></div>
         <div class="chips" id="pickBox"></div>
       </div>
       <div class="fg">
-        <label class="lb">교육과정 탐구 활동 <span>고른 단원의 활동입니다. 고르면 실험실 이름에 쓰이고 교육과정 근거가 분명해집니다</span></label>
+        <label class="lb">교육과정 탐구 활동 <span>고르면 실험실 이름에 쓰입니다</span></label>
         <div class="inqbox" id="inqBox"></div>
       </div>
       <details class="sub opt" id="sciExtra">
@@ -591,11 +708,11 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           <input type="text" id="f_unit" data-k="unitName" maxlength="40" placeholder="예) 일차함수와 그 그래프">
         </div>
       </div>
-      <div class="fg">
+      <div class="fg" style="margin-top:var(--sp5)">
         <label class="lb" for="f_stdText">성취기준 <em>*</em><span>한 줄에 하나 · 코드가 있으면 앞에 [코드]</span></label>
         <textarea id="f_stdText" data-k="stdText" placeholder="예) [9수02-15] 일차함수의 개념을 이해하고, 그 그래프를 그릴 수 있다.
 코드 없이 문장만 적어도 됩니다."></textarea>
-        <p class="hint">교육과정 문서(NCIC)나 교과서 지도서에서 복사해 붙여 넣으세요. 학습 목표가 여기서 자동으로 만들어집니다.</p>
+        <p class="hint">교육과정 문서(NCIC)나 지도서에서 복사해 붙여 넣으세요. 학습 목표가 여기서 만들어집니다.</p>
       </div>
       <div class="fg opt">
         <label class="lb" for="f_actText">교과서·교육과정의 탐구(학습) 활동 <span>한 줄에 하나</span></label>
@@ -604,12 +721,12 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     </div>
 
     <div class="fg">
-      <label class="lb" for="f_title">실험실 이름 <em>*</em><span>학생 화면 제목에 그대로 들어갑니다</span><span class="autob" id="titleAutoB" hidden>자동</span></label>
+      <label class="lb" for="f_title">실험실 이름 <em>*</em><span>학생 화면의 제목이 됩니다</span><span class="autob" id="titleAutoB" hidden>자동</span></label>
       <input type="text" id="f_title" data-k="title" maxlength="60" placeholder="성취기준이나 탐구 활동을 고르면 자동으로 채워집니다">
     </div>
 
     <div class="fg">
-      <label class="lb" for="f_goal">학습 목표 <em>*</em><span>학생이 이 실험실을 끝냈을 때 할 수 있어야 하는 것</span><span class="autob" id="goalAutoB" hidden>자동</span></label>
+      <label class="lb" for="f_goal">학습 목표 <em>*</em><span>이 실험실을 끝낸 학생이 할 수 있어야 하는 것</span><span class="autob" id="goalAutoB" hidden>자동</span></label>
       <textarea id="f_goal" data-k="goal" class="sm" placeholder="성취기준 문장이 그대로 들어갑니다. 고쳐 써도 됩니다."></textarea>
       <p class="hint">고쳐 쓰면 자동 채움이 멈춥니다.<button class="mini" id="btnGoalAuto" type="button">성취기준 문장으로 되돌리기</button></p>
     </div>
@@ -624,20 +741,19 @@ footer a:hover{color:var(--acc);text-decoration:underline}
       <div class="fg"><label class="lb">수업 시간</label><div class="seg" id="segTime"></div></div>
       <div class="fg opt"><label class="lb">수업 맥락</label><div class="seg" id="segCtx"></div></div>
     </div>
-    <div class="fg" id="typeEtcBox" hidden></div>
+    <div class="fg" id="typeEtcBox" style="margin-top:var(--sp4)" hidden></div>
   </section>
 
   <!-- ══ STEP 2 ══ -->
   <section class="step" id="s2">
-    <div class="sh"><span class="n">2</span><div>
-      <h2>실험 설계</h2>
-      <p>학생이 바꾸는 것과 달라지는 것, 두 칸이 핵심입니다. 비워 둔 칸은 AI가 교과서 수준으로 정한 뒤 «확인 필요»로 따로 알려 주므로 되묻는 왕복이 없습니다.</p></div></div>
+    <div class="sh"><span class="n">2</span><h2>실험 설계</h2>
+      <p class="sub">두 칸이 핵심입니다 · 빈칸은 AI가 정하고 «확인 필요»로 알려 줍니다</p></div>
 
     <div class="fg">
       <label class="lb">학생이 직접 바꾸는 것 <em>*</em><span>조작 변인 · 예) 전압, 기울기, 가격, 박자</span></label>
       <div class="row c2" style="margin-bottom:var(--sp2)">
         <input type="text" id="f_iv" data-k="iv" placeholder="학생이 바꿀 것 · 예) 전원 장치의 전압">
-        <select id="f_ivtool" data-k="ivTool" class="opt">
+        <select id="f_ivtool" data-k="ivTool" class="opt" aria-label="조작 방법">
           <option value="슬라이더">조작 방법 · 슬라이더</option>
           <option value="다이얼">조작 방법 · 다이얼</option>
           <option value="단계 버튼">조작 방법 · 단계 버튼</option>
@@ -648,45 +764,45 @@ footer a:hover{color:var(--acc);text-decoration:underline}
         </select>
       </div>
       <div class="row c4">
-        <input type="text" id="f_ivmin" data-k="ivMin" placeholder="최솟값 · 0">
-        <input type="text" id="f_ivmax" data-k="ivMax" placeholder="최댓값 · 9">
-        <input type="text" id="f_ivstep" data-k="ivStep" class="opt" placeholder="눈금 간격 · 1">
-        <input type="text" id="f_ivunit" data-k="ivUnit" placeholder="단위 · V (없으면 비움)">
+        <label class="mf"><span>최솟값</span><input type="text" id="f_ivmin" data-k="ivMin" placeholder="예) 0"></label>
+        <label class="mf"><span>최댓값</span><input type="text" id="f_ivmax" data-k="ivMax" placeholder="예) 9"></label>
+        <label class="mf opt"><span>눈금 간격</span><input type="text" id="f_ivstep" data-k="ivStep" placeholder="예) 1"></label>
+        <label class="mf"><span>단위</span><input type="text" id="f_ivunit" data-k="ivUnit" placeholder="예) V · 없으면 비움"></label>
       </div>
-      <p class="hint">범위를 정해 두면 AI가 임의로 정밀도를 부풀리지 않습니다.</p>
+      <p class="hint">범위를 정해 두면 AI가 정밀도를 임의로 부풀리지 않습니다.</p>
     </div>
 
     <div class="fg">
       <label class="lb">그에 따라 달라지는 것 <em>*</em><span>종속 변인 · 학생이 관찰·측정·확인하는 것</span></label>
-      <div class="row c2" style="margin-bottom:var(--sp2)">
+      <div class="row dv2" style="margin-bottom:var(--sp2)">
         <input type="text" id="f_dv" data-k="dv" placeholder="학생이 볼 것 · 예) 색을 띤 이온이 이동한 거리">
-        <input type="text" id="f_dvunit" data-k="dvUnit" placeholder="단위 · mm (없으면 비움)">
+        <label class="mf in"><span>단위</span><input type="text" id="f_dvunit" data-k="dvUnit" placeholder="예) mm"></label>
       </div>
       <div class="row c2 opt">
-        <input type="text" id="f_dvhow" data-k="dvHow" placeholder="측정·확인 방법 · 예) 거름종이 위 눈금자로 색 경계 읽기">
-        <input type="text" id="f_dvres" data-k="dvRes" placeholder="기구 분해능·판정 기준 · 예) 1 mm (눈금자 최소 눈금)">
+        <label class="mf"><span>측정·확인 방법</span><input type="text" id="f_dvhow" data-k="dvHow" placeholder="예) 거름종이 위 눈금자로 색 경계 읽기"></label>
+        <label class="mf"><span>기구 분해능·판정 기준</span><input type="text" id="f_dvres" data-k="dvRes" placeholder="예) 1 mm (눈금자 최소 눈금)"></label>
       </div>
-      <p class="hint opt"><b>분해능을 적으면</b> AI가 그럴듯해 보이려는 임의의 ±0.1~0.3 노이즈를 넣지 말라는 규칙이 함께 들어갑니다.</p>
+      <p class="hint opt"><b>분해능을 적으면</b> 그럴듯해 보이려는 임의의 노이즈(±0.1~0.3)를 넣지 말라는 규칙이 함께 들어갑니다.</p>
     </div>
 
     <div class="fg">
-      <label class="lb" for="f_brief">실험을 말로 설명 <span>선택 · 위 칸에 담기 어려운 것. 무엇을 조작하고, 무엇이 달라지고, 무엇을 알게 하고 싶은지</span></label>
+      <label class="lb" for="f_brief">실험을 말로 설명 <span>선택 · 무엇을 조작하고, 무엇이 달라지고, 무엇을 알게 하고 싶은지</span></label>
       <textarea id="f_brief" data-k="brief" placeholder="예) 젖은 거름종이 양 끝에 집게 전극을 물리고 가운데에 보라색·파란색 수용액을 한 방울씩 떨어뜨린다. 전압을 올리면 두 색이 서로 반대 전극 쪽으로 번진다. 이온이 전하를 띠고 있다는 것을 설명하게 하고 싶다."></textarea>
     </div>
 
     <div class="fg opt">
-      <label class="lb" for="f_concept">핵심 개념·용어 <span>쉼표로 구분 · 비우면 성취기준에서 AI가 뽑습니다</span></label>
+      <label class="lb" for="f_concept">핵심 개념·용어 <span>쉼표로 구분 · 비우면 AI가 성취기준에서 뽑습니다</span></label>
       <input type="text" id="f_concept" data-k="concept" placeholder="예) 이온, 양이온, 음이온, 전하, 전극, 전기력">
     </div>
 
     <div class="fg opt">
       <label class="lb">같게 유지할 조건 <span>통제 변인</span></label>
       <div class="list" id="listCv"></div>
-      <button class="add" id="addCv">+ 조건 추가</button>
+      <button class="add" id="addCv" type="button">+ 조건 추가</button>
     </div>
 
     <div class="fg opt">
-      <label class="lb" for="f_init">초기 조건 · 근거 있는 수치·자료와 출처 <span>근거 있는 값만 적습니다</span></label>
+      <label class="lb" for="f_init">초기 조건 · 수치·자료와 출처 <span>근거 있는 값만 적습니다</span></label>
       <textarea id="f_init" data-k="init" placeholder="예) 질산 칼륨 수용액을 적신 거름종이 10 cm, 전극 간격 8 cm.
 보라색 MnO4- (음이온), 파란색 Cu2+ (양이온).
 출처: 중학교 과학 교과서 탐구 활동 표준 조건"></textarea>
@@ -696,7 +812,6 @@ footer a:hover{color:var(--acc);text-decoration:underline}
       <label class="lb" for="f_simplify">교육적 단순화와 모델의 한계 <span>화면에 그대로 표시할 문구가 됩니다</span></label>
       <textarea id="f_simplify" data-k="simplify" placeholder="예) 이온의 이동 속도는 전압에 따라 대체로 빨라지는 경향만 보여 주는 교육용 모델이다.
 실제 이온의 이동도 차이, 전기 삼투, 줄 열은 다루지 않는다."></textarea>
-      <p class="hint">이 칸이 프롬프트에서 <b>“무엇을 정확히 재현하고 무엇을 단순화했는지”</b>를 화면에 밝히라는 지시로 바뀝니다.</p>
     </div>
 
     <div class="fg opt">
@@ -713,33 +828,23 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 
   <!-- ══ STEP 3 (선택) ══ -->
   <section class="step fold" id="s3">
-    <div class="sh"><span class="n">3</span><div>
-      <h2>학습 장치 · 화면 느낌 <small>선택</small></h2>
-      <p>기본값(공통 코어만 · 화면은 AI가 정함)으로도 완성됩니다. 탐구 질문·그래프·리포트가 필요하거나 화면의 장면을 직접 정하고 싶을 때만 엽니다.</p></div>
+    <div class="sh"><span class="n">3</span><h2>학습 장치 · 화면 느낌 <small>선택</small></h2>
+      <p class="sub">기본값으로도 완성됩니다 · 탐구 질문·그래프·장면을 직접 정할 때만 엽니다</p>
       <button class="pill sm sh-act" id="btnS3" type="button" aria-expanded="false">열어서 고르기</button></div>
     <div class="fold-sum" id="s3sum"></div>
 
     <div class="sbody">
     <div class="fg">
-      <label class="lb">공통 코어 <span>모든 실험실에 항상 들어갑니다 · 선택 대상 아님</span></label>
-      <div class="note ok">
-        <b>① 핵심 스테이지 + 조작 1~3개</b> · <b>② 읽을 수 있는 상태·측정값 + 초기화</b> ·
-        <b>③ 44px 터치·키보드·색 외 표현 + 상태 서술 문장</b> · <b>④ 모델의 근거·조건·단위·단순화 표시</b> ·
-        <b>⑤ 도움말과 실패 시 폴백</b> · <b>⑥ 결과 저장(PNG) 버튼</b> · <b>⑦ 전체화면 · 다크/라이트 테마</b>
-      </div>
-    </div>
-
-    <div class="fg">
-      <label class="lb">선택 모듈 <span>학습 목표를 직접 돕는 것만. 고르지 않은 것은 “만들지 말 것”으로 프롬프트에 들어갑니다</span></label>
+      <label class="lb">선택 모듈 <span>학습 목표를 직접 돕는 것만 · 고르지 않은 것은 “만들지 말 것”으로 들어갑니다</span></label>
       <div class="cgrid" id="modGrid"></div>
+      <p class="hint">조작·상태 표시·접근성·도움말·결과 저장(PNG)·전체화면·다크/라이트 테마는 <b>공통 코어</b>로 항상 들어갑니다.</p>
       <div id="shortNote"></div>
       <div id="modWhy" class="opt" style="margin-top:var(--sp3)"></div>
     </div>
 
     <div class="fg" id="wrapEssay" hidden>
-      <label class="lb">서술형 탐구 질문 <span>지침대로 정확히 3문항 · 비워 둔 문항은 AI가 성취기준에 맞춰 만들고 힌트·모범 답안(2~3문장)까지 함께 씁니다</span></label>
+      <label class="lb">서술형 탐구 질문 <span>정확히 3문항 · 비운 문항은 AI가 힌트·모범 답안까지 만듭니다</span></label>
       <div class="list" id="listQ"></div>
-      <p class="hint">모범 답안을 열면 처음 답안은 잠기고 바로 아래에 «다시 쓰기» 칸이 열리는 단일 정책이 프롬프트에 들어갑니다. 상황을 묻는 문항에는 그 상황을 바로 해 볼 수 있는 간이 실험 그림을 붙이도록 지시합니다.</p>
     </div>
 
     <div class="fg">
@@ -754,16 +859,15 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     </div>
 
     <div class="fg">
-      <label class="lb" for="f_exclude">이번 실험실에 넣지 않을 것 <span>고르지 않은 모듈은 자동으로 들어갑니다. 그 밖에 더 뺄 것</span></label>
+      <label class="lb" for="f_exclude">더 넣지 않을 것 <span>고르지 않은 모듈은 자동으로 빠집니다</span></label>
       <input type="text" id="f_exclude" data-k="exclude" placeholder="예) 타이머, 점수판, 학생 이름 입력">
     </div>
 
-    <h3 class="gsub">화면 느낌 <span style="font-size:12px;font-weight:500;color:var(--tx3);margin-left:6px">비우면 AI가 지침에 맞춰 정하고, 코드보다 먼저 브리프 표로 보여 줍니다</span></h3>
+    <h3 class="gsub">화면 느낌 <small>비우면 AI가 정하고, 코드보다 먼저 브리프 표로 보여 줍니다</small></h3>
 
     <div class="fg">
-      <label class="lb" for="f_concept1">이 실험실을 한 장면으로 말하면 <span>사진 한 장을 설명하듯이</span></label>
+      <label class="lb" for="f_concept1">한 장면으로 말하면 <span>사진 한 장을 설명하듯이 · “깔끔하게” 대신 눈에 보이는 것으로</span></label>
       <input type="text" id="f_concept1" data-k="concept1" placeholder="예) 어두운 실험대 위 젖은 거름종이 한 장에서 보라색과 파란색이 서로 반대쪽으로 번져 나간다">
-      <p class="hint">“깔끔하게”, “예쁘게” 같은 말 대신 <b>눈에 보이는 장면</b>으로 쓰면 AI가 매번 다른 화면을 만듭니다.</p>
     </div>
 
     <div class="fg">
@@ -772,7 +876,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     </div>
 
     <div class="fg">
-      <label class="lb">화면 분위기 <span>과목·단원에 맞춰 자동으로 제안됩니다. 눌러서 바꿀 수 있습니다</span></label>
+      <label class="lb">화면 분위기 <span>과목·단원에 맞춰 자동 제안 · 눌러서 바꿉니다</span></label>
       <div class="seg" id="segMood"></div>
     </div>
 
@@ -782,8 +886,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     </div>
 
     <div class="fg opt">
-      <button class="add" id="btnAdv" aria-expanded="false" style="margin-top:0">⚙ 색·구도까지 직접 정하기 (선택)</button>
-      <p class="hint">비워 두면 AI가 지침에 맞춰 정합니다. 원하는 색이나 구도가 이미 있을 때만 열어서 쓰세요.</p>
+      <button class="add" id="btnAdv" type="button" aria-expanded="false" style="margin-top:0">색·구도까지 직접 정하기 (선택)</button>
     </div>
 
     <div id="advBox" hidden>
@@ -801,7 +904,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           <textarea id="f_together" data-k="together" class="sm" placeholder="예) 거름종이 화면, 전압 다이얼, 이동 거리 눈금, 경과 시간"></textarea>
         </div>
       </div>
-      <div class="row c2">
+      <div class="row c2" style="margin-top:var(--sp5)">
         <div class="fg">
           <label class="lb" for="f_sign">기억에 남길 장면 하나 <span>이 실험실만의 특징</span></label>
           <input type="text" id="f_sign" data-k="sign" placeholder="예) 색이 사방이 아니라 전극 방향으로만 번지는 모습">
@@ -811,7 +914,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
           <input type="text" id="f_motion" data-k="motion" placeholder="예) 전원을 켜는 순간 전극에서 전기력 선이 한 번 훑고 지나감">
         </div>
       </div>
-      <div class="fg">
+      <div class="fg" style="margin-top:var(--sp5)">
         <label class="lb" for="f_budget">배치 메모 <span>비워 두면 AI가 레이아웃 전략을 고릅니다</span></label>
         <input type="text" id="f_budget" data-k="budget" placeholder="예) 그래프는 장면 오른쪽에 세로로, 조작은 기구 바로 옆에">
       </div>
@@ -821,39 +924,52 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 
   <!-- ══ STEP 4 ══ -->
   <section class="step" id="s4">
-    <div class="sh"><span class="n">4</span><div>
-      <h2>완성 프롬프트</h2>
-      <p>통째로 복사해 생성형 AI에 붙여넣으세요. 브리프 표 → 확인 필요 목록 → 완성 HTML → 점검 결과 순으로 응답하도록 지시되어 있습니다.</p></div></div>
+    <div class="sh"><span class="n">4</span><h2>완성 프롬프트</h2>
+      <p class="sub">AI를 고르고 복사해 붙여 넣으세요 · 브리프 → 확인 필요 → 완성 HTML → 점검 순으로 답합니다</p></div>
 
     <div class="tabs" id="tabs" role="tablist">
-      <button role="tab" aria-selected="true" data-tab="prompt">제작 요청서</button>
-      <button role="tab" aria-selected="false" data-tab="gate">제출 전 점검</button>
-      <button role="tab" aria-selected="false" data-tab="evid">교육과정 근거</button>
-      <button role="tab" aria-selected="false" data-tab="class">수업 활용안</button>
+      <button role="tab" type="button" aria-selected="true" data-tab="prompt">제작 요청서</button>
+      <button role="tab" type="button" aria-selected="false" data-tab="gate">받은 뒤 점검·수정</button>
+      <button role="tab" type="button" aria-selected="false" data-tab="evid">교육과정 근거</button>
+      <button role="tab" type="button" aria-selected="false" data-tab="class">수업 활용안</button>
     </div>
 
     <div id="tab-prompt">
-      <div class="acts">
-        <button class="pill pri" id="btnCopy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>프롬프트 전체 복사</button>
-        <div class="aibar" id="aiBarMain"></div>
+      <div class="sendbar">
+        <div class="q">어느 AI에 붙여 넣나요?<small>고른 곳에 맞게 응답 형식이 바뀝니다</small></div>
+        <div class="ais" data-ais></div>
+        <div class="ainote" data-ainote aria-live="polite"></div>
       </div>
-      <div class="acts">
-        <button class="pill sm" id="btnTxt"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>.txt 저장</button>
-        <button class="pill sm" id="btnMd"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>.md 저장</button>
-        <button class="pill sm" id="btnExport"><svg viewBox="0 0 24 24"><path d="M12 21V9M8 13l4-4 4 4"/><path d="M4 7V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"/></svg>작업 파일 내보내기</button>
-        <button class="pill sm" id="btnPrint"><svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 15h12v6H6z"/></svg>수업 기획서 인쇄</button>
+      <div class="lenrow">
+        <div class="seg2" data-len role="group" aria-label="프롬프트 길이"></div>
+        <p class="meter" data-meter aria-live="polite"></p>
       </div>
-      <pre class="out" id="out"></pre>
-      <p class="stat" id="stat"></p>
+      <div class="over-msg" data-over hidden></div>
+      <div class="acts">
+        <button class="pill pri go" type="button" data-go></button>
+        <button class="pill" type="button" data-copy><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>복사</button>
+        <button class="pill" type="button" data-txt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>.txt 저장</button>
+        <details class="more" id="moreMenu">
+          <summary class="pill" aria-label="더 보기 — 작업 파일 저장·열기, 인쇄">더 보기</summary>
+          <div class="more-menu">
+            <button type="button" id="btnExport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>작업 파일 저장 (.json)</button>
+            <button type="button" id="btnImport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M12 16v-5M9.5 13.5 12 11l2.5 2.5"/></svg>작업 파일 열기</button>
+            <button type="button" id="btnPrint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 15h12v6H6z"/></svg>수업 기획서 인쇄</button>
+          </div>
+        </details>
+        <input type="file" id="fileIn" accept=".json,application/json" hidden>
+      </div>
+      <pre class="out" id="out" tabindex="0" aria-label="완성 프롬프트"></pre>
     </div>
 
     <div id="tab-gate" hidden>
-      <p class="hint" style="margin:0 0 var(--sp4)">AI가 코드를 준 뒤 교사가 직접 확인할 항목입니다. 프롬프트에도 같은 목록이 들어가 AI가 스스로 점검하게 합니다.</p>
-      <h3 class="gsub" style="margin-top:0">차단 게이트 8 — 하나라도 실패하면 수업에 못 씁니다</h3>
+      <h3 class="gsub" style="margin-top:0">고쳐 달라고 말하기 <small>같은 대화창에 이어서 · 한 번에 한 가지씩 · <mark style="background:var(--tint2);color:inherit;border-radius:4px;padding:0 4px">색칠한 곳</mark>은 내 말로 바꿉니다</small></h3>
+      <div class="fixes" id="fixes"></div>
+      <h3 class="gsub">차단 게이트 8 <small>하나라도 실패하면 수업에 쓰지 않습니다 · 프롬프트에도 같은 목록이 들어갑니다</small></h3>
       <ul class="gates block" id="gateA"></ul>
-      <h3 class="gsub">공통 확인 12 — 기능·마감</h3>
+      <h3 class="gsub">공통 확인 12 <small>기능·마감</small></h3>
       <ul class="gates" id="gateC"></ul>
-      <h3 class="gsub">조건부 게이트 — 고른 모듈에만 해당</h3>
+      <h3 class="gsub">조건부 게이트 <small>고른 모듈에만 해당</small></h3>
       <ul class="gates cond" id="gateB"></ul>
     </div>
 
@@ -864,80 +980,82 @@ footer a:hover{color:var(--acc);text-decoration:underline}
     <div id="tab-class" hidden>
       <pre class="out" id="classOut" style="max-height:none"></pre>
       <div class="acts" style="margin:var(--sp4) 0 0">
-        <button class="pill" id="btnCopyClass"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>수업 활용안 복사</button>
+        <button class="pill" id="btnCopyClass" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>수업 활용안 복사</button>
       </div>
     </div>
   </section>
 </main>
 
-<!-- ── 사이드 ── -->
-<aside class="side">
+<!-- ── 완성 프롬프트 판 ── -->
+<aside class="side" aria-label="완성 프롬프트">
   <div class="panel">
-    <h3><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>제작 준비도<span class="pct" id="pct">0%</span></h3>
-    <div class="pbody">
-      <div class="bar"><i id="barFill" style="width:0"></i></div>
+    <div class="p-head"><h2>완성 프롬프트</h2><span class="pct">준비도 <span id="pct">0%</span></span></div>
+    <div class="p-ready">
+      <div class="bar"><i id="barFill"></i></div>
       <p class="ready" id="readyLine"></p>
       <ul class="crit" id="critList"></ul>
     </div>
-    <div class="side-acts">
-      <button class="pill pri" id="btnCopySide"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>프롬프트 복사</button>
-      <div class="aibar" id="aiBarSide"></div>
+    <div class="p-opt">
+      <div class="ais sm" data-ais></div>
+      <div class="seg2" data-len role="group" aria-label="프롬프트 길이"></div>
+      <p class="meter" data-meter></p>
     </div>
-  </div>
-  <div class="panel prevbox">
-    <h3>프롬프트 미리보기<button class="mini" id="btnCopy2">복사</button></h3>
-    <div class="pbody"><pre class="prev" id="prev">성취기준을 고르면 여기에 프롬프트가 만들어집니다.
-
-위 «예시» 단추를 누르면 과목별 예시 7종 중 하나를 골라 한 번에 채울 수 있습니다.</pre></div>
+    <div class="p-body" tabindex="0" aria-label="프롬프트 미리보기"><pre class="prev" id="prev"></pre></div>
+    <div class="p-act">
+      <button class="pill pri go" type="button" data-go></button>
+      <div class="row2">
+        <button class="pill" type="button" data-copy><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>복사</button>
+        <button class="pill" type="button" data-txt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>.txt 저장</button>
+      </div>
+    </div>
   </div>
 </aside>
 </div>
 
 <div class="dock" id="dock">
   <span class="dk">준비도<b id="dockPct">0%</b></span>
-  <button class="pill pri" id="btnDockCopy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg><span class="lbtxt">프롬프트 복사</span></button>
-  <button class="pill" id="btnDockAI"><svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg><span class="lbtxt" id="dockAiTxt">복사하고 AI 열기</span></button>
+  <button class="pill pri" id="btnDockAI" type="button"><span class="lbtxt" id="dockAiTxt">복사하고 AI 열기</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <button class="pill" id="btnDockCopy" type="button" aria-label="프롬프트 복사"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg><span class="lbtxt">복사</span></button>
 </div>
 
 <footer>
-  <b>🧪 송쌤과학 가상실험실 프롬프트 스튜디오 (교사용 · 전 과목)</b><br>
-  과학은 2022 개정 과학과 교육과정(교육부 고시 제2022-33호 [별책 9]) 중학교 1~3학년군 성취기준 87개와 탐구 활동 48개, 통합과학 성취기준을 담고 있습니다. 다른 과목은 성취기준을 직접 붙여 넣어 같은 방식으로 씁니다.<br>
-  제작 규칙은 <b>송쌤과학 가상실험실 프로젝트 지침 v10.13</b>에서 과목과 무관한 부분을 추려 넣었습니다. 생성된 실험실에는 제작자 브랜드가 들어가지 않습니다.<br>
-  ⓒ 2026 송쌤과학 · <a href="https://www.youtube.com/@songsamscience" target="_blank" rel="noopener noreferrer">YouTube @songsamscience</a>
-  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer">Instagram @songsamscience</a><br>
-  ⚠ 무단 복제·상업적 이용 금지 · 입력한 내용은 이 브라우저 안에만 저장되며 어디로도 전송되지 않습니다. · v2.0 · 2026-10-07
+  <b>송쌤과학 가상실험실 프롬프트 스튜디오 (교사용 · 전 과목)</b><br>
+  과학 성취기준은 2022 개정 과학과 교육과정(교육부 고시 제2022-33호 [별책 9]), 제작 규칙은 송쌤과학 가상실험실 프로젝트 지침 v10.13을 간추린 것입니다.<br>
+  AI가 만든 결과는 초안입니다. 수치와 내용은 교과서와 견주어 확인해 주세요. 입력한 내용은 이 브라우저에만 저장되고 어디로도 보내지 않습니다.<br>
+  ⓒ 2026 송쌤과학 · <a href="https://www.youtube.com/@songsamscience" target="_blank" rel="noopener noreferrer" title="새 창에서 열립니다">YouTube @songsamscience</a>
+  · <a href="https://www.instagram.com/songsamscience/" target="_blank" rel="noopener noreferrer" title="새 창에서 열립니다">Instagram @songsamscience</a>
+  · 무단 복제·상업적 이용 금지 · v2.1 · 2026-11-11
 </footer>
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
-  <div class="dhead"><h2 id="drawerTitle">지침 요약</h2>
-    <button class="ico" id="btnCloseDrawer" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
-  <div class="dbody" id="drawerBody"></div>
+  <div class="dhead"><h2 id="drawerTitle">사용 방법</h2>
+    <button class="ico" id="btnCloseDrawer" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+  <div class="dbody">
+    <div class="dtabs" role="tablist">
+      <button type="button" role="tab" data-d="help" aria-selected="true">사용 방법</button>
+      <button type="button" role="tab" data-d="guide" aria-selected="false">지침 요약</button>
+    </div>
+    <div id="drawerBody"></div>
+  </div>
 </aside>
 
 <div class="modal" id="askModal" hidden role="dialog" aria-modal="true" aria-labelledby="askTitle">
   <div class="mbox">
     <div class="dhead"><h2 id="askTitle">활동 내용 AI에게 물어보기</h2>
-      <button class="ico" id="btnCloseAsk" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <button class="ico" id="btnCloseAsk" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
     <div class="mbody">
-      <p class="hint" style="margin:0 0 var(--sp3)">실험·활동 방법, 준비물, 예상 결과가 잘 떠오르지 않을 때 쓰세요.
-        질문을 적고 AI를 고르면 <b>새 탭에서 열리고, 질문은 자동으로 클립보드에 복사</b>됩니다.</p>
+      <p class="hint">실험·활동 방법, 준비물, 예상 결과가 떠오르지 않을 때 씁니다. AI를 고르면 <b>질문을 복사하고 새 탭에서 엽니다.</b></p>
       <div class="lbrow">
-        <label class="lb" for="askText" style="margin:0">무엇을 물어볼까요</label>
+        <label class="lb" for="askText">무엇을 물어볼까요 <span>1단계에서 고른 내용이 자동으로 들어갑니다</span></label>
         <button class="mini" id="btnReseed" type="button">고른 내용으로 다시 채우기</button>
       </div>
       <textarea id="askText" style="min-height:150px" placeholder="예) 중학교 2학년 «전기력을 이용한 이온의 이동» 실험의 준비물과 과정, 예상 결과를 알려 주세요. 조건이 결과를 좌우하는 값도 함께요."></textarea>
-      <p class="hint" style="margin:6px 0 0">1단계에서 고른 <b>성취기준과 활동</b>이 위에 자동으로 들어갑니다. 지우고 직접 써도 됩니다.</p>
-      <label class="lb" style="margin-top:var(--sp4)">이런 것도 물어볼 수 있어요 <span>누르면 아래에 덧붙습니다</span></label>
+      <label class="lb">이런 것도 물어볼 수 있어요 <span>누르면 위에 덧붙습니다</span></label>
       <div class="qchips" id="qchips"></div>
-      <label class="lb" style="margin-top:var(--sp4)">어디에 물어볼까요</label>
+      <label class="lb">어디에 물어볼까요</label>
       <div class="ai-grid" id="aiGrid"></div>
-      <div class="note" style="margin-top:var(--sp4)"><b>버튼 색의 뜻.</b>
-        <span class="dotk auto"></span> <b>진한 색</b>은 질문이 <b>주소로 함께 전달되어 자동으로 입력</b>되는 서비스,
-        <span class="dotk man"></span> <b>연한 색</b>은 새 탭에서 <b>붙여넣기(Ctrl+V)</b> 해야 하는 서비스입니다. 어느 쪽이든 질문은 클립보드에 복사해 둡니다.</div>
-      <div class="note warn" style="margin-top:var(--sp2)"><b>확인하고 쓰세요.</b>
-        AI가 알려 준 수치·조건은 그대로 믿지 말고 교과서나 교육과정 자료로 확인한 뒤 2단계에 옮겨 적으세요.
-        학생 이름·학번 같은 개인정보는 입력하지 않습니다.</div>
+      <div class="note warn"><b>확인하고 쓰세요.</b> AI가 알려 준 수치·조건은 교과서나 교육과정 자료로 확인한 뒤 2단계에 옮겨 적습니다. 학생 이름·학번 같은 개인정보는 넣지 않습니다.</div>
     </div>
   </div>
 </div>
@@ -945,45 +1063,43 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 <div class="modal" id="quickModal" hidden role="dialog" aria-modal="true" aria-labelledby="quickTitle">
   <div class="mbox" style="max-width:760px">
     <div class="dhead"><h2 id="quickTitle">긴급 가상실험실 프롬프트</h2>
-      <button class="ico" id="btnCloseQuick" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <button class="ico" id="btnCloseQuick" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
     <div class="mbody">
-      <p class="hint" style="margin:0 0 var(--sp3)">단계를 채울 시간이 없을 때 쓰세요. <b>만들 내용만 적으면</b> 제작 지침이 통째로 붙은 요청서가 바로 만들어지고 복사됩니다.
-        <b>무엇을 조작하고 · 무엇이 달라지고 · 무엇을 알게 하고 싶은지</b> 세 가지만 넣어도 결과가 크게 달라집니다.</p>
+      <p class="hint">단계를 채울 시간이 없을 때 씁니다. <b>무엇을 조작하고 · 무엇이 달라지고 · 무엇을 알게 하고 싶은지</b>만 적으면 제작 지침이 붙은 요청서가 바로 만들어집니다.</p>
 
       <div class="lbrow">
-        <label class="lb" for="qkText" style="margin:0">어떤 실험실을 만들까요 <em style="color:var(--bad)">*</em></label>
+        <label class="lb" for="qkText">어떤 실험실을 만들까요 <em style="color:var(--bad)">*</em><span>Ctrl(⌘)+Enter 로 바로 복사</span></label>
         <button class="mini" id="btnQkEx" type="button">예시 넣기</button>
       </div>
       <textarea id="qkText" style="min-height:140px" placeholder="예) 중2 과학 물질의 구성. 젖은 거름종이 양 끝에 전극을 물리고 가운데에 보라색·파란색 수용액을 떨어뜨린 뒤, 전압을 0~9 V로 올리며 두 색이 서로 반대 전극 쪽으로 번지는 것을 관찰. 이온이 전하를 띠고 있음을 설명하게 하고 싶음.
 예) 중2 수학 일차함수. 기울기와 y절편 슬라이더를 움직이면 그래프가 바뀌고, 두 점을 지나는 직선의 식을 맞히는 미션."></textarea>
-      <p class="hint" style="margin:6px 0 0">Ctrl(⌘)+Enter 로 바로 만들 수 있습니다.</p>
 
       <div id="qkSugWrap" hidden>
-        <label class="lb" style="margin-top:var(--sp3)">내용과 맞는 과학 성취기준 <span>눌러서 붙이면 교육과정 근거로 들어갑니다</span></label>
+        <label class="lb">내용과 맞는 과학 성취기준 <span>눌러서 붙이면 교육과정 근거로 들어갑니다</span></label>
         <div class="sug" id="qkSug"></div>
       </div>
 
-      <label class="lb" style="margin-top:var(--sp4)">알면 골라 주세요 <span>몰라도 됩니다. 비우면 AI가 내용에서 추정합니다</span></label>
+      <label class="lb">알면 골라 주세요 <span>비우면 AI가 내용에서 추정합니다</span></label>
       <div class="qk-rows">
-        <div><small>과목</small><input type="text" id="qkSubj" list="subjList" placeholder="예) 과학, 수학, 사회" maxlength="12"><datalist id="subjList"></datalist></div>
+        <div><small>과목</small><input type="text" id="qkSubj" list="subjList" placeholder="예) 과학, 수학, 사회" maxlength="12" aria-label="과목"><datalist id="subjList"></datalist></div>
         <div><small>학교급</small><div class="seg sm" id="qkLvl"></div></div>
         <div><small>학년</small><div class="seg sm" id="qkGradeN"></div></div>
         <div><small>유형</small><div class="seg sm" id="qkType"></div></div>
         <div><small>수업 시간</small><div class="seg sm" id="qkTime"></div></div>
       </div>
 
-      <div class="acts" style="margin:var(--sp5) 0 0">
-        <button class="pill pri" id="btnQkMake"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg>프롬프트 만들고 복사하기</button>
-        <div class="aibar" id="aiBarQuick"></div>
+      <div class="qk-send">
+        <div class="qk-pick">
+          <div class="ais" data-ais></div>
+          <div class="seg2" data-len role="group" aria-label="프롬프트 길이"></div>
+        </div>
+        <div class="acts">
+          <button class="pill pri go" type="button" id="btnQkGo"></button>
+          <button class="pill" type="button" id="btnQkMake"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>복사</button>
+          <button class="pill" type="button" id="btnQkTxt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/></svg>.txt 저장</button>
+          <button class="pill" type="button" id="btnQkToFull"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>단계 입력으로 가져가기</button>
+        </div>
       </div>
-      <div class="acts" style="margin:var(--sp2) 0 0">
-        <button class="pill sm" id="btnQkTxt"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>.txt 저장</button>
-        <button class="pill sm" id="btnQkToFull"><svg viewBox="0 0 24 24"><path d="M4 12h16M13 5l7 7-7 7"/></svg>이 내용을 단계 입력으로 가져가기</button>
-      </div>
-
-      <div class="note ok" style="margin-top:var(--sp3)"><b>한 번에 완성되지 않아도 됩니다.</b>
-        AI가 만든 실험실을 열어 본 뒤 같은 대화창에서 «범위를 12까지 늘려 주세요», «그래프를 오른쪽으로 옮겨 주세요»처럼
-        <b>이어서 이야기하며 고쳐 나가면</b> 됩니다. 고칠 곳이 많아지면 단계 입력으로 가져가 다시 만드는 편이 빠릅니다.</div>
 
       <pre class="out" id="qkOut" hidden style="margin-top:var(--sp4);max-height:300px"></pre>
     </div>
@@ -993,10 +1109,9 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 <div class="modal" id="exModal" hidden role="dialog" aria-modal="true" aria-labelledby="exTitle">
   <div class="mbox" style="max-width:980px">
     <div class="dhead"><h2 id="exTitle">예시 세팅 불러오기</h2>
-      <button class="ico" id="btnCloseEx" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <button class="ico" id="btnCloseEx" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
     <div class="mbody">
-      <p class="hint" style="margin:0 0 var(--sp4)">카드를 누르면 네 단계가 모두 채워집니다. 과학 5종(중2 네 영역 + 고1 통합과학 게임형)과 수학·사회 각 1종입니다.
-        내 수업 주제로 바꿀 때는 성취기준부터 다시 고르세요. 지금 입력한 내용은 예시로 바뀝니다.</p>
+      <p class="hint">카드를 누르면 네 단계가 모두 채워집니다. 과학 5종(중2·중3 네 영역 + 고1 통합과학)과 수학·사회 각 1종입니다. 지금 입력한 내용은 예시로 바뀝니다.</p>
       <div class="exgrid" id="exGrid"></div>
     </div>
   </div>
@@ -1008,8 +1123,8 @@ footer a:hover{color:var(--acc);text-decoration:underline}
       <h2 id="cfmTitle" style="font-size:17px;margin-bottom:var(--sp2)">입력한 내용을 모두 지울까요?</h2>
       <p id="cfmMsg" style="margin:0 0 var(--sp5);color:var(--tx2);font-size:13.5px;line-height:1.6"></p>
       <div style="display:flex;gap:var(--sp2);justify-content:flex-end">
-        <button class="pill" id="cfmNo">그대로 두기</button>
-        <button class="pill pri" id="cfmYes">지우기</button>
+        <button class="pill" id="cfmNo" type="button">그대로 두기</button>
+        <button class="pill pri" id="cfmYes" type="button">지우기</button>
       </div>
     </div>
   </div>
@@ -1018,7 +1133,7 @@ footer a:hover{color:var(--acc);text-decoration:underline}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const CURRICULUM=[{"no":1,"g":1,"a":"융합","n":"과학과 인류의 지속가능한 삶","s":[{"c":"9과01-01","t":"과학적 탐구 방법을 이해하고, 일상생활의 문제에 대한 과학적 해결 방안을 제안할 수 있다."},{"c":"9과01-02","t":"과학의 발전이 인류 문명에 미친 영향을 이해하고, 인공지능 등 첨단 과학기술이 가져올 미래 사회의 변화를 조사하여 발표할 수 있다."},{"c":"9과01-03","t":"인류의 지속가능한 삶을 위한 과학기술의 중요성과 역할에 대해 토의하고, 개인과 사회 차원의 활동 방안을 찾아 실천할 수 있다."}],"q":["주변에서 탐구할 문제를 발견하고 탐구 계획서 작성하기"]},{"no":2,"g":1,"a":"생명","n":"생물의 구성과 다양성","s":[{"c":"9과02-01","t":"세포는 생명 활동이 일어나는 기본 단위임을 이해하고, 세포의 구조와 기능의 관계를 추론할 수 있다."},{"c":"9과02-02","t":"생물의 유기적 구성 단계를 이해하고, 동물과 식물을 비교하여 분석할 수 있다."},{"c":"9과02-03","t":"생물다양성을 이해하고, 변이와 생물다양성의 관계를 추론할 수 있다."},{"c":"9과02-04","t":"종의 개념과 분류 체계를 이해하고, 생물을 계 수준에서 분류할 수 있다."},{"c":"9과02-05","t":"생물다양성 보전의 필요성을 이해하고, 생물다양성 유지를 위한 방안을 조사하고 실천할 수 있다."}],"q":["세포 관찰하기","생물다양성 보전 놀이 활동하기"]},{"no":3,"g":1,"a":"물리","n":"열","s":[{"c":"9과03-01","t":"온도와 열평형 과정을 물질을 구성하는 입자들의 배치나 움직임 등으로 설명할 수 있다."},{"c":"9과03-02","t":"열은 전도, 대류, 복사로 전달됨을 알고, 열전달 과정을 모형 등을 사용하여 다양하게 표현할 수 있다."},{"c":"9과03-03","t":"물질에 따라 비열과 열팽창 정도가 다름을 알고, 이러한 성질이 일상생활에서 유용하게 활용됨을 인식할 수 있다."}],"q":["열화상 카메라를 이용하여 물체에서 열의 전도 비교하기","온도 센서를 이용하여 여러 가지 액체의 비열 비교하기"]},{"no":4,"g":1,"a":"화학","n":"물질의 상태 변화","s":[{"c":"9과04-01","t":"확산 및 증발 현상을 관찰하여 물질을 구성하는 입자가 운동하고 있음을 추론할 수 있다."},{"c":"9과04-02","t":"물질의 세 가지 상태의 특징을 설명하고, 이를 입자 모형으로 표현할 수 있다."},{"c":"9과04-03","t":"여러 가지 물질의 상태 변화를 관찰하고, 이를 입자 모형으로 설명할 수 있다."},{"c":"9과04-04","t":"물질의 상태 변화와 열에너지 출입 관계를 이해하고, 이를 실생활에 적용하여 과학의 유용성을 인식할 수 있다."}],"q":["확산 현상 관찰하기","물질의 상태 변화 시 질량과 부피 변화 측정하기","상태 변화 실험에서 가열 곡선 또는 냉각 곡선 그리기"]},{"no":5,"g":1,"a":"물리","n":"힘의 작용","s":[{"c":"9과05-01","t":"물체에 작용하는 힘을 화살표를 이용하여 나타내고, 힘의 평형을 이루는 조건을 설명할 수 있다."},{"c":"9과05-02","t":"중력, 탄성력, 마찰력, 부력을 이해하고, 각 힘의 특징을 크기와 방향으로 설명할 수 있다."},{"c":"9과05-03","t":"알짜힘이 0이 아닐 때 물체의 운동 상태가 변함을 알고, 그 예를 조사하여 분류할 수 있다."},{"c":"9과05-04","t":"다양한 사례에서 작용하는 힘과 힘의 평형 관계를 설명하고, 일상생활에서 힘의 특징을 이용한 기구나 장치를 설계할 수 있다."}],"q":["용수철의 탄성력 측정하기","물속에서 부력 측정하기","장난감이나 놀이 기구에서 힘의 작용 탐구하기"]},{"no":6,"g":1,"a":"화학","n":"기체의 성질","s":[{"c":"9과06-01","t":"압력의 의미를 알고, 기체의 압력을 입자의 운동으로 설명할 수 있다."},{"c":"9과06-02","t":"기체의 압력과 부피 관계를 실험 결과로부터 알아내고, 이를 입자 모형으로 해석할 수 있다."},{"c":"9과06-03","t":"기체의 온도와 부피 관계를 실험 결과로부터 알아내고, 이를 입자 모형으로 해석할 수 있다."}],"q":["기체의 압력과 부피 관계와 기체의 온도와 부피 관계를 실험으로 알아보기"]},{"no":7,"g":1,"a":"지구","n":"태양계","s":[{"c":"9과07-01","t":"태양계를 구성하는 천체의 특징을 알고, 행성을 목성형 행성과 지구형 행성으로 구분할 수 있다."},{"c":"9과07-02","t":"태양의 표면과 대기에서 일어나는 현상을 알고, 태양의 활동이 지구에 미치는 영향을 추론할 수 있다."},{"c":"9과07-03","t":"지구 자전에 의한 천체의 겉보기 운동과 지구 공전에 의한 별자리 변화를 이해하고, 밤하늘 천체에 호기심을 가진다."},{"c":"9과07-04","t":"달을 관측하여 달의 위상변화 원리를 이해하고, 일식과 월식을 설명할 수 있다."}],"q":["망원경을 이용하여 달, 행성 관측하기","태양계 천체 자료 수집 및 분석하기","모형을 이용하여 달의 위상변화 관찰하기"]},{"no":8,"g":1,"a":"화학","n":"물질의 특성","s":[{"c":"9과08-01","t":"물질의 특성의 의미를 알고, 실험을 통해 밀도, 용해도, 녹는점, 끓는점 등을 설명할 수 있다."},{"c":"9과08-02","t":"물질의 특성을 근거로 우리 주변의 물질을 순물질과 혼합물로 분류할 수 있다."},{"c":"9과08-03","t":"물질의 특성을 이용하여 혼합물이 분리되는 원리를 이해하고, 이를 이용한 사례를 주변에서 찾을 수 있다."}],"q":["혼합물 분리 실험을 설계하고 수행하기"]},{"no":9,"g":1,"a":"지구","n":"지권의 변화","s":[{"c":"9과09-01","t":"지구계의 구성 요소를 알고, 지권의 층상 구조와 그 특징을 조사·발표할 수 있다."},{"c":"9과09-02","t":"조암 광물의 주요 특성을 관찰하고, 암석과 광물의 활용 방안 및 자원으로서 가치에 대해 조사할 수 있다."},{"c":"9과09-03","t":"지각을 이루는 암석을 생성 과정에 따라 분류하고, 암석의 순환 과정을 설명할 수 있다."},{"c":"9과09-04","t":"풍화 과정을 이해하고, 토양 생성 과정을 풍화 작용의 예로 설명할 수 있다."},{"c":"9과09-05","t":"대륙이동설을 이해하고, 지진과 화산이 발생하는 지역의 분포를 판의 경계와 관련지어 설명할 수 있다."}],"q":["광물 특성 관찰하기","암석을 관찰하여 분류하기","빅데이터를 활용하여 화산대 및 지진대와 판의 경계와의 관련성 탐구하기"]},{"no":10,"g":2,"a":"물리","n":"빛과 파동","s":[{"c":"9과10-01","t":"빛의 반사와 굴절의 원리를 이해하고, 물체를 보는 과정을 빛의 경로를 이용하여 표현할 수 있다."},{"c":"9과10-02","t":"평면거울에서 상이 생기는 원리를 설명하고, 일상생활에서 사용되는 거울과 렌즈의 종류를 분류하고 상의 특징을 비교할 수 있다."},{"c":"9과10-03","t":"물체의 색을 빛의 반사와 관련지어 설명하고, 영상 장치에서 빛의 합성을 이용하여 다양한 색이 표현되는 원리를 이해할 수 있다."},{"c":"9과10-04","t":"파동의 발생과 전달 과정을 이해하고, 소리의 특성을 진폭, 진동수, 파형 등의 과학적 용어로 표현할 수 있다."}],"q":["거울과 렌즈에 의한 상의 특징 관찰하기","디지털 탐구 도구를 이용하여 소리의 진폭, 진동수, 파형 탐구하기"]},{"no":11,"g":2,"a":"화학","n":"물질의 구성","s":[{"c":"9과11-01","t":"원소와 화합물의 정의를 알고, 원소와 화합물을 화학식으로 표현할 수 있다."},{"c":"9과11-02","t":"원소를 구성하는 입자인 원자는 양성자, 중성자, 전자로 구성되며, 양성자의 수에 따라 원소의 종류가 달라짐을 입자 모형을 활용하여 설명할 수 있다."},{"c":"9과11-03","t":"원소는 양성자의 수에 따라 주기율표에 배치됨을 알고, 주기율표에서 성질이 유사한 원소를 찾을 수 있다."},{"c":"9과11-04","t":"물질을 이루는 입자는 원자, 분자, 이온 등으로 존재할 수 있음을 알고, 이온은 전하를 띠고 있음을 설명할 수 있다."}],"q":["같은 족 원소들의 유사성 탐구하기","전기력을 이용한 실험으로 이온의 이동 관찰하기"]},{"no":12,"g":2,"a":"생명","n":"식물과 에너지","s":[{"c":"9과12-01","t":"광합성 과정을 이해하고, 환경 요인과 광합성의 관계를 탐구하는 실험을 설계할 수 있다."},{"c":"9과12-02","t":"식물의 호흡과 광합성의 관계를 이해하고, 호흡과 광합성 과정에서 출입하는 에너지와 물질의 변화를 분석할 수 있다."},{"c":"9과12-03","t":"광합성 산물의 저장과 이용 과정을 이해하고, 모형으로 설명할 수 있다."}],"q":["광합성에 필요한 물질과 산물 확인하는 실험하기"]},{"no":13,"g":2,"a":"생명","n":"동물과 에너지","s":[{"c":"9과13-01","t":"소화계의 구조와 기능을 이해하고, 소화 과정을 소화 효소의 작용과 관련지어 추론할 수 있다."},{"c":"9과13-02","t":"순환계의 구조와 기능을 이해하고, 혈액의 순환 경로를 종합하여 발표할 수 있다."},{"c":"9과13-03","t":"호흡계의 구조와 기능을 이해하고, 호흡 운동의 원리를 나타내는 모형을 만들 수 있다."},{"c":"9과13-04","t":"배설계의 구조와 기능을 이해하고, 노폐물이 배설되는 과정을 모식도로 표현할 수 있다."},{"c":"9과13-05","t":"동물이 세포호흡을 통해 에너지를 얻는 과정을 소화, 순환, 호흡, 배설과 관련지어 통합적으로 설명할 수 있다."}],"q":["음식물에 들어 있는 영양소 검출하기","침의 소화 작용 탐구하기"]},{"no":14,"g":2,"a":"물리","n":"전기와 자기","s":[{"c":"9과14-01","t":"마찰 전기, 정전기 유도 현상을 관찰하고, 이를 전기력과 원자 모형을 이용하여 설명할 수 있다."},{"c":"9과14-02","t":"전기 회로에서 전류를 모형으로 설명하고, 실험을 통해 저항, 전류, 전압 사이의 관계를 이끌어낼 수 있다."},{"c":"9과14-03","t":"저항의 직렬연결과 병렬연결의 특징을 비교하고, 일상생활에서 전기 에너지가 다양한 형태의 에너지로 전환됨을 소비 전력과 관련지어 설명할 수 있다."},{"c":"9과14-04","t":"자기장 안에 놓인 전류가 흐르는 코일이 받는 힘의 특성을 추리하고, 전동기 등 일상생활에서 활용한 예를 찾을 수 있다."}],"q":["저항, 전류, 전압 사이의 관계 탐구하기","전류가 흐르는 코일 주위의 자기장 관찰하기"]},{"no":15,"g":2,"a":"지구","n":"별과 우주","s":[{"c":"9과15-01","t":"연주시차를 이용하여 별까지의 거리를 구할 수 있고, 별의 등급과 밝기의 관계 및 표면 온도와 색의 관계를 설명할 수 있다."},{"c":"9과15-02","t":"우리은하의 구조와 크기를 이해하고, 성운과 성단의 특징을 비교할 수 있다."},{"c":"9과15-03","t":"모형을 이용하여 우주가 팽창하고 있음을 설명할 수 있다."},{"c":"9과15-04","t":"우주탐사의 의의와 인류에게 미치는 영향을 조사하여 과학의 유용성을 인식할 수 있다."}],"q":["디지털 탐구 도구를 활용하여 광원으로부터의 거리에 따른 빛의 세기 실험하기","천체 관측 프로그램을 활용하여 우리은하를 구성하는 천체 관측하기","우주탐사 계획 세우기"]},{"no":16,"g":2,"a":"화학","n":"화학 반응의 규칙성","s":[{"c":"9과16-01","t":"물리 변화와 화학 변화의 의미를 알고, 화학 변화에서 새로운 물질이 생성됨을 관찰할 수 있다."},{"c":"9과16-02","t":"간단한 화학 반응을 화학 반응식으로 표현하고, 화학 반응식에서 계수의 비를 입자 수의 비로 해석할 수 있다."},{"c":"9과16-03","t":"화학 반응에서 질량이 보존됨을 실험을 통해 추론할 수 있다."},{"c":"9과16-04","t":"화합물을 구성하는 성분 원소의 질량비가 일정함을 실험 자료를 해석하여 설명할 수 있다."},{"c":"9과16-05","t":"기체 반응에서 기체 부피 사이의 비가 일정함을 실험 자료를 해석하여 설명할 수 있다."},{"c":"9과16-06","t":"화학 반응에서 열에너지가 출입함을 알고, 생활 속 사례를 조사하여 발표할 수 있다."}],"q":["화학 반응 전후의 질량 변화 관찰하기","화학 반응을 이용한 간단한 냉각 장치 만들기"]},{"no":17,"g":2,"a":"지구","n":"날씨와 기후변화","s":[{"c":"9과17-01","t":"지구 대기권을 4개 권역으로 구분하며, 온실효과와 지구온난화를 복사 평형의 관점으로 설명할 수 있다."},{"c":"9과17-02","t":"대기 대순환에서 위도별 바람의 특성을 파악하고, 대기 대순환의 역할을 설명할 수 있다."},{"c":"9과17-03","t":"상대습도, 단열 팽창 및 응결 현상의 관계를 이해하고, 구름의 생성과 강수 과정을 설명할 수 있다."},{"c":"9과17-04","t":"기압, 기단, 전선의 개념을 이해하고, 일기도에서 저기압과 고기압의 분포에 따른 날씨를 해석할 수 있다."}],"q":["기후변화 관련 자료 검색 및 분석하기","디지털 탐구 도구를 이용하여 구름 생성 과정 실험하기","일기도, 레이더 및 위성 영상 등 실시간 데이터를 활용하여 날씨 해석하기"]},{"no":18,"g":2,"a":"지구","n":"수권과 해수의 순환","s":[{"c":"9과18-01","t":"수권에서 해수, 담수, 빙하의 분포와 활용 사례를 조사하고, 자원으로서 물의 가치에 대해 토론할 수 있다."},{"c":"9과18-02","t":"해수의 수온과 염분의 분포 및 변화를 해석하여 해수의 특성을 설명할 수 있다."},{"c":"9과18-03","t":"대기 대순환과 해양 표층 순환과의 관계를 이해하고, 기후변화에 영향을 미치는 해류의 역할을 설명할 수 있다."}],"q":["디지털 탐구 도구를 이용하여 해수의 연직 수온 분포 실험하기","실시간 데이터를 활용하여 우리나라 주변 해양 정보(수온, 염분) 분석하기"]},{"no":19,"g":3,"a":"물리","n":"운동과 에너지","s":[{"c":"9과19-01","t":"직선상에서 움직이는 물체의 운동을 그래프로 나타내고 해석할 수 있다."},{"c":"9과19-02","t":"자유 낙하하는 물체의 운동에서 시간에 따른 속력의 변화가 일정함을 분석할 수 있다."},{"c":"9과19-03","t":"일의 정의를 알고, 자유 낙하하는 물체의 운동에서 중력이 한 일을 위치 에너지와 운동 에너지로 표현할 수 있다."},{"c":"9과19-04","t":"물체의 운동에서 역학적 에너지의 전환과 보존을 이해하고, 이를 활용하여 일상생활 속 물체의 운동을 예측할 수 있다."}],"q":["여러 가지 물체의 자유 낙하 운동 분석하기","자유 낙하하는 물체의 역학적 에너지 보존 실험하기"]},{"no":20,"g":3,"a":"생명","n":"자극과 반응","s":[{"c":"9과20-01","t":"감각기관의 구조와 기능을 이해하고, 실험을 통해 자극이 뇌로 전달되는 과정을 추론할 수 있다."},{"c":"9과20-02","t":"뉴런과 신경계의 구조와 기능을 이해하고, 자극에서 반응이 일어나기까지의 과정을 모형으로 설명할 수 있다."},{"c":"9과20-03","t":"우리 몸의 기능 조절에 호르몬이 관여함을 알고, 관련 자료를 조사하여 발표할 수 있다."}],"q":["맹점 확인 실험하기","무조건 반사와 의식적 반응 실험하기"]},{"no":21,"g":3,"a":"생명","n":"생식과 유전","s":[{"c":"9과21-01","t":"개체의 생장에 세포분열이 필요한 이유를 세포의 표면적과 부피의 관계로 추론할 수 있다."},{"c":"9과21-02","t":"염색체와 유전자의 관계를 이해하고, 체세포분열과 생식세포 형성과정의 특징을 염색체 행동을 중심으로 해석할 수 있다."},{"c":"9과21-03","t":"수정란으로부터 개체가 발생하는 과정을 모형으로 표현할 수 있다."},{"c":"9과21-04","t":"멘델 유전 실험의 의의와 원리를 이해하고, 멘델 유전 원리가 적용되는 유전 현상을 조사하여 협력적으로 소통할 수 있다."},{"c":"9과21-05","t":"사람의 유전 형질과 유전 연구 방법을 알고, 가계도를 분석하여 사람의 유전 현상을 설명할 수 있다."}],"q":["세포분열 관찰하기","유전 현상 모의 활동하기"]},{"no":22,"g":3,"a":"융합","n":"재해·재난과 안전","s":[{"c":"9과22-01","t":"재해·재난 사례와 관련된 자료를 조사하고, 그 발생 원인과 피해에 대해 과학적으로 분석할 수 있다."},{"c":"9과22-02","t":"과학적 원리를 이용하여 재해·재난에 대한 대비 및 대처 방안을 세울 수 있다."}],"q":["빅데이터를 이용하여 재해·재난 사례 분석하기","재해·재난의 피해를 줄이기 위한 홍보자료 제작하기"]},{"no":23,"g":3,"a":"융합","n":"과학과 나의 미래","s":[{"c":"9과23-01","t":"과학과 관련된 직업의 종류와 하는 일을 조사하고, 과학기술의 발달로 생기는 미래 사회의 직업 변화를 예상할 수 있다."},{"c":"9과23-02","t":"자신의 진로와 관련 있는 과학 분야를 조사하고, 진로 선택을 위하여 필요한 과학 학습을 계획할 수 있다."}],"q":["다양한 직업 속 과학 탐색하기","미래 사회에서 과학의 역할과 새로운 과학 직업 토의하기"]},{"no":101,"g":10,"bk":1,"sub":1,"a":"통합","n":"과학의 기초","s":[{"c":"10통과1-01-01","t":"자연을 시간과 공간에서 기술할 수 있음을 알고, 길이와 시간 측정의 현대적 방법과 다양한 규모의 측정 사례를 조사할 수 있다."},{"c":"10통과1-01-02","t":"과학 탐구에서 중요한 기본량의 의미를 알고, 자연 현상을 기술하는 데 단위가 가지는 의미와 적용사례를 설명할 수 있다."},{"c":"10통과1-01-03","t":"과학 탐구에서 측정과 어림의 의미를 알고, 일상생활의 여러 가지 상황에서 측정 표준의 유용성과 필요성을 논증할 수 있다."},{"c":"10통과1-01-04","t":"자연에서 일어나는 다양한 변화를 측정·분석하여 정보를 산출함을 알고, 이러한 정보를 디지털로 변환하는 기술을 정보 통신에 활용하여 현대 문명에 미친 영향을 인식한다."}],"q":["미시세계와 거시세계의 물체의 크기에 따른 차이점 분석하기","일상생활에서 측정 표준이 활용되는 사례 탐색하기","스마트 기기를 활용하여 여러 가지 기본량을 측정하고 분석하기"]},{"no":102,"g":10,"bk":1,"sub":2,"a":"통합","n":"물질과 규칙성","s":[{"c":"10통과1-02-01","t":"천체에서 방출되는 빛의 스펙트럼을 분석하여 우주 초기에 형성된 원소와 천체의 구성 물질을 추론할 수 있다."},{"c":"10통과1-02-02","t":"우주 초기의 원소들로부터 태양계의 재료이면서 생명체를 구성하는 원소들이 형성되는 과정을 통해 지구와 생명의 역사가 우주 역사의 일부분임을 해석할 수 있다."},{"c":"10통과1-02-03","t":"세상을 구성하는 원소들의 성질이 주기성을 나타내는 현상을 통해 자연의 규칙성을 도출하고, 지구와 생명체를 구성하는 주요 원소들이 결합을 형성하는 이유를 해석할 수 있다."},{"c":"10통과1-02-04","t":"인류의 생존에 필수적인 물, 산소, 소금 등이 만들어지는 결합의 차이를 이해하고 각 물질의 성질과 관련지어 설명할 수 있다."},{"c":"10통과1-02-05","t":"지각과 생명체를 구성하는 물질들이 기본 단위체의 결합을 통해서 형성된다는 것을 규산염 광물, 단백질과 핵산의 예를 통해 설명할 수 있다."},{"c":"10통과1-02-06","t":"지구를 구성하는 물질을 전기적 성질에 따라 구분할 수 있고, 물질의 전기적 성질을 응용하여 일상생활과 첨단기술에서 다양한 소재로 활용됨을 인식한다."}],"q":["분광기를 활용하여 다양한 물질이 방출하는 스펙트럼을 관찰·비교하기","지구와 생명체의 구성 성분을 비교하여, 우주와 지구 역사를 통한 구성 성분의 유래 탐구하기","같은 족 원소들의 유사성을 탐구하는 실험 설계하기","이온 결합 화합물과 공유 결합 화합물의 성질을 비교하는 실험하기","DNA 모형을 제작하고 DNA의 구조적 특징과 규칙성 탐구하기"]},{"no":103,"g":10,"bk":1,"sub":3,"a":"통합","n":"시스템과 상호작용","s":[{"c":"10통과1-03-01","t":"지구시스템은 태양계라는 시스템의 구성요소임을 알고, 지구시스템을 구성하는 권역들 간의 물질 순환과 에너지 흐름의 결과로 나타나는 현상을 논증할 수 있다."},{"c":"10통과1-03-02","t":"지권의 변화를 판구조론 관점에서 해석하고, 에너지 흐름의 결과로 발생하는 지권의 변화가 지구시스템에 미치는 영향을 추론할 수 있다."},{"c":"10통과1-03-03","t":"중력의 작용으로 인한 지구 표면과 지구 주위의 다양한 운동을 설명할 수 있다."},{"c":"10통과1-03-04","t":"상호작용이 없을 때 물체가 가속되지 않음을 알고, 충격량과 운동량의 관계를 충돌 관련 안전장치와 스포츠에 적용할 수 있다."},{"c":"10통과1-03-05","t":"생명 시스템을 유지하기 위해서 다양한 화학 반응과 물질 출입이 필요함을 이해하고, 일상생활에서 활용되는 화학 반응 사례를 조사하여 발표할 수 있다."},{"c":"10통과1-03-06","t":"생명 시스템의 유지에 필요한 세포 내 정보의 흐름을 유전자로부터 단백질이 만들어지는 과정을 중심으로 설명할 수 있다."}],"q":["화산 분출로 인한 환경·사회경제적 피해의 종류를 조사하고, 지구와 생명 시스템 측면에서 피해를 줄이기 위한 대책 수립하기"]},{"no":201,"g":10,"bk":2,"sub":1,"a":"통합","n":"변화와 다양성","s":[{"c":"10통과2-01-01","t":"지질시대를 통해 지구 환경이 끊임없이 변화해 왔으며 이러한 환경 변화가 생물다양성에 미치는 영향을 추론할 수 있다."},{"c":"10통과2-01-02","t":"변이의 발생과 자연선택 과정을 통해 생물의 진화가 일어나고, 진화의 과정을 통해 생물다양성이 형성되었음을 추론할 수 있다."},{"c":"10통과2-01-03","t":"자연과 인류의 역사에 큰 변화를 가져온 광합성, 화석 연료 사용, 철의 제련 등에서 공통점을 찾아 산화와 환원을 이해하고, 생활 주변의 다양한 변화를 산화와 환원의 특징과 규칙성으로 분석할 수 있다."},{"c":"10통과2-01-04","t":"대표적인 산·염기 물질의 특징을 알고, 산과 염기를 혼합할 때 나타나는 중화 반응을 생활 속에서 이용할 수 있다."},{"c":"10통과2-01-05","t":"생활 주변에서 에너지를 흡수하거나 방출하는 현상을 찾아 에너지의 흡수 방출이 우리 생활에 어떻게 이용되는지 토의할 수 있다."}],"q":["생물 대멸종의 원인과 그 이후의 변화를 설명하는 여러 가설들의 타당성 평가하기","자연선택 과정에 대한 모의실험하기","산과 염기를 혼합할 때 용액의 온도를 측정하여 그래프로 나타내기","가열장치 없이 물과 산화 칼슘을 이용한 음식 조리 방법 설계하고 실험하기"]},{"no":202,"g":10,"bk":2,"sub":2,"a":"통합","n":"환경과 에너지","s":[{"c":"10통과2-02-01","t":"생태계 구성요소를 이해하고 생물과 환경 사이의 상호 관계를 설명할 수 있다."},{"c":"10통과2-02-02","t":"먹이 관계와 생태 피라미드를 중심으로 생태계 평형이 유지되는 과정을 이해하고, 환경의 변화가 생태계에 미칠 수 있는 영향에 대해 협력적으로 소통할 수 있다."},{"c":"10통과2-02-03","t":"온실효과 강화로 인한 지구온난화의 메커니즘을 이해하고, 엘니뇨, 사막화 등과 같은 현상이 지구 환경과 인간 생활에 미치는 영향과 대처 방안을 분석할 수 있다."},{"c":"10통과2-02-04","t":"태양에서 수소 핵융합 반응을 통해 질량 일부가 에너지로 바뀌고, 그중 일부가 지구에서 에너지 흐름을 일으키며 다양한 에너지로 전환되는 과정을 추론할 수 있다."},{"c":"10통과2-02-05","t":"발전기에서 운동 에너지가 전기 에너지로 전환되는 과정을 이해하고, 열원으로서 화석 연료, 핵에너지를 이용하는 발전소가 인간 생활에 미치는 영향을 조사·발표할 수 있다."},{"c":"10통과2-02-06","t":"에너지 효율의 의미와 중요성을 이해하고, 지속가능한 발전과 지구 환경 문제 해결에 신재생 에너지 기술을 활용하는 방안을 탐색할 수 있다."}],"q":["개체군 변동 모의실험하기","지구온난화에 따른 지구 열수지 변동 탐구하기","기후변화로 인한 생태계와 지구계의 미래 시나리오 구상하기","자석과 코일의 상대 운동에 의해 운동 에너지가 전기 에너지로 전환되는 과정 탐구하기"]},{"no":203,"g":10,"bk":2,"sub":3,"a":"통합","n":"과학과 미래 사회","s":[{"c":"10통과2-03-01","t":"감염병의 진단, 추적 등을 사례로 과학의 유용성을 설명하고, 미래 사회 문제 해결에서 과학의 필요성에 대해 논증할 수 있다."},{"c":"10통과2-03-02","t":"빅데이터를 과학기술사회에서 사용하고 있는 사례를 조사하고, 빅데이터 활용의 장점과 문제점을 추론할 수 있다."},{"c":"10통과2-03-03","t":"인공지능 로봇, 사물인터넷 등과 같이 과학기술의 발전을 인간 삶과 환경 개선에 활용하는 사례를 찾고, 이러한 과학기술의 발전이 미래 사회에 미치는 유용성과 한계를 예측할 수 있다."},{"c":"10통과2-03-04","t":"과학기술의 발전 과정에서 발생할 수 있는 과학 관련 사회적 쟁점(SSI)과 과학기술 이용에서 과학 윤리의 중요성에 대해 논증할 수 있다."}],"q":["핵산과 단백질을 이용한 감염병 진단 기술 체험하기","디지털 탐구 도구를 활용한 실시간 생활 데이터 측정하기","일상생활에 활용되는 로봇의 특징 분석 및 개선방안 고안하기"]}];
+const CURRICULUM=[{"no":1,"g":1,"a":"융합","n":"과학과 인류의 지속가능한 삶","s":[{"c":"9과01-01","t":"과학적 탐구 방법을 이해하고, 일상생활의 문제에 대한 과학적 해결 방안을 제안할 수 있다."},{"c":"9과01-02","t":"과학의 발전이 인류 문명에 미친 영향을 이해하고, 인공지능 등 첨단 과학기술이 가져올 미래 사회의 변화를 조사하여 발표할 수 있다."},{"c":"9과01-03","t":"인류의 지속가능한 삶을 위한 과학기술의 중요성과 역할에 대해 토의하고, 개인과 사회 차원의 활동 방안을 찾아 실천할 수 있다."}],"q":["주변에서 탐구할 문제를 발견하고 탐구 계획서 작성하기"]},{"no":2,"g":1,"a":"생명","n":"생물의 구성과 다양성","s":[{"c":"9과02-01","t":"세포는 생명 활동이 일어나는 기본 단위임을 이해하고, 세포의 구조와 기능의 관계를 추론할 수 있다."},{"c":"9과02-02","t":"생물의 유기적 구성 단계를 이해하고, 동물과 식물을 비교하여 분석할 수 있다."},{"c":"9과02-03","t":"생물다양성을 이해하고, 변이와 생물다양성의 관계를 추론할 수 있다."},{"c":"9과02-04","t":"종의 개념과 분류 체계를 이해하고, 생물을 계 수준에서 분류할 수 있다."},{"c":"9과02-05","t":"생물다양성 보전의 필요성을 이해하고, 생물다양성 유지를 위한 방안을 조사하고 실천할 수 있다."}],"q":["세포 관찰하기","생물다양성 보전 놀이 활동하기"]},{"no":3,"g":1,"a":"물리","n":"열","s":[{"c":"9과03-01","t":"온도와 열평형 과정을 물질을 구성하는 입자들의 배치나 움직임 등으로 설명할 수 있다."},{"c":"9과03-02","t":"열은 전도, 대류, 복사로 전달됨을 알고, 열전달 과정을 모형 등을 사용하여 다양하게 표현할 수 있다."},{"c":"9과03-03","t":"물질에 따라 비열과 열팽창 정도가 다름을 알고, 이러한 성질이 일상생활에서 유용하게 활용됨을 인식할 수 있다."}],"q":["열화상 카메라를 이용하여 물체에서 열의 전도 비교하기","온도 센서를 이용하여 여러 가지 액체의 비열 비교하기"]},{"no":4,"g":1,"a":"화학","n":"물질의 상태 변화","s":[{"c":"9과04-01","t":"확산 및 증발 현상을 관찰하여 물질을 구성하는 입자가 운동하고 있음을 추론할 수 있다."},{"c":"9과04-02","t":"물질의 세 가지 상태의 특징을 설명하고, 이를 입자 모형으로 표현할 수 있다."},{"c":"9과04-03","t":"여러 가지 물질의 상태 변화를 관찰하고, 이를 입자 모형으로 설명할 수 있다."},{"c":"9과04-04","t":"물질의 상태 변화와 열에너지 출입 관계를 이해하고, 이를 실생활에 적용하여 과학의 유용성을 인식할 수 있다."}],"q":["확산 현상 관찰하기","물질의 상태 변화 시 질량과 부피 변화 측정하기","상태 변화 실험에서 가열 곡선 또는 냉각 곡선 그리기"]},{"no":5,"g":1,"a":"물리","n":"힘의 작용","s":[{"c":"9과05-01","t":"물체에 작용하는 힘을 화살표를 이용하여 나타내고, 힘의 평형을 이루는 조건을 설명할 수 있다."},{"c":"9과05-02","t":"중력, 탄성력, 마찰력, 부력을 이해하고, 각 힘의 특징을 크기와 방향으로 설명할 수 있다."},{"c":"9과05-03","t":"알짜힘이 0이 아닐 때 물체의 운동 상태가 변함을 알고, 그 예를 조사하여 분류할 수 있다."},{"c":"9과05-04","t":"다양한 사례에서 작용하는 힘과 힘의 평형 관계를 설명하고, 일상생활에서 힘의 특징을 이용한 기구나 장치를 설계할 수 있다."}],"q":["용수철의 탄성력 측정하기","물속에서 부력 측정하기","장난감이나 놀이 기구에서 힘의 작용 탐구하기"]},{"no":6,"g":1,"a":"화학","n":"기체의 성질","s":[{"c":"9과06-01","t":"압력의 의미를 알고, 기체의 압력을 입자의 운동으로 설명할 수 있다."},{"c":"9과06-02","t":"기체의 압력과 부피 관계를 실험 결과로부터 알아내고, 이를 입자 모형으로 해석할 수 있다."},{"c":"9과06-03","t":"기체의 온도와 부피 관계를 실험 결과로부터 알아내고, 이를 입자 모형으로 해석할 수 있다."}],"q":["기체의 압력과 부피 관계와 기체의 온도와 부피 관계를 실험으로 알아보기"]},{"no":7,"g":1,"a":"지구","n":"태양계","s":[{"c":"9과07-01","t":"태양계를 구성하는 천체의 특징을 알고, 행성을 목성형 행성과 지구형 행성으로 구분할 수 있다."},{"c":"9과07-02","t":"태양의 표면과 대기에서 일어나는 현상을 알고, 태양의 활동이 지구에 미치는 영향을 추론할 수 있다."},{"c":"9과07-03","t":"지구 자전에 의한 천체의 겉보기 운동과 지구 공전에 의한 별자리 변화를 이해하고, 밤하늘 천체에 호기심을 가진다."},{"c":"9과07-04","t":"달을 관측하여 달의 위상변화 원리를 이해하고, 일식과 월식을 설명할 수 있다."}],"q":["망원경을 이용하여 달, 행성 관측하기","태양계 천체 자료 수집 및 분석하기","모형을 이용하여 달의 위상변화 관찰하기"]},{"no":8,"g":2,"a":"화학","n":"물질의 특성","s":[{"c":"9과08-01","t":"물질의 특성의 의미를 알고, 실험을 통해 밀도, 용해도, 녹는점, 끓는점 등을 설명할 수 있다."},{"c":"9과08-02","t":"물질의 특성을 근거로 우리 주변의 물질을 순물질과 혼합물로 분류할 수 있다."},{"c":"9과08-03","t":"물질의 특성을 이용하여 혼합물이 분리되는 원리를 이해하고, 이를 이용한 사례를 주변에서 찾을 수 있다."}],"q":["혼합물 분리 실험을 설계하고 수행하기"]},{"no":9,"g":2,"a":"지구","n":"지권의 변화","s":[{"c":"9과09-01","t":"지구계의 구성 요소를 알고, 지권의 층상 구조와 그 특징을 조사·발표할 수 있다."},{"c":"9과09-02","t":"조암 광물의 주요 특성을 관찰하고, 암석과 광물의 활용 방안 및 자원으로서 가치에 대해 조사할 수 있다."},{"c":"9과09-03","t":"지각을 이루는 암석을 생성 과정에 따라 분류하고, 암석의 순환 과정을 설명할 수 있다."},{"c":"9과09-04","t":"풍화 과정을 이해하고, 토양 생성 과정을 풍화 작용의 예로 설명할 수 있다."},{"c":"9과09-05","t":"대륙이동설을 이해하고, 지진과 화산이 발생하는 지역의 분포를 판의 경계와 관련지어 설명할 수 있다."}],"q":["광물 특성 관찰하기","암석을 관찰하여 분류하기","빅데이터를 활용하여 화산대 및 지진대와 판의 경계와의 관련성 탐구하기"]},{"no":10,"g":2,"a":"물리","n":"빛과 파동","s":[{"c":"9과10-01","t":"빛의 반사와 굴절의 원리를 이해하고, 물체를 보는 과정을 빛의 경로를 이용하여 표현할 수 있다."},{"c":"9과10-02","t":"평면거울에서 상이 생기는 원리를 설명하고, 일상생활에서 사용되는 거울과 렌즈의 종류를 분류하고 상의 특징을 비교할 수 있다."},{"c":"9과10-03","t":"물체의 색을 빛의 반사와 관련지어 설명하고, 영상 장치에서 빛의 합성을 이용하여 다양한 색이 표현되는 원리를 이해할 수 있다."},{"c":"9과10-04","t":"파동의 발생과 전달 과정을 이해하고, 소리의 특성을 진폭, 진동수, 파형 등의 과학적 용어로 표현할 수 있다."}],"q":["거울과 렌즈에 의한 상의 특징 관찰하기","디지털 탐구 도구를 이용하여 소리의 진폭, 진동수, 파형 탐구하기"]},{"no":11,"g":2,"a":"화학","n":"물질의 구성","s":[{"c":"9과11-01","t":"원소와 화합물의 정의를 알고, 원소와 화합물을 화학식으로 표현할 수 있다."},{"c":"9과11-02","t":"원소를 구성하는 입자인 원자는 양성자, 중성자, 전자로 구성되며, 양성자의 수에 따라 원소의 종류가 달라짐을 입자 모형을 활용하여 설명할 수 있다."},{"c":"9과11-03","t":"원소는 양성자의 수에 따라 주기율표에 배치됨을 알고, 주기율표에서 성질이 유사한 원소를 찾을 수 있다."},{"c":"9과11-04","t":"물질을 이루는 입자는 원자, 분자, 이온 등으로 존재할 수 있음을 알고, 이온은 전하를 띠고 있음을 설명할 수 있다."}],"q":["같은 족 원소들의 유사성 탐구하기","전기력을 이용한 실험으로 이온의 이동 관찰하기"]},{"no":12,"g":2,"a":"생명","n":"식물과 에너지","s":[{"c":"9과12-01","t":"광합성 과정을 이해하고, 환경 요인과 광합성의 관계를 탐구하는 실험을 설계할 수 있다."},{"c":"9과12-02","t":"식물의 호흡과 광합성의 관계를 이해하고, 호흡과 광합성 과정에서 출입하는 에너지와 물질의 변화를 분석할 수 있다."},{"c":"9과12-03","t":"광합성 산물의 저장과 이용 과정을 이해하고, 모형으로 설명할 수 있다."}],"q":["광합성에 필요한 물질과 산물 확인하는 실험하기"]},{"no":13,"g":2,"a":"생명","n":"동물과 에너지","s":[{"c":"9과13-01","t":"소화계의 구조와 기능을 이해하고, 소화 과정을 소화 효소의 작용과 관련지어 추론할 수 있다."},{"c":"9과13-02","t":"순환계의 구조와 기능을 이해하고, 혈액의 순환 경로를 종합하여 발표할 수 있다."},{"c":"9과13-03","t":"호흡계의 구조와 기능을 이해하고, 호흡 운동의 원리를 나타내는 모형을 만들 수 있다."},{"c":"9과13-04","t":"배설계의 구조와 기능을 이해하고, 노폐물이 배설되는 과정을 모식도로 표현할 수 있다."},{"c":"9과13-05","t":"동물이 세포호흡을 통해 에너지를 얻는 과정을 소화, 순환, 호흡, 배설과 관련지어 통합적으로 설명할 수 있다."}],"q":["음식물에 들어 있는 영양소 검출하기","침의 소화 작용 탐구하기"]},{"no":14,"g":2,"a":"물리","n":"전기와 자기","s":[{"c":"9과14-01","t":"마찰 전기, 정전기 유도 현상을 관찰하고, 이를 전기력과 원자 모형을 이용하여 설명할 수 있다."},{"c":"9과14-02","t":"전기 회로에서 전류를 모형으로 설명하고, 실험을 통해 저항, 전류, 전압 사이의 관계를 이끌어낼 수 있다."},{"c":"9과14-03","t":"저항의 직렬연결과 병렬연결의 특징을 비교하고, 일상생활에서 전기 에너지가 다양한 형태의 에너지로 전환됨을 소비 전력과 관련지어 설명할 수 있다."},{"c":"9과14-04","t":"자기장 안에 놓인 전류가 흐르는 코일이 받는 힘의 특성을 추리하고, 전동기 등 일상생활에서 활용한 예를 찾을 수 있다."}],"q":["저항, 전류, 전압 사이의 관계 탐구하기","전류가 흐르는 코일 주위의 자기장 관찰하기"]},{"no":15,"g":2,"a":"지구","n":"별과 우주","s":[{"c":"9과15-01","t":"연주시차를 이용하여 별까지의 거리를 구할 수 있고, 별의 등급과 밝기의 관계 및 표면 온도와 색의 관계를 설명할 수 있다."},{"c":"9과15-02","t":"우리은하의 구조와 크기를 이해하고, 성운과 성단의 특징을 비교할 수 있다."},{"c":"9과15-03","t":"모형을 이용하여 우주가 팽창하고 있음을 설명할 수 있다."},{"c":"9과15-04","t":"우주탐사의 의의와 인류에게 미치는 영향을 조사하여 과학의 유용성을 인식할 수 있다."}],"q":["디지털 탐구 도구를 활용하여 광원으로부터의 거리에 따른 빛의 세기 실험하기","천체 관측 프로그램을 활용하여 우리은하를 구성하는 천체 관측하기","우주탐사 계획 세우기"]},{"no":16,"g":3,"a":"화학","n":"화학 반응의 규칙성","s":[{"c":"9과16-01","t":"물리 변화와 화학 변화의 의미를 알고, 화학 변화에서 새로운 물질이 생성됨을 관찰할 수 있다."},{"c":"9과16-02","t":"간단한 화학 반응을 화학 반응식으로 표현하고, 화학 반응식에서 계수의 비를 입자 수의 비로 해석할 수 있다."},{"c":"9과16-03","t":"화학 반응에서 질량이 보존됨을 실험을 통해 추론할 수 있다."},{"c":"9과16-04","t":"화합물을 구성하는 성분 원소의 질량비가 일정함을 실험 자료를 해석하여 설명할 수 있다."},{"c":"9과16-05","t":"기체 반응에서 기체 부피 사이의 비가 일정함을 실험 자료를 해석하여 설명할 수 있다."},{"c":"9과16-06","t":"화학 반응에서 열에너지가 출입함을 알고, 생활 속 사례를 조사하여 발표할 수 있다."}],"q":["화학 반응 전후의 질량 변화 관찰하기","화학 반응을 이용한 간단한 냉각 장치 만들기"]},{"no":17,"g":3,"a":"지구","n":"날씨와 기후변화","s":[{"c":"9과17-01","t":"지구 대기권을 4개 권역으로 구분하며, 온실효과와 지구온난화를 복사 평형의 관점으로 설명할 수 있다."},{"c":"9과17-02","t":"대기 대순환에서 위도별 바람의 특성을 파악하고, 대기 대순환의 역할을 설명할 수 있다."},{"c":"9과17-03","t":"상대습도, 단열 팽창 및 응결 현상의 관계를 이해하고, 구름의 생성과 강수 과정을 설명할 수 있다."},{"c":"9과17-04","t":"기압, 기단, 전선의 개념을 이해하고, 일기도에서 저기압과 고기압의 분포에 따른 날씨를 해석할 수 있다."}],"q":["기후변화 관련 자료 검색 및 분석하기","디지털 탐구 도구를 이용하여 구름 생성 과정 실험하기","일기도, 레이더 및 위성 영상 등 실시간 데이터를 활용하여 날씨 해석하기"]},{"no":18,"g":3,"a":"지구","n":"수권과 해수의 순환","s":[{"c":"9과18-01","t":"수권에서 해수, 담수, 빙하의 분포와 활용 사례를 조사하고, 자원으로서 물의 가치에 대해 토론할 수 있다."},{"c":"9과18-02","t":"해수의 수온과 염분의 분포 및 변화를 해석하여 해수의 특성을 설명할 수 있다."},{"c":"9과18-03","t":"대기 대순환과 해양 표층 순환과의 관계를 이해하고, 기후변화에 영향을 미치는 해류의 역할을 설명할 수 있다."}],"q":["디지털 탐구 도구를 이용하여 해수의 연직 수온 분포 실험하기","실시간 데이터를 활용하여 우리나라 주변 해양 정보(수온, 염분) 분석하기"]},{"no":19,"g":3,"a":"물리","n":"운동과 에너지","s":[{"c":"9과19-01","t":"직선상에서 움직이는 물체의 운동을 그래프로 나타내고 해석할 수 있다."},{"c":"9과19-02","t":"자유 낙하하는 물체의 운동에서 시간에 따른 속력의 변화가 일정함을 분석할 수 있다."},{"c":"9과19-03","t":"일의 정의를 알고, 자유 낙하하는 물체의 운동에서 중력이 한 일을 위치 에너지와 운동 에너지로 표현할 수 있다."},{"c":"9과19-04","t":"물체의 운동에서 역학적 에너지의 전환과 보존을 이해하고, 이를 활용하여 일상생활 속 물체의 운동을 예측할 수 있다."}],"q":["여러 가지 물체의 자유 낙하 운동 분석하기","자유 낙하하는 물체의 역학적 에너지 보존 실험하기"]},{"no":20,"g":3,"a":"생명","n":"자극과 반응","s":[{"c":"9과20-01","t":"감각기관의 구조와 기능을 이해하고, 실험을 통해 자극이 뇌로 전달되는 과정을 추론할 수 있다."},{"c":"9과20-02","t":"뉴런과 신경계의 구조와 기능을 이해하고, 자극에서 반응이 일어나기까지의 과정을 모형으로 설명할 수 있다."},{"c":"9과20-03","t":"우리 몸의 기능 조절에 호르몬이 관여함을 알고, 관련 자료를 조사하여 발표할 수 있다."}],"q":["맹점 확인 실험하기","무조건 반사와 의식적 반응 실험하기"]},{"no":21,"g":3,"a":"생명","n":"생식과 유전","s":[{"c":"9과21-01","t":"개체의 생장에 세포분열이 필요한 이유를 세포의 표면적과 부피의 관계로 추론할 수 있다."},{"c":"9과21-02","t":"염색체와 유전자의 관계를 이해하고, 체세포분열과 생식세포 형성과정의 특징을 염색체 행동을 중심으로 해석할 수 있다."},{"c":"9과21-03","t":"수정란으로부터 개체가 발생하는 과정을 모형으로 표현할 수 있다."},{"c":"9과21-04","t":"멘델 유전 실험의 의의와 원리를 이해하고, 멘델 유전 원리가 적용되는 유전 현상을 조사하여 협력적으로 소통할 수 있다."},{"c":"9과21-05","t":"사람의 유전 형질과 유전 연구 방법을 알고, 가계도를 분석하여 사람의 유전 현상을 설명할 수 있다."}],"q":["세포분열 관찰하기","유전 현상 모의 활동하기"]},{"no":22,"g":3,"a":"융합","n":"재해·재난과 안전","s":[{"c":"9과22-01","t":"재해·재난 사례와 관련된 자료를 조사하고, 그 발생 원인과 피해에 대해 과학적으로 분석할 수 있다."},{"c":"9과22-02","t":"과학적 원리를 이용하여 재해·재난에 대한 대비 및 대처 방안을 세울 수 있다."}],"q":["빅데이터를 이용하여 재해·재난 사례 분석하기","재해·재난의 피해를 줄이기 위한 홍보자료 제작하기"]},{"no":23,"g":3,"a":"융합","n":"과학과 나의 미래","s":[{"c":"9과23-01","t":"과학과 관련된 직업의 종류와 하는 일을 조사하고, 과학기술의 발달로 생기는 미래 사회의 직업 변화를 예상할 수 있다."},{"c":"9과23-02","t":"자신의 진로와 관련 있는 과학 분야를 조사하고, 진로 선택을 위하여 필요한 과학 학습을 계획할 수 있다."}],"q":["다양한 직업 속 과학 탐색하기","미래 사회에서 과학의 역할과 새로운 과학 직업 토의하기"]},{"no":101,"g":10,"bk":1,"sub":1,"a":"통합","n":"과학의 기초","s":[{"c":"10통과1-01-01","t":"자연을 시간과 공간에서 기술할 수 있음을 알고, 길이와 시간 측정의 현대적 방법과 다양한 규모의 측정 사례를 조사할 수 있다."},{"c":"10통과1-01-02","t":"과학 탐구에서 중요한 기본량의 의미를 알고, 자연 현상을 기술하는 데 단위가 가지는 의미와 적용사례를 설명할 수 있다."},{"c":"10통과1-01-03","t":"과학 탐구에서 측정과 어림의 의미를 알고, 일상생활의 여러 가지 상황에서 측정 표준의 유용성과 필요성을 논증할 수 있다."},{"c":"10통과1-01-04","t":"자연에서 일어나는 다양한 변화를 측정·분석하여 정보를 산출함을 알고, 이러한 정보를 디지털로 변환하는 기술을 정보 통신에 활용하여 현대 문명에 미친 영향을 인식한다."}],"q":["미시세계와 거시세계의 물체의 크기에 따른 차이점 분석하기","일상생활에서 측정 표준이 활용되는 사례 탐색하기","스마트 기기를 활용하여 여러 가지 기본량을 측정하고 분석하기"]},{"no":102,"g":10,"bk":1,"sub":2,"a":"통합","n":"물질과 규칙성","s":[{"c":"10통과1-02-01","t":"천체에서 방출되는 빛의 스펙트럼을 분석하여 우주 초기에 형성된 원소와 천체의 구성 물질을 추론할 수 있다."},{"c":"10통과1-02-02","t":"우주 초기의 원소들로부터 태양계의 재료이면서 생명체를 구성하는 원소들이 형성되는 과정을 통해 지구와 생명의 역사가 우주 역사의 일부분임을 해석할 수 있다."},{"c":"10통과1-02-03","t":"세상을 구성하는 원소들의 성질이 주기성을 나타내는 현상을 통해 자연의 규칙성을 도출하고, 지구와 생명체를 구성하는 주요 원소들이 결합을 형성하는 이유를 해석할 수 있다."},{"c":"10통과1-02-04","t":"인류의 생존에 필수적인 물, 산소, 소금 등이 만들어지는 결합의 차이를 이해하고 각 물질의 성질과 관련지어 설명할 수 있다."},{"c":"10통과1-02-05","t":"지각과 생명체를 구성하는 물질들이 기본 단위체의 결합을 통해서 형성된다는 것을 규산염 광물, 단백질과 핵산의 예를 통해 설명할 수 있다."},{"c":"10통과1-02-06","t":"지구를 구성하는 물질을 전기적 성질에 따라 구분할 수 있고, 물질의 전기적 성질을 응용하여 일상생활과 첨단기술에서 다양한 소재로 활용됨을 인식한다."}],"q":["분광기를 활용하여 다양한 물질이 방출하는 스펙트럼을 관찰·비교하기","지구와 생명체의 구성 성분을 비교하여, 우주와 지구 역사를 통한 구성 성분의 유래 탐구하기","같은 족 원소들의 유사성을 탐구하는 실험 설계하기","이온 결합 화합물과 공유 결합 화합물의 성질을 비교하는 실험하기","DNA 모형을 제작하고 DNA의 구조적 특징과 규칙성 탐구하기"]},{"no":103,"g":10,"bk":1,"sub":3,"a":"통합","n":"시스템과 상호작용","s":[{"c":"10통과1-03-01","t":"지구시스템은 태양계라는 시스템의 구성요소임을 알고, 지구시스템을 구성하는 권역들 간의 물질 순환과 에너지 흐름의 결과로 나타나는 현상을 논증할 수 있다."},{"c":"10통과1-03-02","t":"지권의 변화를 판구조론 관점에서 해석하고, 에너지 흐름의 결과로 발생하는 지권의 변화가 지구시스템에 미치는 영향을 추론할 수 있다."},{"c":"10통과1-03-03","t":"중력의 작용으로 인한 지구 표면과 지구 주위의 다양한 운동을 설명할 수 있다."},{"c":"10통과1-03-04","t":"상호작용이 없을 때 물체가 가속되지 않음을 알고, 충격량과 운동량의 관계를 충돌 관련 안전장치와 스포츠에 적용할 수 있다."},{"c":"10통과1-03-05","t":"생명 시스템을 유지하기 위해서 다양한 화학 반응과 물질 출입이 필요함을 이해하고, 일상생활에서 활용되는 화학 반응 사례를 조사하여 발표할 수 있다."},{"c":"10통과1-03-06","t":"생명 시스템의 유지에 필요한 세포 내 정보의 흐름을 유전자로부터 단백질이 만들어지는 과정을 중심으로 설명할 수 있다."}],"q":["화산 분출로 인한 환경·사회경제적 피해의 종류를 조사하고, 지구와 생명 시스템 측면에서 피해를 줄이기 위한 대책 수립하기"]},{"no":201,"g":10,"bk":2,"sub":1,"a":"통합","n":"변화와 다양성","s":[{"c":"10통과2-01-01","t":"지질시대를 통해 지구 환경이 끊임없이 변화해 왔으며 이러한 환경 변화가 생물다양성에 미치는 영향을 추론할 수 있다."},{"c":"10통과2-01-02","t":"변이의 발생과 자연선택 과정을 통해 생물의 진화가 일어나고, 진화의 과정을 통해 생물다양성이 형성되었음을 추론할 수 있다."},{"c":"10통과2-01-03","t":"자연과 인류의 역사에 큰 변화를 가져온 광합성, 화석 연료 사용, 철의 제련 등에서 공통점을 찾아 산화와 환원을 이해하고, 생활 주변의 다양한 변화를 산화와 환원의 특징과 규칙성으로 분석할 수 있다."},{"c":"10통과2-01-04","t":"대표적인 산·염기 물질의 특징을 알고, 산과 염기를 혼합할 때 나타나는 중화 반응을 생활 속에서 이용할 수 있다."},{"c":"10통과2-01-05","t":"생활 주변에서 에너지를 흡수하거나 방출하는 현상을 찾아 에너지의 흡수 방출이 우리 생활에 어떻게 이용되는지 토의할 수 있다."}],"q":["생물 대멸종의 원인과 그 이후의 변화를 설명하는 여러 가설들의 타당성 평가하기","자연선택 과정에 대한 모의실험하기","산과 염기를 혼합할 때 용액의 온도를 측정하여 그래프로 나타내기","가열장치 없이 물과 산화 칼슘을 이용한 음식 조리 방법 설계하고 실험하기"]},{"no":202,"g":10,"bk":2,"sub":2,"a":"통합","n":"환경과 에너지","s":[{"c":"10통과2-02-01","t":"생태계 구성요소를 이해하고 생물과 환경 사이의 상호 관계를 설명할 수 있다."},{"c":"10통과2-02-02","t":"먹이 관계와 생태 피라미드를 중심으로 생태계 평형이 유지되는 과정을 이해하고, 환경의 변화가 생태계에 미칠 수 있는 영향에 대해 협력적으로 소통할 수 있다."},{"c":"10통과2-02-03","t":"온실효과 강화로 인한 지구온난화의 메커니즘을 이해하고, 엘니뇨, 사막화 등과 같은 현상이 지구 환경과 인간 생활에 미치는 영향과 대처 방안을 분석할 수 있다."},{"c":"10통과2-02-04","t":"태양에서 수소 핵융합 반응을 통해 질량 일부가 에너지로 바뀌고, 그중 일부가 지구에서 에너지 흐름을 일으키며 다양한 에너지로 전환되는 과정을 추론할 수 있다."},{"c":"10통과2-02-05","t":"발전기에서 운동 에너지가 전기 에너지로 전환되는 과정을 이해하고, 열원으로서 화석 연료, 핵에너지를 이용하는 발전소가 인간 생활에 미치는 영향을 조사·발표할 수 있다."},{"c":"10통과2-02-06","t":"에너지 효율의 의미와 중요성을 이해하고, 지속가능한 발전과 지구 환경 문제 해결에 신재생 에너지 기술을 활용하는 방안을 탐색할 수 있다."}],"q":["개체군 변동 모의실험하기","지구온난화에 따른 지구 열수지 변동 탐구하기","기후변화로 인한 생태계와 지구계의 미래 시나리오 구상하기","자석과 코일의 상대 운동에 의해 운동 에너지가 전기 에너지로 전환되는 과정 탐구하기"]},{"no":203,"g":10,"bk":2,"sub":3,"a":"통합","n":"과학과 미래 사회","s":[{"c":"10통과2-03-01","t":"감염병의 진단, 추적 등을 사례로 과학의 유용성을 설명하고, 미래 사회 문제 해결에서 과학의 필요성에 대해 논증할 수 있다."},{"c":"10통과2-03-02","t":"빅데이터를 과학기술사회에서 사용하고 있는 사례를 조사하고, 빅데이터 활용의 장점과 문제점을 추론할 수 있다."},{"c":"10통과2-03-03","t":"인공지능 로봇, 사물인터넷 등과 같이 과학기술의 발전을 인간 삶과 환경 개선에 활용하는 사례를 찾고, 이러한 과학기술의 발전이 미래 사회에 미치는 유용성과 한계를 예측할 수 있다."},{"c":"10통과2-03-04","t":"과학기술의 발전 과정에서 발생할 수 있는 과학 관련 사회적 쟁점(SSI)과 과학기술 이용에서 과학 윤리의 중요성에 대해 논증할 수 있다."}],"q":["핵산과 단백질을 이용한 감염병 진단 기술 체험하기","디지털 탐구 도구를 활용한 실시간 생활 데이터 측정하기","일상생활에 활용되는 로봇의 특징 분석 및 개선방안 고안하기"]}];
 
 /* ══════════ 데이터 ══════════ */
 const AREAS=[{k:'물리',n:'물리 · 운동과 에너지',c:'var(--ph)'},{k:'화학',n:'화학 · 물질',c:'var(--ch)'},
@@ -1181,7 +1296,7 @@ const PRESETS=[
 
 {key:'ea',subj:'과학',area:'지구',tag:'측정형',label:'지구 · 수권과 해수의 순환',
  sum:'전등과 바람의 세기를 바꿔 가며 깊이별 수온을 재고, 바다의 세 층이 생기는 과정을 확인합니다.',
- data:{subj:'과학',title:'수온 탐침 — 바다의 세 층은 왜 생길까',titleAuto:0,goalAuto:0,grade:2,area:'지구',stds:['9과18-02'],
+ data:{subj:'과학',title:'수온 탐침 — 바다의 세 층은 왜 생길까',titleAuto:0,goalAuto:0,grade:3,area:'지구',stds:['9과18-02'],
  inqs:['디지털 탐구 도구를 이용하여 해수의 연직 수온 분포 실험하기'],
  goal:'태양 복사 에너지와 바람의 세기에 따라 혼합층·수온약층·심해층이 만들어지는 과정을 수온 분포로 설명할 수 있다.',
  check:'바람의 세기를 올렸을 때 혼합층의 두께가 두꺼워지는 것을 그래프에서 찾아 설명한 답안',
@@ -1320,8 +1435,10 @@ let toastT;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('in');clearTimeout(toastT);
   toastT=setTimeout(()=>t.classList.remove('in'),2600)}
 function dl(name,text){const b=new Blob([text],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),1200)}
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+/* .txt 는 윈도우 메모장에서도 글자·줄이 깨지지 않게 BOM + CRLF 로 저장 */
+function dlTxt(name,text){dl(name,String.fromCharCode(0xFEFF)+text.replace(/\r?\n/g,'\r\n')+'\r\n')}
 function slug(){return (S.title||'가상실험실').replace(/[\\/:*?"<>|]/g,'').trim().slice(0,40)||'가상실험실'}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 
@@ -1410,18 +1527,19 @@ function renderPresets(){
 function openEx(){$('#exModal').hidden=false;requestAnimationFrame(()=>{$('#exModal').classList.add('in');$('#btnCloseEx').focus()})}
 function closeEx(){$('#exModal').classList.remove('in');setTimeout(()=>{$('#exModal').hidden=true},220)}
 function renderRail(){
-  const names=['교육과정','실험 설계','장치·화면 (선택)','완성'];
-  $('#rail').innerHTML=names.map((n,i)=>`<button data-s="${i+1}"><i>${i+1}</i>${esc(n)}</button>`).join('')
-    +'<span class="rail-mode">'
-    +'<button id="btnReset3" class="rail-reset" type="button" title="입력한 내용을 전부 지웁니다">처음부터</button>'
-    +'<button id="btnMode" type="button" aria-pressed="true"><span id="modeTxt">간단 입력</span></button></span>';
+  const names=[['교육과정','성취기준 고르기'],['실험 설계','바꾸는 것 · 달라지는 것'],['장치 · 화면','선택'],['완성','복사해 붙여 넣기']];
+  $('#rail').innerHTML=names.map((n,i)=>`<button type="button" data-s="${i+1}" aria-label="${i+1}단계 ${esc(n[0])} — ${esc(n[1])}"><i aria-hidden="true">${i+1}</i><span><b>${esc(n[0])}</b><small>${esc(n[1])}</small></span></button>`).join('')
+    +'<span class="rail-mode" role="group" aria-label="입력 방식">'
+    +'<button type="button" data-mode="1" title="꼭 필요한 칸만 보입니다. 나머지는 AI가 정하고 «확인 필요»로 알려 줍니다">간단</button>'
+    +'<button type="button" data-mode="0" title="측정 방법·통제 변인·오개념까지 모든 칸이 열립니다">자세히</button></span>';
   $$('#rail button[data-s]').forEach(b=>b.onclick=()=>{
     if(b.dataset.s==='3'&&SIMPLE&&!S.s3open){S.s3open=1;renderS3sum();save()}
     $('#s'+b.dataset.s).scrollIntoView({block:'start'});
   });
-  $('#btnMode').onclick=()=>{SIMPLE=!SIMPLE;applyMode();renderCrit();
-    toast(SIMPLE?'간단 입력으로 바꿨어요.':'자세히 입력으로 바꿨어요. 모든 칸이 열립니다.')};
-  $('#btnReset3').onclick=()=>doReset();
+  $$('#rail button[data-mode]').forEach(b=>b.onclick=()=>{
+    const want=b.dataset.mode==='1'; if(want===SIMPLE)return;
+    SIMPLE=want;applyMode();renderCrit();
+    toast(SIMPLE?'간단 입력으로 바꿨어요. 두 칸이면 완성됩니다.':'자세히 입력으로 바꿨어요. 모든 칸이 열립니다.')});
 }
 function renderSubj(){
   $('#segSubj').innerHTML=SUBJECTS.map(s=>`<button data-v="${esc(s)}" style="--k:${SUBJ_COLOR[s]||'var(--cv)'}" aria-pressed="${S.subj===s}">${esc(s)}</button>`).join('');
@@ -1443,7 +1561,7 @@ function renderSegs(){
 
   const g10=S.grade===10;
   $('#segArea').innerHTML=AREAS.map(a=>`<button data-v="${a.k}" style="--k:${a.c}" aria-pressed="${!g10&&S.area===a.k}" ${g10?'disabled':''}>${esc(a.n)}</button>`).join('')
-    +(g10?'<span style="align-self:center;font-size:12.5px;color:var(--tx3);margin-left:6px">통합과학은 물리·화학·생명·지구를 가로지르므로 6개 영역을 모두 보여 줍니다.</span>':'');
+    +(g10?'<span class="seg-note">통합과학은 영역을 가로지르므로 6개 단원을 모두 보여 줍니다.</span>':'');
   $$('#segArea button').forEach(b=>b.onclick=()=>{if(b.disabled)return;S.area=b.dataset.v;renderSegs();renderStds();sync()});
 
   $('#segLvl').innerHTML=['초','중','고'].map(l=>`<button data-v="${l}" aria-pressed="${S.lvl===l}">${l==='초'?'초등학교':l==='중'?'중학교':'고등학교'}</button>`).join('');
@@ -1536,7 +1654,7 @@ function renderStds(){
 function renderPicks(){
   const box=$('#pickBox');
   if(!isSci()||!S.stds.length){box.innerHTML='';return}
-  box.innerHTML='<span style="font-size:12.5px;color:var(--tx3);align-self:center;margin-right:2px">고른 성취기준</span>'
+  box.innerHTML='<span class="picked">고른 성취기준</span>'
     +S.stds.map(c=>{const st=stdOf(c);
       return `<span class="chip"><code>${esc(c)}</code><em>${esc(st?st.t:'')}</em>
         <button data-rm="${esc(c)}" aria-label="${esc(c)} 빼기"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></span>`}).join('');
@@ -1605,7 +1723,7 @@ function renderModWhy(){
   const w=$('#modWhy');
   if(!on.length){w.innerHTML='<div class="note">모듈을 하나도 고르지 않아도 됩니다. 공통 코어만으로 충분한 실험실이 가장 좋은 실험실인 경우가 많습니다.</div>';return}
   w.innerHTML='<label class="lb">각 모듈이 왜 이 학습 목표에 필요한가요 <span>한 줄이면 충분합니다. 이유를 못 쓰겠다면 그 모듈은 빼는 편이 낫습니다</span></label>'
-    +'<div class="list">'+on.map(m=>`<div class="li"><span class="num" style="width:auto;padding:0 9px;border-radius:99px;font-size:11px">${esc(m.n)}</span>
+    +'<div class="list">'+on.map(m=>`<div class="li"><span class="num tag">${esc(m.n)}</span>
       <input type="text" data-why="${m.k}" value="${esc(S.modWhy[m.k]||'')}" placeholder="예) 이 조작 결과를 표로 봐야 관계가 보인다"></div>`).join('')+'</div>';
   $$('#modWhy input').forEach(i=>i.oninput=()=>{S.modWhy[i.dataset.why]=i.value;sync()});
 }
@@ -1635,7 +1753,7 @@ function renderS3sum(){
   $('#s3sum').innerHTML=
     `<span class="chipk">모듈 <b>${on.length?esc(on.join(' · ')):'없음 (공통 코어만)'}</b></span>`
     +`<span class="chipk">기능 <b>${op.length?esc(op.join(' · ')):'기본만'}</b></span>`
-    +`<span class="chipk">분위기 <b>${esc(moodEff())}</b>${S.mood?'':' <small style="color:var(--tx3)">자동</small>'}</span>`
+    +`<span class="chipk">분위기 <b>${esc(moodEff())}</b>${S.mood?'':' <small>자동</small>'}</span>`
     +`<span class="chipk">장면 <b>${(S.concept1||'').trim()?'직접 정함':'AI가 정함'}</b></span>`;
 }
 function fillFields(){
@@ -1755,7 +1873,7 @@ function responseLines(n,sl){return [
  '【'+n+'】 응답 형식 — 이 순서대로, 설명은 짧게',
  '① 디자인 브리프 표(15항목) + 자기 검열 한 줄(무엇을 바꿨는가 · 이번 L4는 무엇인가)',
  '② «확인 필요» 목록 — 교사 미입력 칸을 무엇으로 정했는지, 교사가 확인해야 할 수치·조건',
- '③ 완성된 단일 HTML 전체 코드 — 하나의 코드 블록',
+ '③ 완성된 단일 HTML 전체 코드 — '+curAI().out,
  '④ 제출 전 점검 결과 — 항목별 O/X와 근거 한 줄. 차단 게이트는 코드만 보지 말고 실제로 눌러 본 것처럼 구체적으로',
  '⑤ 파일 제공 — 파일 생성이 되는 환경이면 «'+sl+'.html»로 내려받을 링크를, 아니면 «복사해서 메모장에 붙여넣고 '+sl+'.html로 저장하세요» 한 줄 안내',
  '· 수정 요청에는 최소 변경을 우선하고 무엇을 왜 바꾸는지 한 줄로 밝힙니다. 브리프의 시각 언어는 유지하고, 콘셉트·팔레트·핵심 재질·모션 방향이 바뀔 때만 브리프를 먼저 갱신합니다.',''];}
@@ -1851,9 +1969,86 @@ function dvLine(){
   return s;
 }
 function modsOn(){return MODS.filter(m=>S.mods[m.k])}
+
+/* ══════════ 핵심만 — 글자 수가 적은 AI용 짧은 요청서 ══════════
+   지침 전체 대신 꼭 지킬 규칙만 추린다. 교사가 적은 칸만 싣고, 빈칸은 한 줄 규칙으로 맡긴다. */
+function buildLite(){
+  const L=[], sci=isSci(), sl=stdList(), iq=allInqs(), lv=schoolLv(), sj=subjName();
+  const has=k=>(S[k]||'').trim(), one=k=>has(k).replace(/\s*\n\s*/g,' / ');
+  const typeName=has('type')||'관찰형', typeDesc=(TYPES.find(t=>t[0]===S.type)||['',''])[1];
+  L.push('[가상실험실 제작 요청서 · 핵심만]');
+  L.push('이름: '+(has('title')||'(성취기준에 맞게 정해 주세요)'));
+  L.push('대상: '+unitLine());
+  L.push('조건: '+typeName+(typeDesc&&!S.typeEtc?' ('+typeDesc+')':'')+' / 수업 '+S.time+'분');
+  L.push('');
+  L.push(...liteRole(lv,sj));
+  L.push('[교육과정 근거]');
+  if(sl.length)sl.forEach(s=>L.push('- 성취기준: '+(s.c?'['+s.c+'] ':'')+s.t));
+  else L.push('- 성취기준: (교사 미입력 — 2022 개정 교육과정에서 맞는 성취기준을 제안)');
+  if(iq.length)L.push('- 활동: '+iq.join(' / '));
+  if(has('goal'))L.push('- 학습 목표: '+one('goal'));
+  if(has('check'))L.push('- 도달 확인: '+has('check'));
+  const vh=verbHint();
+  L.push('- 성취기준의 서술어'+(sl.length&&vh.charAt(0)!=='('?'('+vh+')':'')+'에 해당하는 학생 행동이 화면 안에서 실제로 일어나게 하기. 성취기준 밖 내용을 목표로 끌어올리지 않기');
+  L.push('');
+  L.push('[만들 내용]');
+  const ivR=(S.ivMin||'').trim()!==''&&(S.ivMax||'').trim()!==''?' · 범위 '+S.ivMin.trim()+'~'+S.ivMax.trim()+(has('ivUnit')?' '+has('ivUnit'):'')+(has('ivStep')?' · 간격 '+has('ivStep'):''):(has('ivUnit')?' · 단위 '+has('ivUnit'):'');
+  L.push('- 학생이 바꾸는 것: '+(has('iv')?has('iv')+ivR+(S.ivTool&&!SIMPLE?' · '+S.ivTool:''):'(미입력 — 표준으로 정하고 «확인 필요»에)'));
+  L.push('- 달라지는 것: '+(has('dv')?has('dv')+(has('dvUnit')&&S.dvUnit!=='—'?' ('+has('dvUnit')+')':'')+(has('dvHow')?' · 측정 '+has('dvHow'):'')+(has('dvRes')?' · 분해능 '+has('dvRes'):''):'(미입력 — 표준으로 정하고 «확인 필요»에)'));
+  if(has('brief'))L.push('- 교사의 설명: '+one('brief'));
+  if(has('concept'))L.push('- 핵심 용어: '+has('concept'));
+  const cv=S.cvs.map(x=>x.trim()).filter(Boolean); if(cv.length)L.push('- 같게 유지: '+cv.join(' / '));
+  if(has('init'))L.push('- 초기 조건·근거 자료: '+one('init'));
+  if(has('simplify'))L.push('- 모델의 한계(화면에 표시): '+one('simplify'));
+  if(has('misconcept'))L.push('- 경계할 오개념: '+one('misconcept'));
+  if(has('safety'))L.push('- 안전: '+has('safety'));
+  if(has('watch'))L.push('- 관찰 포인트: '+one('watch'));
+  const on=modsOn().map(m=>m.n), op=OPTS.filter(o=>S.opts[o.k]).map(o=>o.n);
+  L.push('- 넣을 것: 핵심 장면 + 조작 1~3개'+(on.length?' + '+on.join(' · '):'')+(op.length?' + '+op.join(' · '):''));
+  if(S.mods.essay){const qs=S.qs.map(q=>(q||'').trim());
+    L.push('- 서술형 탐구 질문: 정확히 3문항(힌트 + 2~3문장 모범 답안, 모범 답안을 열면 처음 답안은 잠기고 다시 쓰기 칸이 열림)'+(qs.some(Boolean)?' — '+qs.map((q,i)=>'Q'+(i+1)+' '+(q||'(AI가 작성)')).join(' / '):''))}
+  L.push('- 넣지 않을 것: '+(on.length?'고르지 않은 학습 모듈':'퀴즈·서술형·리포트·이론 드로어 같은 학습 모듈')+', 빈 탭, 형식적인 퀴즈, 의미 없는 장식'+(has('exclude')?', '+has('exclude'):''));
+  L.push('- 화면: 분위기 '+moodEff()+(has('concept1')?' · 한 장면 «'+has('concept1')+'»':'')+(has('core')?' · 먼저 만지는 것 '+has('core'):'')+(S.avoid.length?' · 피할 것 '+S.avoid.join(' / '):''));
+  [['팔레트','palette'],['구도·재질','scene'],['함께 보일 것','together'],['시그니처','sign'],['모션','motion'],['배치','budget']].filter(a=>has(a[1])).forEach(a=>L.push('- '+a[0]+': '+one(a[1])));
+  L.push('');
+  const custom=S.typeEtc&&has('typeAct')?typeName+': '+has('typeAct')+(has('typeDone')?' · 끝나는 조건 '+has('typeDone'):'')+(has('typeRule')?' · '+has('typeRule'):''):'';
+  L.push(...liteRules(lv,S.typeEtc?'':S.type,S.time,custom));
+  L.push(...liteResp(slug()));
+  return L.join('\n');
+}
+function liteRole(lv,sj){return [
+  '[역할]',
+  '- '+lv+' '+sj+' 교사의 가상실험실 제작 파트너. 결과물은 수업에 바로 쓰는 단일 HTML 파일 하나, 화면과 응답은 모두 한국어',
+  '- 가상실험실: 학생이 핵심 변수를 직접 바꾸고 결과를 보며 원인과 결과를 스스로 연결하는 도구. 기능 수보다 내용의 정확성 · 조작의 즉시성 · 관찰의 명료성이 먼저',
+  '- 아래에 없는 것은 되묻지 말고 교과서 수준의 표준으로 정한 뒤, 응답 맨 앞 «확인 필요» 목록에 모아 알리기',
+  ''];}
+function liteRules(lv,type,time,custom){
+  const R=[
+   '수치·상수·자료는 근거 있는 값만. 없으면 정성적 경향만 보여 주고 그 사실을 화면에 밝히기. 임의 노이즈·가짜 정밀도 금지',
+   '모델의 조건·단위·교육적 단순화를 화면에 한 줄로 표시. 용어·표기는 '+lv+' 교육과정 기준, 화면이 오개념을 강화하지 않게',
+   '단일 HTML · CSS와 JS 인라인 · 외부 이미지 없이 동작. 그래픽은 SVG/Canvas',
+   '첫 화면에서 핵심 장면과 조작이 스크롤 없이 보이고, 조작 결과가 곧바로 장면에 반영',
+   '조작은 관찰 대상 가까이. 떠 있는 UI가 장면을 가리지 않게. 휴대폰 세로(320~430px)와 노트북(1366×768)에서 확인',
+   '터치 44px · 키보드 조작 · 색에만 기대지 않는 표시 · 본문 대비 4.5:1 이상',
+   '다크/라이트 테마 둘 다 실제 구현(D) · 전체화면(F) · 초기화 · 도움말',
+   '결과 저장 버튼: 지금 장면 + 조건·결과 한 줄을 PNG 한 장으로',
+   '개인정보를 밖으로 보내지 않기. 제작자 브랜드·로고·채널 링크 넣지 않기'];
+  if(time&&SHORT(time))R.push('수업 '+time+'분: 화면을 열고 30초 안에 첫 조작. 시작·설명·이름 입력 화면을 앞에 두지 않기');
+  if(type==='게임형')R.push('게임형: 승패는 내용에 대한 판단의 결과(운·반응 속도 금지). 끝난 뒤 «무엇을 알게 되었는지» 정리 화면');
+  if(type==='미션형')R.push('미션형: 목표 달성 조건을 화면에 밝히고, 실패했을 때 무엇을 바꿔 볼지 한 줄로 안내');
+  if(custom)R.push(custom);
+  return ['[꼭 지킬 것]',...R.map((r,i)=>(i+1)+'. '+r),''];
+}
+function liteResp(name){return [
+  '[응답 형식]',
+  '1. «확인 필요» 목록 — 표준으로 정한 값과 교사가 확인할 수치·조건',
+  '2. 완성된 단일 HTML 전체 코드 — '+curAI().out,
+  '3. [꼭 지킬 것] 항목별 점검 결과 O/X 한 줄씩',
+  '4. 파일 생성이 되면 «'+name+'.html»로 내려받게 하고, 아니면 저장 방법 한 줄 안내'];}
+
 function modsOff(){return MODS.filter(m=>!S.mods[m.k])}
 
-function buildPrompt(){
+function buildFull(){
   const T=v(S.title,'(제목 미입력)'), lv=schoolLv(), subj=subjName(), sci=isSci();
   const sl=stdList();
   const stdBlock=sl.length?sl.map(s=>'  · '+(s.c?'['+s.c+'] ':'')+s.t).join('\n'):'  '+NA;
@@ -2017,7 +2212,16 @@ function buildPrompt(){
 }
 
 /* ══════════ 점검표 · 근거 · 수업 활용안 ══════════ */
+const FIXES=[
+ {n:'수치를 교과서 값으로',t:'«확인 필요» 목록의 [항목]은 교과서 값 [값과 단위]로 바꿔 주세요. 바꾼 곳과, 함께 달라지는 문항·해설을 한 줄씩 알려 주세요.'},
+ {n:'조작부가 장면을 가릴 때',t:'[조작 패널]이 [관찰 대상]을 가립니다. 장면을 가리지 않는 자리로 옮기고, 무엇을 어디로 옮겼는지 한 줄로 알려 주세요.'},
+ {n:'휴대폰 화면이 깨질 때',t:'휴대폰 세로 화면(폭 320~430px)에서 [깨지는 부분]이 잘리거나 겹칩니다. 그 폭에서만 배치를 바꾸고 노트북 화면은 그대로 두세요.'},
+ {n:'눌러도 반응이 없을 때',t:'[단추·슬라이더 이름]을 조작해도 [바뀌어야 할 것]이 바뀌지 않습니다. 원인을 찾아 고치고, 고친 부분만 짧게 설명해 주세요.'},
+ {n:'내용이 교과서와 다를 때',t:'[틀린 설명]은 교과서와 다릅니다. [옳은 내용]에 맞게 고치고, 같은 내용이 들어간 안내문·문항·모범 답안도 함께 고쳐 주세요.'},
+ {n:'코드가 중간에 끊겼을 때',t:'코드가 중간에 끊겼습니다. 끊긴 줄부터 이어서, 생략 없이 끝까지 써 주세요.'}];
 function renderGates(){
+  $('#fixes').innerHTML=FIXES.map((f,i)=>`<div class="fix"><b>${esc(f.n)}</b><p>${esc(f.t).replace(/\[([^\]]+)\]/g,'<mark>$1</mark>')}</p>
+    <button class="mini" type="button" data-fix="${i}">이 말 복사</button></div>`).join('');
   $('#gateA').innerHTML=GATES8.map((g,i)=>`<li><span class="g">${i+1}</span><span><b>${esc(g[0])}</b><small>${esc(g[1])}</small></span></li>`).join('');
   $('#gateC').innerHTML=GATES12.map((g,i)=>`<li><span class="g">${i+1}</span><span><b>${esc(g[0])}</b><small>${esc(g[1])}</small></span></li>`).join('');
   const cg=condGates();
@@ -2028,13 +2232,13 @@ function renderEvid(){
   const rows=[], sl=stdList(), us=sciUnits();
   rows.push(['학년·과목·단원',esc(unitLine())]);
   if(sl.length)rows.push(['성취기준',sl.map(s=>(s.c?`<code>[${esc(s.c)}]</code> `:'')+esc(s.t)).join('<br>')]);
-  else rows.push(['성취기준','<span style="color:var(--tx3)">아직 고르지(적지) 않았습니다.</span>']);
+  else rows.push(['성취기준','<span class="none">아직 고르지(적지) 않았습니다.</span>']);
   const iq=allInqs(); if(iq.length)rows.push(['교육과정·교과서 활동',iq.map(esc).join('<br>')]);
   rows.push(['성취기준 서술어',esc(verbHint())]);
   if((S.goal||'').trim())rows.push(['학습 목표',esc(S.goal).replace(/\n/g,'<br>')]);
   if((S.check||'').trim())rows.push(['도달 확인',esc(S.check)]);
   if(us.length)rows.push(['같은 단원의 다른 성취기준',
-    us.flatMap(u=>u.s).filter(s=>!S.stds.includes(s.c)).map(s=>`<code>[${s.c}]</code> ${esc(s.t)}`).join('<br>')||'<span style="color:var(--tx3)">없음</span>']);
+    us.flatMap(u=>u.s).filter(s=>!S.stds.includes(s.c)).map(s=>`<code>[${s.c}]</code> ${esc(s.t)}`).join('<br>')||'<span class="none">없음</span>']);
   rows.push(['출처',isSci()?'교육부 고시 제2022-33호 [별책 9] 과학과 교육과정':'교사가 직접 입력한 '+esc(subjName())+'과 교육과정 성취기준 (교육부 고시 제2022-33호)']);
   $('#evBody').innerHTML=rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('');
 }
@@ -2098,15 +2302,14 @@ function renderCrit(){
   $('#critList').innerHTML=list.map(c=>{
     const r=c.f().map(Boolean); const ok=r.every(Boolean);
     done+=r.filter(Boolean).length; total+=r.length;
-    return `<li class="${ok?'on':''}"><span class="mk">${ok?'✓':r.filter(Boolean).length}</span>
-      <span><b>${esc(c.n)}</b><small>${esc(c.d)}</small></span></li>`}).join('');
+    return `<li class="${ok?'on':''}" title="${esc(c.d)}"><span class="mk" aria-hidden="true">${ok?'✓':r.filter(Boolean).length}</span>${esc(c.n)}<span class="sr">${ok?' 완료':' 진행 중'} — ${esc(c.d)}</span></li>`}).join('');
   const p=Math.round(done/total*100);
   $('#pct').textContent=p+'%'; $('#barFill').style.width=p+'%'; $('#dockPct').textContent=p+'%';
   const ready=stdList().length>0;
   const rl=$('#readyLine'); rl.className='ready'+(ready?' ok':'');
-  rl.textContent=ready?'✓ 지금 복사해도 됩니다. 빈칸은 AI가 정하고 «확인 필요»로 알려 줍니다.':'성취기준 1개만 고르면 바로 복사할 수 있습니다.';
-  ['btnCopy','btnCopy2','btnCopySide','btnDockCopy','btnDockAI'].forEach(id=>{const b=$('#'+id);if(b)b.disabled=!ready});
-  $$('#aiBarMain .aib, #aiBarSide .aib').forEach(b=>b.disabled=!ready);
+  rl.textContent=ready?'✓ 지금 복사해도 됩니다. 빈칸은 AI가 정해 «확인 필요»로 알려 줍니다.':'성취기준 1개만 고르면 바로 복사할 수 있습니다.';
+  ['btnDockCopy','btnDockAI'].forEach(id=>{const b=$('#'+id);if(b)b.disabled=!ready});
+  $$('#s4 [data-go],#s4 [data-copy],#s4 [data-txt],.side [data-go],.side [data-copy],.side [data-txt]').forEach(b=>b.disabled=!ready);
   const okS1=CRIT_CORE[0].f().every(Boolean)&&CRIT_CORE[1].f().every(Boolean);
   const okS2=CRIT_CORE[2].f().every(Boolean);
   const okS3=!!(modsOn().length||S.mood||(S.concept1||'').trim());
@@ -2118,7 +2321,7 @@ let saveT;
 function sync(){
   const p=buildPrompt();
   $('#out').textContent=p; $('#prev').textContent=p;
-  $('#stat').textContent=p.length.toLocaleString('ko-KR')+'자 · 약 '+Math.ceil(p.length/2.2).toLocaleString('ko-KR')+' 토큰';
+  renderMeter(p);
   $('#classOut').textContent=buildClass();
   renderGates(); renderEvid(); renderCrit(); renderS3sum();
   clearTimeout(saveT); saveT=setTimeout(save,400);
@@ -2137,7 +2340,7 @@ function refreshAll(){
   if(advHas)S.adv=1;
   $('#advBox').hidden=!S.adv;
   $('#btnAdv').setAttribute('aria-expanded',String(!!S.adv));
-  $('#btnAdv').textContent=(S.adv?'⚙ 직접 정하기 접기':'⚙ 색·구도까지 직접 정하기 (선택)');
+  $('#btnAdv').textContent=(S.adv?'직접 정하기 접기':'색·구도까지 직접 정하기 (선택)');
   sync()}
 function loadPreset(i){
   const p=PRESETS[i];
@@ -2168,18 +2371,14 @@ $('#btnS3').onclick=()=>{S.s3open=S.s3open?0:1;renderS3sum();save();if(S.s3open)
 let SIMPLE=true;
 function applyMode(){
   document.body.classList.toggle('simple',SIMPLE);
-  $('#btnMode').setAttribute('aria-pressed',String(SIMPLE));
-  $('#modeTxt').textContent=SIMPLE?'간단 입력':'자세히 입력';
-  $('#modeHint').innerHTML=SIMPLE
-    ? '<b>간단 입력</b> — 과목·성취기준을 고르면 이름과 학습 목표가 자동으로 채워지고, <b>바꾸는 것 · 달라지는 것</b> 두 칸이면 완성됩니다. 3단계(학습 장치·화면 느낌)는 접혀 있으며 필요할 때만 엽니다. 나머지는 AI가 지침에 맞춰 정하고 «확인 필요»로 알려 줍니다. 측정 방법·통제 변인·오개념까지 직접 적으려면 <b>자세히 입력</b>으로 바꾸세요.'
-    : '<b>자세히 입력</b> — 모든 칸이 열렸습니다. 수치와 모델의 한계를 직접 적을수록 AI가 값을 지어낼 여지가 줄어듭니다.';
+  $$('#rail button[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.mode==='1')===SIMPLE)));
   try{localStorage.setItem('ssv-mode',SIMPLE?'1':'0')}catch(e){}
 }
 $('#btnAdv').onclick=()=>{
   S.adv=S.adv?0:1;
   $('#advBox').hidden=!S.adv;
   $('#btnAdv').setAttribute('aria-expanded',String(!!S.adv));
-  $('#btnAdv').textContent=(S.adv?'⚙ 직접 정하기 접기':'⚙ 색·구도까지 직접 정하기 (선택)');
+  $('#btnAdv').textContent=(S.adv?'직접 정하기 접기':'색·구도까지 직접 정하기 (선택)');
   sync()};
 $('#addCv').onclick=()=>{S.cvs.push('');renderCv();sync();
   const els=$$('#listCv input');els[els.length-1].focus()};
@@ -2195,18 +2394,61 @@ async function copy(txt,msg){
   try{await navigator.clipboard.writeText(txt);toast(msg)}
   catch(e){if(copyFallback(txt))toast(msg);else toast('복사하지 못했어요. 아래 내용을 직접 선택해 복사해 주세요.')}
 }
+/* ── AI 사이트 5곳 : 결과를 받는 방법과 한 번에 받는 글자 수가 서로 다르다 ──
+   out  = 프롬프트 【응답 형식】 ③에 들어가는 구절 (고른 AI에 맞춤)
+   tip  = 화면 안내 한 줄,  short = 긴 글이 잘릴 수 있는 곳 (「핵심만」 추천) */
+const OUT_BLOCK='하나의 코드 블록으로, 생략 없이 끝까지. 길어서 끊기면 «이어서»라는 말에 끊긴 줄부터 이어 씁니다';
 const AIS=[
- {k:'ChatGPT',c:'#10A37F',auto:1,mark:'GPT',url:q=>q?'https://chatgpt.com/?q='+encodeURIComponent(q):'https://chatgpt.com/',note:'질문이 자동으로 입력됩니다'},
- {k:'Claude',c:'#C96442',auto:0,mark:'Cl',url:()=>'https://claude.ai/new',note:'붙여넣기(Ctrl+V) 하세요'},
- {k:'Gemini',c:'#8E6FE8',auto:0,mark:'G',url:()=>'https://gemini.google.com/app',note:'붙여넣기(Ctrl+V) 하세요'},
- {k:'Copilot',c:'#0F6FB8',auto:0,mark:'Co',url:()=>'https://copilot.microsoft.com/',note:'붙여넣기(Ctrl+V) 하세요'},
- {k:'SenGPT',c:'#2E7D4F',auto:0,mark:'Sen',url:()=>'https://gov.wrks.ai/',note:'서울시교육청 계정 · 붙여넣기'}];
+ {k:'ChatGPT',c:'#0B7D61',auto:1,mark:'GPT',url:q=>q?'https://chatgpt.com/?q='+encodeURIComponent(q):'https://chatgpt.com/',note:'질문이 자동으로 입력됩니다',
+  who:'OpenAI 계정',tip:'<b>캔버스</b>가 열리면 미리보기로 바로 실행해 볼 수 있습니다. 안 열리면 코드를 .html 파일로 저장해 엽니다.',
+  out:'캔버스로 만들어 미리보기로 바로 실행되게 하고, 캔버스를 쓸 수 없으면 코드 블록 하나로. 어느 쪽이든 생략 없이 끝까지'},
+ {k:'Claude',c:'#B4532F',auto:0,mark:'Cl',url:()=>'https://claude.ai/new',note:'붙여넣기(Ctrl+V) 하세요',
+  who:'Anthropic 계정',tip:'<b>아티팩트</b> 창에서 만든 것이 바로 실행되고, 내려받기 단추로 .html 파일을 저장합니다.',
+  out:'아티팩트(Artifact) 하나로 만들어 바로 실행되게, 생략 없이 끝까지'},
+ {k:'Gemini',c:'#7655D6',auto:0,mark:'G',url:()=>'https://gemini.google.com/app',note:'붙여넣기(Ctrl+V) 하세요',
+  who:'Google 계정',tip:'입력창의 「도구」에서 <b>Canvas</b>를 켜고 보내면, 만든 것을 미리보기로 바로 실행해 볼 수 있습니다.',
+  out:'캔버스(Canvas)로 만들어 미리보기로 바로 실행되게, 생략 없이 끝까지'},
+ {k:'Copilot',c:'#0F6FB8',auto:0,mark:'Co',short:1,url:()=>'https://m365.cloud.microsoft/chat',note:'학교 Microsoft 365 계정 · 붙여넣기',
+  who:'학교 Microsoft 365 계정',tip:'계정에 따라 <b>한 번에 받는 글자 수가 적습니다</b>(적게는 2,000자쯤). 「핵심만」으로 줄이거나 .txt로 저장해 파일로 첨부하세요.',
+  out:OUT_BLOCK},
+ {k:'SenGPT',c:'#2E7D4F',auto:0,mark:'Sen',short:1,url:()=>'https://gov.wrks.ai/',note:'서울시교육청 계정 · 붙여넣기',
+  who:'서울시교육청 계정',tip:'긴 글은 입력창에서 잘릴 수 있습니다. 「핵심만」으로 줄이거나 .txt로 저장해 파일로 첨부하세요.',
+  out:OUT_BLOCK}];
+const SHORT_BUDGET=2000;
 let lastAI='ChatGPT'; try{lastAI=localStorage.getItem('ssv-ai')||'ChatGPT'}catch(e){}
 if(!AIS.some(a=>a.k===lastAI))lastAI='ChatGPT';
+const curAI=()=>AIS.find(a=>a.k===lastAI)||AIS[0];
+/* 프롬프트 길이 : full = 지침 전체, lite = 핵심만 */
+let LEN='full'; try{LEN=localStorage.getItem('ssv-len')==='lite'?'lite':'full'}catch(e){}
+function buildPrompt(){return LEN==='lite'?buildLite():buildFull()}
+const ARROW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+function setAI(k){if(!AIS.some(a=>a.k===k))return;lastAI=k;try{localStorage.setItem('ssv-ai',k)}catch(e){}
+  renderSend();sync();if(!$('#qkOut').hidden&&$('#qkText').value.trim())$('#qkOut').textContent=buildQuick()}
+function setLen(l){LEN=l==='lite'?'lite':'full';try{localStorage.setItem('ssv-len',LEN)}catch(e){}renderSend();sync();
+  if(!$('#qkOut').hidden&&$('#qkText').value.trim())$('#qkOut').textContent=buildQuick()}
+/* AI 고르기 · 길이 · 보내기 단추 — 본문 4단계, 사이드 판, 긴급 창이 같은 상태를 나눠 쓴다 */
+function renderSend(){
+  const a=curAI();
+  $$('[data-ais]').forEach(el=>{el.innerHTML=AIS.map(x=>`<button type="button" class="aib" data-ai="${x.k}" aria-pressed="${x.k===a.k}" style="--k:${x.c}" title="${x.k} · ${esc(x.who)}"><span class="mark">${x.mark}</span><span class="nm">${x.k}</span></button>`).join('')});
+  $$('[data-ainote]').forEach(el=>{el.innerHTML='<span class="who">'+esc(a.who)+'</span><span>'+a.tip+'</span>'});
+  $$('[data-len]').forEach(el=>{el.innerHTML=
+    `<button type="button" data-l="full" aria-pressed="${LEN==='full'}" title="제작 지침을 통째로 담습니다">전체<small>${a.short?'지침 포함':'추천'}</small></button>`
+   +`<button type="button" data-l="lite" aria-pressed="${LEN==='lite'}" title="꼭 지킬 규칙만 추려 짧게 만듭니다">핵심만<small>${a.short?'추천':'짧게'}</small></button>`});
+  $$('[data-go]').forEach(b=>{b.innerHTML='복사하고 '+a.k+' 열기'+ARROW;b.title='프롬프트를 복사하고 '+a.k+'을(를) 새 탭에서 엽니다'});
+  const qg=$('#btnQkGo'); if(qg){qg.innerHTML='복사하고 '+a.k+' 열기'+ARROW}
+  renderDockAI();
+}
+function renderMeter(p){
+  const a=curAI(), n=p.length, over=!!a.short&&n>SHORT_BUDGET;
+  $$('[data-meter]').forEach(el=>{el.classList.toggle('over',over);
+    el.innerHTML='<b>'+n.toLocaleString('ko-KR')+'자</b> · 약 '+Math.ceil(n/2.2).toLocaleString('ko-KR')+' 토큰 · '+a.k+' 맞춤'});
+  $$('[data-over]').forEach(el=>{el.hidden=!over;
+    if(over)el.innerHTML='<span>'+a.k+'에는 길 수 있어요. '+(LEN==='lite'?'잘리면 .txt로 저장해 파일로 첨부하세요.':'「핵심만」으로 줄이거나 .txt로 저장해 첨부하세요.')+'</span>'
+      +(LEN==='lite'?'':'<button type="button" data-l="lite">핵심만으로</button>')});
+}
 function renderDockAI(){const narrow=matchMedia('(max-width:430px)').matches;
   $('#dockAiTxt').textContent=narrow?lastAI+' 열기':'복사하고 '+lastAI+' 열기';
-  $('#btnDockAI').title='프롬프트를 복사하고 '+lastAI+'을(를) 새 탭에서 엽니다';
-  $('#btnDockCopy').querySelector('.lbtxt').textContent=narrow?'복사':'프롬프트 복사'}
+  $('#btnDockAI').title='프롬프트를 복사하고 '+lastAI+'을(를) 새 탭에서 엽니다'}
 try{matchMedia('(max-width:430px)').addEventListener('change',()=>renderDockAI())}catch(e){}
 async function openAI(key,text){
   const a=AIS.find(x=>x.k===key)||AIS[0];
@@ -2214,29 +2456,27 @@ async function openAI(key,text){
   let ok=true; if(!pr)ok=copyFallback(text);
   window.open(a.url(''),'_blank','noopener,noreferrer');
   if(pr){try{await pr}catch(e){ok=copyFallback(text)}}
-  toast(ok?`${a.k}을(를) 새 탭에서 열었어요. 대화창에 Ctrl+V로 붙여넣으세요.`:`${a.k}을(를) 열었어요. 복사가 막혀 있어 프롬프트를 직접 복사해 주세요.`);
-  lastAI=a.k; try{localStorage.setItem('ssv-ai',a.k)}catch(e){} renderDockAI();
+  toast(ok?`복사했어요. 새 탭에 열린 ${a.k} 대화창에 Ctrl+V로 붙여 넣으세요.`:`${a.k}을(를) 열었어요. 복사가 막혀 있어 프롬프트를 직접 복사해 주세요.`);
 }
-function renderAIBars(){
-  const mk=(id,fn)=>{const el=$(id);if(!el)return;
-    el.innerHTML='<span class="lbl">복사하고 열기</span>'+AIS.map(a=>`<button type="button" class="aib" data-ai="${a.k}" style="--k:${a.c}" title="프롬프트를 복사하고 ${a.k}을(를) 새 탭에서 엽니다"><span class="mark">${a.mark}</span>${a.k}</button>`).join('');
-    $$('.aib',el).forEach(b=>b.onclick=()=>{const t=fn();if(!t)return;openAI(b.dataset.ai,t)})};
-  mk('#aiBarMain',()=>buildPrompt()); mk('#aiBarSide',()=>buildPrompt()); mk('#aiBarQuick',()=>quickText());
-  renderDockAI();
-}
-$('#btnCopy').onclick=()=>copy(buildPrompt(),'프롬프트를 복사했어요. AI 대화창에 붙여넣으세요.');
-$('#btnCopy2').onclick=()=>copy(buildPrompt(),'프롬프트를 복사했어요.');
-$('#btnCopySide').onclick=()=>copy(buildPrompt(),'프롬프트를 복사했어요. AI 대화창에 붙여넣으세요.');
-$('#btnDockCopy').onclick=()=>copy(buildPrompt(),'프롬프트를 복사했어요. AI 대화창에 붙여넣으세요.');
+const saveName=()=>slug()+(LEN==='lite'?'_제작요청서_핵심.txt':'_제작요청서.txt');
+/* 눌린 곳이 어디든 같은 동작 — AI 고르기 · 길이 · 복사 · 저장 · 열기 */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-ai],[data-l],[data-go],[data-copy],[data-txt],[data-fix]'); if(!t||t.disabled)return;
+  if(t.dataset.ai!==undefined&&t.closest('[data-ais]')){setAI(t.dataset.ai);return}
+  if(t.dataset.l!==undefined){setLen(t.dataset.l);if(t.closest('[data-over]'))toast('핵심 규칙만 담은 짧은 요청서로 바꿨어요.');return}
+  if(t.dataset.go!==undefined){openAI(lastAI,buildPrompt());return}
+  if(t.dataset.copy!==undefined){copy(buildPrompt(),'프롬프트를 복사했어요. AI 대화창에 붙여 넣으세요.');return}
+  if(t.dataset.txt!==undefined){dlTxt(saveName(),buildPrompt());toast('메모장 파일로 저장했어요. 다운로드 폴더를 확인해 주세요.');return}
+  if(t.dataset.fix!==undefined){const f=FIXES[+t.dataset.fix];if(f)copy(f.t,'고쳐 달라는 말을 복사했어요. [ ] 안을 내 말로 바꿔 보내세요.')}
+});
+$('#btnDockCopy').onclick=()=>copy(buildPrompt(),'프롬프트를 복사했어요. AI 대화창에 붙여 넣으세요.');
 $('#btnDockAI').onclick=()=>openAI(lastAI,buildPrompt());
 $('#btnCopyClass').onclick=()=>copy(buildClass(),'수업 활용안을 복사했어요.');
-$('#btnTxt').onclick=()=>{dl(slug()+'_제작요청서.txt',buildPrompt());toast('저장했어요. 다운로드 폴더를 확인해 주세요.')};
-$('#btnMd').onclick=()=>{
-  const md='# '+v(S.title,'가상실험실')+' — 가상실험실 제작 요청서\n\n> '+unitLine()+' · '+v(S.type,'(유형 미정)')+' · '+S.time+'분\n\n```\n'+buildPrompt()+'\n```\n';
-  dl(slug()+'_제작요청서.md',md);toast('저장했어요. 다운로드 폴더를 확인해 주세요.')};
-$('#btnExport').onclick=()=>{dl(slug()+'_작업파일.json',JSON.stringify(S,null,2));
-  toast('작업 파일을 저장했어요. 다음에 열어서 이어 쓸 수 있어요.')};
-$('#btnImport').onclick=()=>$('#fileIn').click();
+const closeMore=()=>{const m=$('#moreMenu');if(m)m.open=false};
+document.addEventListener('click',e=>{const m=$('#moreMenu');if(m&&m.open&&!m.contains(e.target))m.open=false});
+$('#btnExport').onclick=()=>{closeMore();dl(slug()+'_작업파일.json',JSON.stringify(S,null,2));
+  toast('작업 파일을 저장했어요. 「더 보기 → 작업 파일 열기」로 이어 쓸 수 있어요.')};
+$('#btnImport').onclick=()=>{closeMore();$('#fileIn').click()};
 $('#fileIn').onchange=e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
@@ -2249,7 +2489,7 @@ $('#fileIn').onchange=e=>{
     catch(err){S=prev;try{refreshAll()}catch(e){}toast('파일을 읽지 못했어요. 이 도구에서 내보낸 .json인지 확인해 주세요.')}};
   r.readAsText(f); e.target.value='';
 };
-$('#btnPrint').onclick=()=>{window.print()};
+$('#btnPrint').onclick=()=>{closeMore();window.print()};
 let cfmResolve=null;
 function askConfirm(msg){
   $('#cfmMsg').textContent=msg;
@@ -2271,7 +2511,7 @@ const doReset=async()=>{
   S=JSON.parse(JSON.stringify(BLANK));
   try{localStorage.removeItem('ssv-teacher-studio')}catch(e){}
   refreshAll();window.scrollTo({top:0});
-  toast('전부 지웠어요. 머리의 «예시»로 다시 시작할 수도 있어요.');
+  toast('모두 지웠어요. 위쪽 «예시»로 시작해도 됩니다.');
 };
 $('#btnReset').onclick=doReset;
 $('#btnEx').onclick=openEx; $('#btnCloseEx').onclick=closeEx;
@@ -2457,7 +2697,32 @@ let qkT; $('#qkText').addEventListener('input',()=>{clearTimeout(qkT);qkT=setTim
 $('#qkSubj').addEventListener('input',()=>{QK.subj=$('#qkSubj').value.trim();renderQkSug()});
 $('#qkText').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();$('#btnQkMake').click()}});
 
+function buildQuickLite(){
+  const body=$('#qkText').value.trim(), subjIn=(QK.subj||'').trim();
+  const lv=QK.lvl==='초'?'초등학교':QK.lvl==='고'?'고등학교':'중학교';
+  const gradeTxt=QK.lvl?(lv+(QK.gradeN?' '+QK.gradeN:'')):(QK.gradeN||'');
+  const typeDesc=QK.type?(TYPES.find(t=>t[0]===QK.type)||['',''])[1]:'';
+  const L=[];
+  L.push('[가상실험실 제작 요청서 · 긴급 · 핵심만]');
+  L.push('과목: '+(subjIn||'(교사가 적은 글에서 추정)')+(gradeTxt?' · '+gradeTxt:''));
+  const cond=[QK.type?QK.type+' ('+typeDesc+')':'',QK.time?'수업 '+QK.time:''].filter(Boolean).join(' / ');
+  if(cond)L.push('조건: '+cond);
+  L.push('');
+  L.push(...liteRole(lv,subjIn||'과목'));
+  L.push('[만들 내용] 교사가 적은 글이 유일한 근거');
+  L.push(body?body.split('\n').map(x=>'  '+x).join('\n'):'  (내용 미입력 — 무엇을 만들지 먼저 물어봐 주세요)');
+  if(QK.stds.length)QK.stds.forEach(x=>L.push('- 성취기준: ['+x.c+'] '+x.t));
+  else L.push('- 성취기준: 글에 맞는 2022 개정 교육과정 성취기준 후보를 1~2개 제안(코드 확인 때문에 제작을 멈추지 않기)');
+  L.push('- 성취기준의 서술어에 해당하는 학생 행동이 화면 안에서 실제로 일어나게 하기');
+  L.push('- 먼저 글에서 ① 학생이 바꾸는 것(범위·단위) ② 달라지는 것(측정·확인 방법) ③ 알게 되어야 하는 것(학습 목표 한 문장)을 뽑아 정리');
+  L.push('- 넣지 않을 것: 학습 목표에 꼭 필요하지 않은 퀴즈·서술형·리포트, 빈 탭, 의미 없는 장식');
+  L.push('');
+  L.push(...liteRules(lv,QK.type,QK.time?String(parseInt(QK.time,10)):'',''));
+  L.push(...liteResp('실험이름'));
+  return L.join('\n');
+}
 function buildQuick(){
+  if(LEN==='lite')return buildQuickLite();
   const body=$('#qkText').value.trim();
   const subjIn=(QK.subj||'').trim();
   const subj=subjIn||'(과목은 교사가 적은 내용에서 추정)';
@@ -2514,7 +2779,7 @@ function buildQuick(){
   L.push(...qualityLines(5,sci,errs,QK.type));
   L.push(...techLines(6,'(교사가 적은 내용에 맞는 실험실 이름을 당신이 정함)',{report:0,theory:0,sound:0,resume:0,share:0,present:0,student:0}));
   L.push('【7】 응답 형식 — 이 순서대로, 설명은 짧게');
-  L.push('① 【3】의 브리프 8줄  ② «확인 필요» 목록 — 표준으로 정한 값과 교사가 확인할 수치·조건  ③ 완성된 단일 HTML 전체 코드(하나의 코드 블록)');
+  L.push('① 【3】의 브리프 8줄  ② «확인 필요» 목록 — 표준으로 정한 값과 교사가 확인할 수치·조건  ③ 완성된 단일 HTML 전체 코드 — '+curAI().out);
   L.push('④ 【8】 점검 결과 — 항목별 O/X와 근거 한 줄  ⑤ 파일 제공 — 가능하면 .html 다운로드 링크, 아니면 «복사해서 메모장에 붙여넣고 실험이름.html로 저장하세요» 한 줄 안내');
   L.push('· 수정 요청에는 최소 변경을 우선하고 무엇을 왜 바꾸는지 한 줄로 밝힙니다.');
   L.push('');
@@ -2536,7 +2801,8 @@ $('#btnQkMake').onclick=async()=>{
   await copy(t,'프롬프트를 복사했어요. AI 대화창에 붙여넣으세요.');
   $('#qkOut').scrollIntoView({block:'nearest'});
 };
-$('#btnQkTxt').onclick=()=>{const t=quickText();if(!t)return;dl('가상실험실_긴급요청서.txt',t);toast('저장했어요. 다운로드 폴더를 확인해 주세요.')};
+$('#btnQkTxt').onclick=()=>{const t=quickText();if(!t)return;dlTxt(LEN==='lite'?'가상실험실_긴급요청서_핵심.txt':'가상실험실_긴급요청서.txt',t);toast('메모장 파일로 저장했어요. 다운로드 폴더를 확인해 주세요.')};
+$('#btnQkGo').onclick=()=>{const t=quickText();if(!t)return;openAI(lastAI,t)};
 $('#btnQkToFull').onclick=()=>{
   const body=$('#qkText').value.trim();
   if(!body){toast('가져갈 내용을 먼저 적어 주세요.');$('#qkText').focus();return}
@@ -2565,43 +2831,55 @@ const GUIDE=[
  {c:'§11',t:'결과 저장 · 테마 · 전체화면 (MUST)',l:['실험 장면이 있는 모든 화면에 <b>결과 저장</b>(카메라 → 장면 + 정보 띠 PNG) 버튼. 모달·overflow 안에 넣지 않습니다.','테마는 <code>html[data-theme]</code> 하나, 두 토큰 블록, 색은 토큰으로만, D 키. <b>다크·라이트 둘 다 실제로 동작</b>해야 합니다.','전체화면 F, iOS 미지원 안내. 문자 단축키는 입력 중일 때만 무시.']},
  {c:'§13·§15',t:'문장과 정확성',l:['버튼은 동사+대상, 상태는 결과부터, 오류는 원인+해결책+계속 가능 여부, 학생을 탓하지 않음.','수치·자료는 적합한 출처를 확인하고 실측값과 교육용 모델값을 구분합니다. 임의 노이즈·가짜 정밀도 금지.','글로 쓴 내용(문항·힌트·모범 답안·해설)도 같은 기준으로 검증합니다.']},
  {c:'§17',t:'제출 전 점검',l:['<b>차단 게이트 8</b>(내용 모델·핵심 조작·접근성·교실 판독성·복원력·개인정보·세련됨·상시 요소 실제 동작)은 하나라도 실패하면 제출하지 않습니다.','공통 확인 12와, 넣은 기능에만 해당하는 조건부 게이트를 이어서 봅니다.','320·430px 세로와 1366×768에서 실제로 확인합니다.']}];
-function openDrawerWith(title,html){
-  $('#drawerTitle').textContent=title; $('#drawerBody').innerHTML=html;
+function helpHtml(){
+  const a=curAI().k;
+  return `
+   <div class="gcard"><h4><code>1</code>가장 빠른 길 — 고르기 세 번 + 두 칸</h4><ul>
+     <li><b>과목 → (과학은 학년·영역) → 성취기준</b>을 고르면 실험실 이름과 학습 목표가 자동으로 채워집니다.</li>
+     <li>2단계에서 <b>학생이 바꾸는 것 · 달라지는 것</b> 두 칸만 적습니다.</li>
+     <li>AI를 고르고 <b>복사하고 ${a} 열기</b>를 누른 뒤, 새 탭 대화창에 Ctrl+V 하면 끝입니다.</li>
+     <li>다른 과목은 성취기준을 교육과정 문서에서 복사해 한 줄에 하나씩 붙여 넣습니다. 코드가 없어도 됩니다.</li></ul></div>
+   <div class="gcard"><h4><code>2</code>AI 고르기와 길이</h4><ul>
+     <li>고른 AI에 맞춰 프롬프트의 <b>응답 형식</b>(캔버스 · 아티팩트 · 코드 블록)이 바뀝니다.</li>
+     <li><b>전체</b>는 제작 지침을 통째로 담습니다. 긴 글을 한 번에 받는 ChatGPT · Claude · Gemini에 맞습니다.</li>
+     <li><b>핵심만</b>은 꼭 지킬 규칙만 추린 짧은 요청서입니다. 한 번에 받는 글자 수가 적은 Copilot · SenGPT에 씁니다. 그래도 잘리면 <b>.txt 저장</b>으로 받아 파일로 첨부합니다.</li></ul></div>
+   <div class="gcard"><h4><code>3</code>예시 · 긴급 · 물어보기</h4><ul>
+     <li><b>예시</b>(E)에서 과학 5종·수학·사회 예시를 불러와 구조를 볼 수 있습니다.</li>
+     <li><b>긴급 프롬프트</b>(Q)는 내용만 적으면 지침이 붙은 요청서를 바로 만듭니다. 과학이면 내용과 맞는 성취기준을 찾아 줍니다.</li>
+     <li><b>AI에게 물어보기</b>(A)는 실험·활동 방법이 떠오르지 않을 때 질문을 만들어 새 탭에서 엽니다.</li></ul></div>
+   <div class="gcard"><h4><code>4</code>비워 두면 어떻게 되나</h4><ul>
+     <li>빈칸은 AI가 <b>교과서 수준의 표준</b>으로 정하고, 응답 맨 앞 «확인 필요» 목록으로 알려 줍니다. 되묻는 왕복이 없습니다.</li>
+     <li>3단계(학습 장치·화면 느낌)는 접혀 있어도 됩니다. 조작·피드백·결과 저장·테마·전체화면은 항상 들어갑니다.</li>
+     <li>단계 줄 오른쪽의 <b>자세히</b>로 바꾸면 측정 방법·통제 변인·오개념 칸이 열립니다.</li></ul></div>
+   <div class="gcard"><h4><code>5</code>결과를 받은 뒤</h4><ul>
+     <li>4단계의 <b>받은 뒤 점검·수정</b> 탭에 «고쳐 달라고 말하기» 문구와 점검 목록이 있습니다. 같은 대화창에서 한 번에 한 가지씩 고칩니다.</li>
+     <li><b>더 보기</b>에서 작업 파일(.json)을 저장해 두면 다음에 열어 이어 쓸 수 있고, 수업 기획서 인쇄는 PDF 저장까지 됩니다.</li></ul></div>
+   <div class="gcard"><h4><code>6</code>단축키 · 저장</h4><ul>
+     <li><b>E</b> 예시 · <b>Q</b> 긴급 · <b>A</b> 물어보기 · <b>H</b> 사용 방법 · <b>G</b> 지침 요약 · <b>D</b> 테마 · <b>Esc</b> 닫기</li>
+     <li>입력한 내용은 이 브라우저에 자동 저장되며 <b>어디로도 전송되지 않습니다</b>.</li></ul></div>`;
+}
+function guideHtml(){
+  return '<p class="hint" style="margin:0 0 var(--sp4)">송쌤과학 가상실험실 프로젝트 지침 v10.13에서 품질을 가장 크게 좌우하는 항목만 뽑았습니다. 과목과 무관한 규칙이며 «전체» 프롬프트에 자동으로 들어갑니다.</p>'
+    +GUIDE.map(g=>`<div class="gcard"><h4><code>${g.c}</code>${esc(g.t)}</h4><ul>${g.l.map(x=>'<li>'+x+'</li>').join('')}</ul></div>`).join('');
+}
+function openDrawer(tab){
+  tab=tab==='guide'?'guide':'help';
+  $('#drawerTitle').textContent=tab==='guide'?'지침 요약':'사용 방법';
+  $$('#drawer .dtabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.d===tab)));
+  $('#drawerBody').innerHTML=tab==='guide'?guideHtml():helpHtml();
+  $('#drawer .dbody').scrollTop=0;
+  if(!$('#drawer').hidden)return;
   $('#scrim').hidden=false; $('#drawer').hidden=false;
   requestAnimationFrame(()=>{$('#scrim').classList.add('in');$('#drawer').classList.add('in')});
   $('#btnCloseDrawer').focus();
-}
-function openDrawer(){
-  openDrawerWith('지침 요약','<p class="hint" style="margin:0 0 var(--sp4)">송쌤과학 가상실험실 프로젝트 지침 v10.13에서 품질을 가장 크게 좌우하는 항목만 뽑았습니다. 과목과 무관한 규칙이며, 완성 프롬프트에 자동으로 들어갑니다.</p>'
-    +GUIDE.map(g=>`<div class="gcard"><h4><code>${g.c}</code>${esc(g.t)}</h4><ul>${g.l.map(x=>'<li>'+x+'</li>').join('')}</ul></div>`).join(''));
 }
 function closeDrawer(){
   $('#scrim').classList.remove('in'); $('#drawer').classList.remove('in');
   setTimeout(()=>{$('#scrim').hidden=true;$('#drawer').hidden=true},220);
 }
-$('#btnGuide').onclick=openDrawer; $('#btnCloseDrawer').onclick=closeDrawer; $('#scrim').onclick=closeDrawer;
-$('#btnHelp').onclick=()=>{
-  openDrawerWith('사용 방법',`
-   <div class="gcard"><h4><code>1</code>가장 빠른 길 — 3클릭 + 2칸</h4><ul>
-     <li><b>과목 → (과학은 학년·영역) → 성취기준</b>을 고르면 실험실 이름과 학습 목표가 자동으로 채워집니다.</li>
-     <li>2단계에서 <b>학생이 바꾸는 것 · 달라지는 것</b> 두 칸만 적고, 사이드(또는 아래 바)의 <b>프롬프트 복사</b>를 누르세요.</li>
-     <li>다른 과목은 성취기준을 교육과정 문서에서 복사해 한 줄에 하나씩 붙여 넣습니다. 코드가 없어도 됩니다.</li></ul></div>
-   <div class="gcard"><h4><code>2</code>예시 · 긴급 · 물어보기</h4><ul>
-     <li>머리의 <b>예시</b>(E)에서 과학 5종·수학·사회 예시를 불러와 구조를 볼 수 있습니다.</li>
-     <li><b>긴급 프롬프트</b>(Q)는 내용만 적으면 지침이 통째로 붙은 요청서를 바로 복사합니다. 과학이면 내용과 맞는 성취기준을 자동으로 찾아 줍니다.</li>
-     <li><b>AI에게 물어보기</b>(A)는 실험·활동 방법이 떠오르지 않을 때 질문을 만들어 새 탭에서 엽니다.</li></ul></div>
-   <div class="gcard"><h4><code>3</code>비워 두면 어떻게 되나</h4><ul>
-     <li>빈칸은 AI가 <b>교과서 수준의 표준</b>으로 정하고, 응답 맨 앞 «확인 필요» 목록에 무엇을 정했는지 모아 알려 줍니다. 되묻는 왕복이 없습니다.</li>
-     <li>3단계(학습 장치·화면 느낌)는 접혀 있어도 됩니다. 공통 코어(조작·피드백·결과 저장·테마·전체화면)만으로 완성됩니다.</li>
-     <li>더 정확히 하려면 레일의 <b>자세히 입력</b>으로 바꿔 측정 방법·통제 변인·오개념을 적으세요.</li></ul></div>
-   <div class="gcard"><h4><code>4</code>결과물 받기</h4><ul>
-     <li><b>복사하고 열기</b> 단추는 프롬프트를 복사한 뒤 고른 AI를 새 탭에서 엽니다. 대화창에 Ctrl+V 하면 끝입니다.</li>
-     <li>프롬프트에는 완성된 실험실을 <b>단일 .html 파일로 다운로드</b>할 수 있게 달라는 요청이 들어 있습니다.</li>
-     <li><b>작업 파일 내보내기</b>로 .json을 저장해 두면 다음에 이어서 쓸 수 있고, <b>수업 기획서 인쇄</b>는 브라우저 인쇄로 PDF 저장까지 됩니다.</li></ul></div>
-   <div class="gcard"><h4><code>5</code>단축키 · 저장</h4><ul>
-     <li><b>E</b> 예시 · <b>Q</b> 긴급 · <b>A</b> 물어보기 · <b>G</b> 지침 요약 · <b>D</b> 테마 · <b>H</b> 사용 방법 · <b>Esc</b> 닫기</li>
-     <li>입력한 내용은 이 브라우저에 자동 저장되며 <b>어디로도 전송되지 않습니다</b>.</li></ul></div>`);
-};
+$('#btnCloseDrawer').onclick=closeDrawer; $('#scrim').onclick=closeDrawer;
+$$('#drawer .dtabs button').forEach(b=>b.onclick=()=>openDrawer(b.dataset.d));
+$('#btnHelp').onclick=()=>openDrawer('help');
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&!$('#cfmModal').hidden){closeCfm(false);return}
@@ -2618,18 +2896,31 @@ document.addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   const k=e.key.toLowerCase();
   if(k==='d'){setTheme(document.documentElement.dataset.t==='dark'?'light':'dark')}
-  else if(k==='h'){$('#btnHelp').click()}
-  else if(k==='g'){openDrawer()}
+  else if(k==='h'){openDrawer('help')}
+  else if(k==='g'){openDrawer('guide')}
   else if(k==='a'){openAsk()}
   else if(k==='q'){openQuick()}
   else if(k==='e'){openEx()}
 });
+
+/* 첫머리가 보이는 동안에는 그만큼 사이드 판을 낮춰, 처음 화면에서도 «복사하고 열기»가 잘리지 않게 한다 */
+let heroT=0;
+function setHeroVis(){
+  const h=$('.hero'), top=$('header.top').offsetHeight, r=h.getBoundingClientRect();
+  document.documentElement.style.setProperty('--hero-vis',Math.round(Math.max(0,Math.min(r.height,r.bottom-top)))+'px');
+}
+const onHero=()=>{if(heroT)return;heroT=requestAnimationFrame(()=>{heroT=0;setHeroVis()})};
+addEventListener('scroll',onHero,{passive:true}); addEventListener('resize',onHero);
 
 /* 스텝 레일 현재 위치 */
 const io=new IntersectionObserver(es=>{
   es.forEach(en=>{if(en.isIntersecting){
     const id=en.target.id.replace('s','');
     $$('#rail button[data-s]').forEach(b=>b.setAttribute('aria-current',String(b.dataset.s===id)));
+    /* 좁은 화면에서 단계 줄이 넘치면 지금 단계가 보이게 줄만 옆으로 민다 (페이지 스크롤은 건드리지 않음) */
+    const rl=$('#rail'), cur=$('#rail button[aria-current="true"]');
+    if(cur&&rl.scrollWidth>rl.clientWidth+1){const a=cur.offsetLeft-12, z=cur.offsetLeft+cur.offsetWidth+12-rl.clientWidth;
+      if(rl.scrollLeft>a)rl.scrollLeft=Math.max(0,a); else if(rl.scrollLeft<z)rl.scrollLeft=z}
   }})},{rootMargin:'-120px 0px -60% 0px'});
 
 /* ══════════ 초기화 ══════════ */
@@ -2643,7 +2934,7 @@ const io=new IntersectionObserver(es=>{
   renderPresets(); renderRail(); applyMode();
   const restored=load();
   refreshAll();
-  renderAIBars(); renderCrit();
+  renderSend(); renderCrit(); setHeroVis();
   ['s1','s2','s3','s4'].forEach(id=>io.observe($('#'+id)));
   if(restored&&(S.title||S.stds.length||S.stdText))toast('지난 작업을 이어서 불러왔어요.');
 })();
